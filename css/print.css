@@ -1,0 +1,580 @@
+/**
+ * Print Styles
+ * Optimized for printing and PDF generation
+ * Ensures professional appearance when portfolio is printed
+ */
+
+@media print {
+    /* ============================================
+       PAGE SETUP
+       ============================================ */
+
+    @page {
+        margin: 1.5cm 2cm;
+        size: A4 portrait;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+
+    html, body {
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        font-size: 11pt;
+        line-height: 1.5;
+        color: #000 !important;
+        background: #fff !important;
+    }
+
+    /* Remove all animations and transitions */
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* ============================================
+       HIDE ELEMENTS NOT NEEDED FOR PRINT
+       ============================================ */
+
+    /* Navigation */
+    .nav,
+    .mobile-menu-toggle,
+    .nav-cta,
+
+    /* Interactive elements */
+    .carousel-prev,
+    .carousel-next,
+    .carousel-dots,
+    .filter-buttons,
+    .modal,
+    .modal-overlay,
+
+    /* Decorative elements */
+    .hero-decorative-overlay,
+    .scroll-indicator,
+
+    /* Skip link */
+    .skip-link,
+
+    /* Footer (optional - uncomment to hide) */
+    /* .footer, */
+
+    /* Video/iframe elements */
+    video,
+    iframe,
+
+    /* Animations */
+    .loading-spinner {
+        display: none !important;
+    }
+
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+        color: #000 !important;
+        font-weight: bold;
+    }
+
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 12pt;
+    }
+
+    h2 {
+        font-size: 18pt;
+        margin-bottom: 10pt;
+        margin-top: 16pt;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-bottom: 8pt;
+    }
+
+    p, li {
+        orphans: 3;
+        widows: 3;
+        color: #333 !important;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+
+    /* Print URLs after links */
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #666 !important;
+    }
+
+    /* Don't print URLs for anchor links */
+    a[href^="#"]:after,
+    a[href^="tel:"]:after,
+    a[href^="mailto:"]:after {
+        content: "";
+    }
+
+    /* ============================================
+       HERO SECTION
+       ============================================ */
+
+    .hero {
+        page-break-after: avoid;
+        padding: 20pt 0 !important;
+        background: #f5f5f5 !important;
+        border-bottom: 2pt solid #333 !important;
+    }
+
+    .hero-container {
+        display: block !important;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100% !important;
+        margin-bottom: 15pt;
+    }
+
+    .hero-title {
+        font-size: 28pt !important;
+        margin-bottom: 8pt !important;
+    }
+
+    .hero-subtitle {
+        font-size: 14pt !important;
+        color: #333 !important;
+    }
+
+    .hero-description {
+        font-size: 11pt !important;
+        color: #555 !important;
+    }
+
+    .hero-image {
+        width: 150pt !important;
+        height: 150pt !important;
+        margin: 0 auto 10pt !important;
+        border: 2pt solid #333 !important;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .hero-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
+
+    /* Hide CTA buttons */
+    .hero-cta {
+        display: none !important;
+    }
+
+    .hero-skills {
+        margin-top: 10pt;
+    }
+
+    /* ============================================
+       SECTIONS
+       ============================================ */
+
+    section {
+        page-break-inside: avoid;
+        margin-bottom: 20pt;
+        padding: 15pt 0 !important;
+    }
+
+    .section-header {
+        page-break-after: avoid;
+        border-bottom: 1pt solid #333 !important;
+        padding-bottom: 8pt !important;
+        margin-bottom: 12pt !important;
+    }
+
+    .section-number {
+        color: #666 !important;
+        font-size: 10pt !important;
+    }
+
+    .section-title {
+        font-size: 18pt !important;
+        color: #000 !important;
+    }
+
+    /* ============================================
+       WORK EXPERIENCE
+       ============================================ */
+
+    .experience-grid {
+        display: block !important;
+    }
+
+    .experience-list {
+        width: 100% !important;
+        margin-bottom: 15pt !important;
+    }
+
+    .experience-company-card {
+        page-break-inside: avoid;
+        background: #f9f9f9 !important;
+        border: 1pt solid #ddd !important;
+        border-left: 3pt solid #000 !important;
+        padding: 10pt !important;
+        margin-bottom: 8pt !important;
+    }
+
+    .company-logo {
+        width: 40pt !important;
+        height: 40pt !important;
+        border: 1pt solid #ccc !important;
+    }
+
+    .company-name {
+        font-size: 12pt !important;
+        font-weight: bold !important;
+        color: #000 !important;
+    }
+
+    .company-role {
+        font-size: 10pt !important;
+        color: #333 !important;
+    }
+
+    .company-tenure {
+        font-size: 9pt !important;
+        color: #666 !important;
+    }
+
+    .experience-details {
+        width: 100% !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    .experience-detail-content {
+        display: block !important;
+        page-break-inside: avoid;
+        margin-bottom: 15pt;
+    }
+
+    .experience-detail-content.active {
+        background: transparent !important;
+    }
+
+    .detail-header h3 {
+        font-size: 14pt !important;
+    }
+
+    .detail-tenure {
+        font-size: 9pt !important;
+        color: #666 !important;
+    }
+
+    /* ============================================
+       SKILLS
+       ============================================ */
+
+    .skills-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12pt !important;
+    }
+
+    .skill-category {
+        page-break-inside: avoid;
+        background: #f9f9f9 !important;
+        border: 1pt solid #ddd !important;
+        padding: 10pt !important;
+    }
+
+    .skill-category-title {
+        font-size: 12pt !important;
+        color: #000 !important;
+        margin-bottom: 8pt !important;
+    }
+
+    .skill-item {
+        margin-bottom: 6pt;
+    }
+
+    .skill-name {
+        font-size: 10pt !important;
+        color: #000 !important;
+    }
+
+    .skill-level-bar {
+        height: 6pt !important;
+        background: #e0e0e0 !important;
+        border: 1pt solid #ccc !important;
+    }
+
+    .skill-level {
+        background: #333 !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    .skill-label {
+        font-size: 8pt !important;
+        color: #666 !important;
+    }
+
+    /* ============================================
+       TESTIMONIALS
+       ============================================ */
+
+    .testimonials-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12pt !important;
+    }
+
+    .testimonial-card {
+        page-break-inside: avoid;
+        background: #f9f9f9 !important;
+        border: 1pt solid #ddd !important;
+        padding: 10pt !important;
+    }
+
+    .testimonial-text {
+        font-size: 10pt !important;
+        font-style: italic !important;
+        color: #333 !important;
+        margin-bottom: 8pt;
+    }
+
+    .testimonial-author {
+        font-size: 9pt !important;
+        color: #000 !important;
+    }
+
+    .testimonial-role {
+        font-size: 8pt !important;
+        color: #666 !important;
+    }
+
+    /* ============================================
+       PORTFOLIO
+       ============================================ */
+
+    .carousel-track,
+    .portfolio-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12pt !important;
+    }
+
+    .portfolio-item,
+    .portfolio-card {
+        page-break-inside: avoid;
+        background: #fff !important;
+        border: 1pt solid #ddd !important;
+        padding: 10pt !important;
+        margin: 0 !important;
+    }
+
+    .portfolio-item img,
+    .portfolio-card img {
+        max-height: 120pt !important;
+        object-fit: cover;
+        border: 1pt solid #ccc !important;
+    }
+
+    .portfolio-content h3 {
+        font-size: 11pt !important;
+        color: #000 !important;
+    }
+
+    .portfolio-content p {
+        font-size: 9pt !important;
+        color: #555 !important;
+        line-height: 1.4;
+    }
+
+    .portfolio-tags {
+        margin-top: 6pt;
+    }
+
+    .tag {
+        display: inline-block;
+        background: #e0e0e0 !important;
+        color: #333 !important;
+        border: 1pt solid #ccc !important;
+        padding: 2pt 6pt !important;
+        font-size: 8pt !important;
+        margin-right: 4pt;
+        margin-bottom: 4pt;
+    }
+
+    /* ============================================
+       CONTACT
+       ============================================ */
+
+    .contact {
+        page-break-before: avoid;
+    }
+
+    .contact-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12pt !important;
+    }
+
+    .contact-item {
+        page-break-inside: avoid;
+        background: #f9f9f9 !important;
+        border: 1pt solid #ddd !important;
+        padding: 10pt !important;
+    }
+
+    .contact-icon {
+        width: 24pt !important;
+        height: 24pt !important;
+    }
+
+    .contact-info h3 {
+        font-size: 10pt !important;
+        color: #000 !important;
+    }
+
+    .contact-info p {
+        font-size: 9pt !important;
+        color: #333 !important;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+
+    .footer {
+        border-top: 1pt solid #333 !important;
+        padding: 10pt 0 !important;
+        font-size: 9pt !important;
+        color: #666 !important;
+        text-align: center;
+    }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+
+    /* Page breaks */
+    .page-break-before {
+        page-break-before: always;
+    }
+
+    .page-break-after {
+        page-break-after: always;
+    }
+
+    .page-break-avoid {
+        page-break-inside: avoid;
+    }
+
+    /* Print visibility */
+    .print-only {
+        display: block !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    /* ============================================
+       PORTFOLIO PAGE SPECIFIC
+       ============================================ */
+
+    /* Ensure all portfolio cards are visible when printed */
+    .portfolio-card[style*="display: none"] {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* ============================================
+       PRINT HEADER (Optional)
+       ============================================ */
+
+    /* Add a print-specific header with contact info */
+    body::before {
+        content: "";
+        display: block;
+        text-align: center;
+        font-size: 10pt;
+        color: #666;
+        padding: 10pt 0;
+        border-bottom: 1pt solid #ddd;
+        margin-bottom: 15pt;
+    }
+
+    /* ============================================
+       CONTRAST & READABILITY
+       ============================================ */
+
+    /* Ensure sufficient contrast for printing */
+    .text-muted,
+    .color-text-muted {
+        color: #555 !important;
+    }
+
+    /* Replace accent colors with black for better print quality */
+    .accent-color,
+    .color-accent {
+        color: #000 !important;
+    }
+
+    /* ============================================
+       IMAGES
+       ============================================ */
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        page-break-inside: avoid;
+    }
+
+    /* Reduce image quality for faster printing (optional) */
+    img {
+        image-rendering: optimizeSpeed;
+    }
+}
+
+/* ============================================
+   PRINT-SPECIFIC CONTENT
+   ============================================ */
+
+/* Content that only shows when printing */
+.print-only {
+    display: none;
+}
+
+@media print {
+    .print-only {
+        display: block !important;
+    }
+}
+
+/* Content that hides when printing */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://rafiatha.github.io/sitemap.xml
+
+# Disallow unnecessary directories
+Disallow: /assets/
+Disallow: /*.backup$

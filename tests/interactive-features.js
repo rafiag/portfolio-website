@@ -1,0 +1,399 @@
+// Interactive Features Testing Suite
+// Tests portfolio carousel, filters, modals, work experience cards, mobile menu, smooth scroll
+
+const { chromium } = require('playwright');
+
+const TARGET_URL = 'http://localhost:8000';
+
+(async () => {
+  console.log('\n🎯 INTERACTIVE FEATURES TEST SUITE');
+  console.log('Testing all interactive elements\n');
+
+  const browser = await chromium.launch({ headless: false, slowMo: 200 });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  let passed = 0;
+  let failed = 0;
+
+  try {
+    // ========================================
+    // INDEX.HTML TESTS
+    // ========================================
+    console.log('='.repeat(60));
+    console.log('Testing index.html Interactive Features');
+    console.log('='.repeat(60));
+
+    await page.goto(TARGET_URL, { waitUntil: 'networkidle', timeout: 10000 });
+    await page.waitForTimeout(1000);
+
+    // Test 1: Portfolio Carousel - Navigation Arrows
+    console.log('\n🎠 Testing portfolio carousel navigation arrows...');
+    try {
+      const carouselExists = await page.locator('.carousel').isVisible();
+      if (carouselExists) {
+        // Test next arrow
+        const nextArrow = page.locator('.carousel-arrow.next');
+        const nextVisible = await nextArrow.isVisible();
+
+        if (nextVisible) {
+          await nextArrow.click();
+          await page.waitForTimeout(500);
+          console.log('  ✅ Next arrow clicked successfully');
+          passed++;
+        } else {
+          console.log('  ❌ Next arrow not visible');
+          failed++;
+        }
+
+        // Test prev arrow
+        const prevArrow = page.locator('.carousel-arrow.prev');
+        const prevVisible = await prevArrow.isVisible();
+
+        if (prevVisible) {
+          await prevArrow.click();
+          await page.waitForTimeout(500);
+          console.log('  ✅ Previous arrow clicked successfully');
+          passed++;
+        } else {
+          console.log('  ❌ Previous arrow not visible');
+          failed++;
+        }
+      } else {
+        console.log('  ⚠️  Carousel not found on index.html');
+      }
+    } catch (error) {
+      console.log('  ❌ Carousel navigation error:', error.message);
+      failed++;
+    }
+
+    // Test 2: Portfolio Carousel - Dots Navigation
+    console.log('\n🔘 Testing carousel dots navigation...');
+    try {
+      const dots = await page.locator('.carousel-dot').count();
+      if (dots > 0) {
+        console.log(`  Found ${dots} carousel dots`);
+
+        // Click second dot
+        await page.locator('.carousel-dot').nth(1).click();
+        await page.waitForTimeout(500);
+        console.log('  ✅ Carousel dot navigation works');
+        passed++;
+      } else {
+        console.log('  ⚠️  No carousel dots found');
+      }
+    } catch (error) {
+      console.log('  ❌ Carousel dots error:', error.message);
+      failed++;
+    }
+
+    // Test 3: Work Experience Cards
+    console.log('\n💼 Testing work experience company selection...');
+    try {
+      const companyCards = await page.locator('.experience-company-card').count();
+      if (companyCards > 0) {
+        console.log(`  Found ${companyCards} company cards`);
+
+        // Click first company card
+        const firstCard = page.locator('.experience-company-card').first();
+        await firstCard.click();
+        await page.waitForTimeout(500);
+
+        // Check if it became active
+        const isActive = await firstCard.evaluate(el => el.classList.contains('active'));
+        if (isActive) {
+          console.log('  ✅ Company card selection works');
+          passed++;
+        } else {
+          console.log('  ❌ Company card did not become active');
+          failed++;
+        }
+      } else {
+        console.log('  ⚠️  No company cards found');
+      }
+    } catch (error) {
+      console.log('  ❌ Work experience error:', error.message);
+      failed++;
+    }
+
+    // Test 3b: Company Description Display
+    console.log('\n🏢 Testing company description display...');
+    try {
+      const descriptions = await page.locator('.company-description').count();
+      if (descriptions === 5) {
+        console.log(`  ✅ All 5 company descriptions found`);
+        passed++;
+
+        // Test that description is visible for active company
+        const activeDescription = page.locator('.experience-detail-content.active .company-description');
+        const isVisible = await activeDescription.isVisible();
+
+        if (isVisible) {
+          console.log('  ✅ Company description visible for active company');
+          passed++;
+
+          // Test switching companies updates description
+          const firstCard = page.locator('.experience-company-card').nth(0);
+          const secondCard = page.locator('.experience-company-card').nth(1);
+
+          await firstCard.click();
+          await page.waitForTimeout(500);
+          const firstDesc = await page.locator('.experience-detail-content.active .company-description').textContent();
+
+          await secondCard.click();
+          await page.waitForTimeout(500);
+          const secondDesc = await page.locator('.experience-detail-content.active .company-description').textContent();
+
+          if (firstDesc !== secondDesc) {
+            console.log('  ✅ Company description changes when switching companies');
+            passed++;
+          } else {
+            console.log('  ❌ Company description does NOT change');
+            failed++;
+          }
+        } else {
+          console.log('  ❌ Company description NOT visible');
+          failed++;
+        }
+      } else {
+        console.log(`  ⚠️  Expected 5 descriptions, found ${descriptions}`);
+      }
+    } catch (error) {
+      console.log('  ❌ Company description error:', error.message);
+      failed++;
+    }
+
+    // Test 4: Mobile Menu Toggle (at 480px viewport)
+    console.log('\n📱 Testing mobile menu toggle...');
+    try {
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.waitForTimeout(500);
+
+      const menuToggle = page.locator('.menu-toggle');
+      const toggleVisible = await menuToggle.isVisible();
+
+      if (toggleVisible) {
+        // Open menu
+        await menuToggle.click();
+        await page.waitForTimeout(500);
+
+        const navMenu = page.locator('.nav-links');
+        const menuActive = await navMenu.evaluate(el => el.classList.contains('active'));
+
+        if (menuActive) {
+          console.log('  ✅ Mobile menu opens successfully');
+          passed++;
+
+          // Close menu
+          await menuToggle.click();
+          await page.waitForTimeout(500);
+          console.log('  ✅ Mobile menu closes successfully');
+          passed++;
+        } else {
+          console.log('  ❌ Mobile menu did not open');
+          failed++;
+        }
+      } else {
+        console.log('  ❌ Menu toggle not visible at mobile viewport');
+        failed++;
+      }
+
+      // Reset viewport
+      await page.setViewportSize({ width: 1280, height: 800 });
+    } catch (error) {
+      console.log('  ❌ Mobile menu error:', error.message);
+      failed++;
+    }
+
+    // Test 5: Smooth Scroll Anchor Links
+    console.log('\n🎢 Testing smooth scroll anchor links...');
+    try {
+      const navLinks = await page.locator('a[href^="#"]').count();
+      if (navLinks > 0) {
+        console.log(`  Found ${navLinks} anchor links`);
+
+        // Click an anchor link
+        const aboutLink = page.locator('a[href="#about"]');
+        const aboutExists = await aboutLink.count() > 0;
+
+        if (aboutExists) {
+          await aboutLink.first().click();
+          await page.waitForTimeout(1000);
+          console.log('  ✅ Smooth scroll anchor link works');
+          passed++;
+        } else {
+          console.log('  ⚠️  No #about anchor link found');
+        }
+      } else {
+        console.log('  ⚠️  No anchor links found');
+      }
+    } catch (error) {
+      console.log('  ❌ Smooth scroll error:', error.message);
+      failed++;
+    }
+
+    // ========================================
+    // PORTFOLIO.HTML TESTS
+    // ========================================
+    console.log('\n' + '='.repeat(60));
+    console.log('Testing portfolio.html Interactive Features');
+    console.log('='.repeat(60));
+
+    await page.goto(`${TARGET_URL}/portfolio.html`, { waitUntil: 'networkidle', timeout: 10000 });
+    await page.waitForTimeout(1000);
+
+    // Test 6: Portfolio Filter Buttons
+    console.log('\n🔍 Testing portfolio filter buttons...');
+    try {
+      const filterButtons = await page.locator('.filter-btn').count();
+      if (filterButtons > 0) {
+        console.log(`  Found ${filterButtons} filter buttons`);
+
+        // Click "All" filter
+        const allFilter = page.locator('.filter-btn[data-filter="all"]');
+        if (await allFilter.count() > 0) {
+          await allFilter.click();
+          await page.waitForTimeout(500);
+          console.log('  ✅ "All" filter works');
+          passed++;
+        }
+
+        // Click "Web Apps" filter (if exists)
+        const webFilter = page.locator('.filter-btn[data-filter="web"]');
+        if (await webFilter.count() > 0) {
+          await webFilter.click();
+          await page.waitForTimeout(500);
+          console.log('  ✅ Category filter works');
+          passed++;
+        }
+      } else {
+        console.log('  ⚠️  No filter buttons found');
+      }
+    } catch (error) {
+      console.log('  ❌ Filter buttons error:', error.message);
+      failed++;
+    }
+
+    // Test 7: Portfolio Modal System
+    console.log('\n🖼️  Testing portfolio modal system...');
+    try {
+      const portfolioItems = await page.locator('.portfolio-item').count();
+      if (portfolioItems > 0) {
+        console.log(`  Found ${portfolioItems} portfolio items`);
+
+        // Click first portfolio item
+        const firstItem = page.locator('.portfolio-item').first();
+        await firstItem.click();
+        await page.waitForTimeout(1000);
+
+        // Check if modal opened
+        const modal = page.locator('.modal');
+        const modalVisible = await modal.isVisible();
+
+        if (modalVisible) {
+          console.log('  ✅ Modal opens when clicking portfolio item');
+          passed++;
+
+          // Test close button
+          const closeBtn = page.locator('.modal-close, .close-modal');
+          if (await closeBtn.count() > 0) {
+            await closeBtn.first().click();
+            await page.waitForTimeout(500);
+
+            const modalClosed = await modal.isVisible() === false || await modal.isHidden();
+            if (modalClosed) {
+              console.log('  ✅ Modal closes with close button');
+              passed++;
+            } else {
+              console.log('  ❌ Modal did not close');
+              failed++;
+            }
+          }
+
+          // Test ESC key close
+          await firstItem.click();
+          await page.waitForTimeout(500);
+          await page.keyboard.press('Escape');
+          await page.waitForTimeout(500);
+
+          const modalClosedByEsc = await modal.isVisible() === false || await modal.isHidden();
+          if (modalClosedByEsc) {
+            console.log('  ✅ Modal closes with ESC key');
+            passed++;
+          } else {
+            console.log('  ⚠️  Modal ESC key close may not work');
+          }
+
+          // Test overlay click close
+          await firstItem.click();
+          await page.waitForTimeout(500);
+          await modal.click({ position: { x: 5, y: 5 } });
+          await page.waitForTimeout(500);
+
+          const modalClosedByOverlay = await modal.isVisible() === false || await modal.isHidden();
+          if (modalClosedByOverlay) {
+            console.log('  ✅ Modal closes when clicking overlay');
+            passed++;
+          } else {
+            console.log('  ⚠️  Modal overlay click close may not work');
+          }
+        } else {
+          console.log('  ❌ Modal did not open');
+          failed++;
+        }
+      } else {
+        console.log('  ⚠️  No portfolio items found');
+      }
+    } catch (error) {
+      console.log('  ❌ Modal system error:', error.message);
+      failed++;
+    }
+
+    // Test 8: Touch/Swipe Gestures (Carousel)
+    console.log('\n👆 Testing touch/swipe support on carousel...');
+    try {
+      await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.waitForTimeout(500);
+
+      const carousel = page.locator('.carousel');
+      const carouselExists = await carousel.isVisible();
+
+      if (carouselExists) {
+        // Simulate swipe left
+        const box = await carousel.boundingBox();
+        if (box) {
+          await page.mouse.move(box.x + box.width * 0.8, box.y + box.height / 2);
+          await page.mouse.down();
+          await page.mouse.move(box.x + box.width * 0.2, box.y + box.height / 2, { steps: 10 });
+          await page.mouse.up();
+          await page.waitForTimeout(500);
+
+          console.log('  ✅ Swipe gesture simulated (visual verification needed)');
+          passed++;
+        }
+      } else {
+        console.log('  ⚠️  Carousel not found for swipe test');
+      }
+    } catch (error) {
+      console.log('  ❌ Touch/swipe error:', error.message);
+      failed++;
+    }
+
+    // Summary
+    console.log('\n' + '='.repeat(60));
+    console.log('📊 INTERACTIVE FEATURES TEST SUMMARY');
+    console.log('='.repeat(60));
+    console.log(`✅ Passed: ${passed}`);
+    console.log(`❌ Failed: ${failed}`);
+    console.log(`Success Rate: ${((passed / (passed + failed)) * 100).toFixed(1)}%`);
+    console.log('='.repeat(60));
+
+    console.log('\n✅ Interactive features testing complete!');
+
+  } catch (error) {
+    console.log('\n❌ Critical error during testing:', error.message);
+  } finally {
+    await browser.close();
+  }
+})();

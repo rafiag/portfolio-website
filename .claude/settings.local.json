@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(ls:*)",
+      "Bash(node -e:*)",
+      "Bash(python -m http.server:*)",
+      "Bash(timeout:*)",
+      "Bash(curl:*)",
+      "Bash(ping:*)",
+      "Bash(node run.js:*)",
+      "Bash(npx playwright install)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-browser-compatibility.js\" .)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-responsive.js\" .)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-interactive-features.js\" .)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-accessibility.js\" .)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-performance.js\" .)",
+      "Bash(copy \"C:\\\\Users\\\\USER\\\\AppData\\\\Local\\\\Temp\\\\playwright-test-content-links.js\" .)",
+      "Bash(xcopy:*)",
+      "Bash(node -c:*)",
+      "Bash(node:*)",
+      "Bash(del \"d:\\\\Project\\\\Portfolio Website\\\\tests\\\\experience-enhancements.js\")",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 5; Invoke-WebRequest -Uri http://localhost:8000 -UseBasicParsing | Select-Object -ExpandProperty StatusCode\")",
+      "Bash(netstat:*)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 3; try { \\(Invoke-WebRequest -Uri http://localhost:8000 -UseBasicParsing\\).StatusCode } catch { ''Error'' }\")",
+      "Bash(taskkill //F //PID 29796)",
+      "Bash(taskkill //F //PID 40676)",
+      "Bash(taskkill:*)"
+    ]
+  }
+}
