@@ -5,7 +5,7 @@ This portfolio website requires the following favicon files to be created:
 ## Required Files
 
 1. **favicon.ico** (root directory)
-   - Location: `d:\Project\Portfolio Website\favicon.ico`
+   - Location: `./favicon.ico`
    - Format: ICO
    - Sizes: 16x16, 32x32, 48x48 (multi-size ICO)
 

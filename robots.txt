@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://rafiatha.github.io/sitemap.xml
+Sitemap: https://rafiag.github.io/portfolio-website/sitemap.xml
 
 # Disallow unnecessary directories
 Disallow: /assets/

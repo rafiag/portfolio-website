@@ -65,12 +65,12 @@ run-all-tests.bat
 ```bash
 cd C:\Users\USER\.claude\plugins\cache\playwright-skill\playwright-skill\4.1.0\skills\playwright-skill
 
-# Run any test
-node run.js "d:\Project\Portfolio Website\tests\{filename}.js"
+# Run any test (use absolute path or adjust based on your location)
+node run.js "<PROJECT_ROOT>/tests/{filename}.js"
 
-# Examples:
-node run.js "d:\Project\Portfolio Website\tests\browser-compatibility.js"
-node run.js "d:\Project\Portfolio Website\tests\accessibility.js"
+# Examples (replace <PROJECT_ROOT> with your actual path):
+node run.js "<PROJECT_ROOT>/tests/browser-compatibility.js"
+node run.js "<PROJECT_ROOT>/tests/accessibility.js"
 ```
 
 ---

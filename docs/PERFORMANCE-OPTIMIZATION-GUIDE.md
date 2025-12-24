@@ -34,12 +34,12 @@ All frequently animated elements now use GPU-accelerated properties:
 **Why:** The `all` property triggers transitions on every CSS property, including expensive ones like `width`, `height`, `top`, `left` that cause layout recalculations. Specific properties (especially `transform` and `opacity`) are GPU-accelerated and don't trigger reflow.
 
 **Optimized Elements:**
-- [style.css:38-56](d:\Project\Portfolio Website\style.css#L38-L56) - Navigation bar
-- [style.css:73-87](d:\Project\Portfolio Website\style.css#L73-L87) - Logo
-- [style.css:377-383](d:\Project\Portfolio Website\style.css#L377-L383) - Hero image (parallax)
-- [style.css:885-896](d:\Project\Portfolio Website\style.css#L885-L896) - Carousel track
-- [style.css:1270-1286](d:\Project\Portfolio Website\style.css#L1270-L1286) - Portfolio cards
-- [style.css:2025-2040](d:\Project\Portfolio Website\style.css#L2025-L2040) - Modal content
+- [style.css:38-56](css/style.css#L38-L56) - Navigation bar
+- [style.css:73-87](css/style.css#L73-L87) - Logo
+- [style.css:377-383](css/style.css#L377-L383) - Hero image (parallax)
+- [style.css:885-896](css/style.css#L885-L896) - Carousel track
+- [style.css:1270-1286](css/style.css#L1270-L1286) - Portfolio cards
+- [style.css:2025-2040](css/style.css#L2025-L2040) - Modal content
 
 #### 2. **CSS Containment**
 Isolated components use CSS containment to limit browser recalculations:
@@ -79,7 +79,7 @@ Replaced generic transitions with specific CSS custom properties:
 #### 1. **Throttling & Debouncing**
 All scroll event handlers now use throttling to limit execution frequency:
 
-**New Utility Module:** [js/modules/performance-utils.js](d:\Project\Portfolio Website\js\modules\performance-utils.js)
+**New Utility Module:** [js/modules/performance-utils.js](js/modules/performance-utils.js)
 
 ```javascript
 // Throttle - limits execution to once per X milliseconds
@@ -104,9 +104,9 @@ export function throttle(func, wait = 16) { // 60fps
 ```
 
 **Applied to:**
-- [navbar-effects.js:55-77](d:\Project\Portfolio Website\js\modules\navbar-effects.js#L55-L77) - Active nav link updates
-- [navbar-effects.js:83-89](d:\Project\Portfolio Website\js\modules\navbar-effects.js#L83-L89) - Resize handling
-- [portfolio-carousel.js:93-103](d:\Project\Portfolio Website\js\modules\portfolio-carousel.js#L93-L103) - Carousel scroll tracking
+- [navbar-effects.js:55-77](js/modules/navbar-effects.js#L55-L77) - Active nav link updates
+- [navbar-effects.js:83-89](js/modules/navbar-effects.js#L83-L89) - Resize handling
+- [portfolio-carousel.js:93-103](js/modules/portfolio-carousel.js#L93-L103) - Carousel scroll tracking
 
 #### 2. **RequestAnimationFrame Integration**
 Scroll handlers use RAF for smooth 60fps updates:
@@ -128,8 +128,8 @@ export function optimizedScrollHandler(callback) {
 ```
 
 **Applied to:**
-- [navbar-effects.js:15-28](d:\Project\Portfolio Website\js\modules\navbar-effects.js#L15-L28) - Navbar scroll effect
-- [index-page.js:14-21](d:\Project\Portfolio Website\js\modules\index-page.js#L14-L21) - Hero parallax
+- [navbar-effects.js:15-28](js/modules/navbar-effects.js#L15-L28) - Navbar scroll effect
+- [index-page.js:14-21](js/modules/index-page.js#L14-L21) - Hero parallax
 
 **Why:** `requestAnimationFrame` syncs updates with the browser's repaint cycle, ensuring smooth 60fps animations.
 
@@ -155,7 +155,7 @@ for (const section of sectionMeasurements) {
 ```
 
 **Applied to:**
-- [navbar-effects.js:47-52](d:\Project\Portfolio Website\js\modules\navbar-effects.js#L47-L52) - Active nav links
+- [navbar-effects.js:47-52](js/modules/navbar-effects.js#L47-L52) - Active nav links
 
 **Why:** Reading layout properties (`offsetTop`, `offsetHeight`) forces a layout recalculation. Caching these values and only recalculating on resize drastically reduces reflows.
 
@@ -194,7 +194,7 @@ const observer = new IntersectionObserver((entries) => {
 ```
 
 **Applied to:**
-- [scroll-animations.js:17-28](d:\Project\Portfolio Website\js\modules\scroll-animations.js#L17-L28)
+- [scroll-animations.js:17-28](js/modules/scroll-animations.js#L17-L28)
 
 **Benefits:**
 - Reduces memory usage
@@ -252,10 +252,10 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
 ## Files Modified
 
 ### New Files
-- ✅ [js/modules/performance-utils.js](d:\Project\Portfolio Website\js\modules\performance-utils.js) - Performance utilities (throttle, debounce, RAF)
+- ✅ [js/modules/performance-utils.js](js/modules/performance-utils.js) - Performance utilities (throttle, debounce, RAF)
 
 ### Modified Files
-- ✅ [style.css](d:\Project\Portfolio Website\style.css)
+- ✅ [style.css](css/style.css)
   - Lines 1-16: Added optimized transition variables
   - Lines 38-56: Navbar GPU acceleration
   - Lines 377-383: Hero image GPU acceleration
@@ -264,22 +264,22 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
   - Lines 2025-2040: Modal GPU + containment
   - Lines 2500-2527: Scroll animation classes
 
-- ✅ [js/modules/navbar-effects.js](d:\Project\Portfolio Website\js\modules\navbar-effects.js)
+- ✅ [js/modules/navbar-effects.js](js/modules/navbar-effects.js)
   - Throttled scroll handlers
   - Cached measurements
   - Passive listeners
   - RequestAnimationFrame integration
 
-- ✅ [js/modules/index-page.js](d:\Project\Portfolio Website\js\modules\index-page.js)
+- ✅ [js/modules/index-page.js](js/modules/index-page.js)
   - Hero parallax with RAF
   - `translate3d` for GPU acceleration
   - Passive scroll listener
 
-- ✅ [js/modules/portfolio-carousel.js](d:\Project\Portfolio Website\js\modules\portfolio-carousel.js)
+- ✅ [js/modules/portfolio-carousel.js](js/modules/portfolio-carousel.js)
   - Throttled scroll tracking
   - Passive scroll listener
 
-- ✅ [js/modules/scroll-animations.js](d:\Project\Portfolio Website\js\modules\scroll-animations.js)
+- ✅ [js/modules/scroll-animations.js](js/modules/scroll-animations.js)
   - Class-based animations
   - Unobserve after animation
   - Reduced motion support

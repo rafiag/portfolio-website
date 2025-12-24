@@ -703,7 +703,7 @@ SyntaxError: Failed to execute 'querySelectorAll': '[*]' is not a valid selector
 
 ### Test Scripts Location
 
-**Location:** `d:\Project\Portfolio Website\tests\`
+**Location:** `tests/` directory in project root
 
 All 10 test suite files:
 1. browser-compatibility.js
@@ -720,8 +720,9 @@ All 10 test suite files:
 **Re-run tests:**
 ```bash
 cd "C:\Users\USER\.claude\plugins\cache\playwright-skill\playwright-skill\4.1.0\skills\playwright-skill"
-node run.js "d:\Project\Portfolio Website\tests\[test-file-name].js"
+node run.js "<PROJECT_ROOT>/tests/[test-file-name].js"
 ```
+Note: Replace `<PROJECT_ROOT>` with your actual project path
 
 ---
 

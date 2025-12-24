@@ -853,7 +853,7 @@ See original test report for security test details.
 
 ### Test Scripts
 
-**Location:** `d:\Project\Portfolio Website\tests\`
+**Location:** `tests/` directory in project root
 
 1. browser-compatibility.js (24 tests)
 2. responsive.js (56 tests)

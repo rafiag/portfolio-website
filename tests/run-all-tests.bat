@@ -13,61 +13,61 @@ cd C:\Users\USER\.claude\plugins\cache\playwright-skill\playwright-skill\4.1.0\s
 
 echo [1/10] Browser Compatibility Tests
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\browser-compatibility.js"
+node run.js "%~dp0browser-compatibility.js"
 echo.
 pause
 
 echo [2/10] Responsive Testing
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\responsive.js"
+node run.js "%~dp0responsive.js"
 echo.
 pause
 
 echo [3/10] Interactive Features
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\interactive-features.js"
+node run.js "%~dp0interactive-features.js"
 echo.
 pause
 
 echo [4/10] Accessibility (WCAG 2.1)
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\accessibility.js"
+node run.js "%~dp0accessibility.js"
 echo.
 pause
 
 echo [5/10] Performance Tests
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\performance.js"
+node run.js "%~dp0performance.js"
 echo.
 pause
 
 echo [6/10] Content & Links
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\content-links.js"
+node run.js "%~dp0content-links.js"
 echo.
 pause
 
 echo [7/10] Cross-Browser JavaScript
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\cross-browser-javascript.js"
+node run.js "%~dp0cross-browser-javascript.js"
 echo.
 pause
 
 echo [8/10] SEO & Meta Tags
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\seo-meta.js"
+node run.js "%~dp0seo-meta.js"
 echo.
 pause
 
 echo [9/10] Error Handling
 echo ========================================
-node run.js "d:\Project\Portfolio Website\tests\error-handling.js"
+node run.js "%~dp0error-handling.js"
 echo.
 pause
 
 echo [10/10] Security Tests (Static Analysis - No Playwright)
 echo ========================================
-cd "d:\Project\Portfolio Website"
+cd /d "%~dp0.."
 node tests\security.js
 echo.
 
@@ -76,7 +76,7 @@ echo ========================================
 echo All tests complete!
 echo ========================================
 echo.
-echo Check the test report at:
-echo d:\Project\Portfolio Website\TEST-REPORT-2025-12-24.md
+echo Check the test reports in the docs/ folder
+echo (TEST-REPORT-2025-12-24.md and TEST-SUMMARY-UPDATED.md)
 echo.
 pause

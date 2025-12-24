@@ -7,6 +7,10 @@ yarn-error.log
 .DS_Store
 Thumbs.db
 desktop.ini
+*.tmp
+*~
+
+## DONT REMOVE THIS LINE BELOW ##
 nul
 
 # IDE
@@ -30,3 +34,11 @@ logs/
 
 # Development Tools
 tools/
+
+# Test outputs and coverage
+coverage/
+*.test.log
+
+# Server logs (from development server)
+server.log
+*.log.*
