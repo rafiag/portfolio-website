@@ -73,7 +73,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 │   ├── README.md      # JavaScript modules documentation
 │   ├── data/
 │   │   └── portfolio-data.js  # Portfolio project data
-│   └── modules/       # Modular ES6 JavaScript (13 modules)
+│   └── modules/       # Modular ES6 JavaScript (14 modules)
 │       ├── accessibility.js
 │       ├── error-handler.js
 │       ├── font-loader.js
@@ -84,6 +84,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 │       ├── portfolio-carousel.js
 │       ├── portfolio-filter.js
 │       ├── portfolio-modal.js
+│       ├── portfolio-validator.js
 │       ├── scroll-animations.js
 │       ├── smooth-scroll.js
 │       └── structured-data.js
@@ -95,6 +96,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 │   ├── error-handling.js
 │   ├── interactive-features.js
 │   ├── performance.js
+│   ├── portfolio-validation.js
 │   ├── README.md
 │   ├── responsive.js
 │   ├── run-all-tests.bat
@@ -121,7 +123,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - [x] Native Lazy Loading Strategy (Use loading="lazy" on below-fold images)
 - [x] Memory Leak Prevention (Cleanup methods in classes to remove event listeners)
 - [x] Back-to-Top Button (Floating button appearing after scrolling down)
-- [ ] Portfolio Data Validation (Schema validation portfolio-data.js)
+- [x] Portfolio Data Validation (Schema validation portfolio-data.js)
 
 ### Medium Priority
 - [x] Add error handling and loading states
@@ -155,6 +157,7 @@ For detailed technical guides, see the [docs/](docs/) folder:
 - **[Print Styles Guide](docs/PRINT-STYLES-GUIDE.md)** - Professional PDF generation, A4 format, page breaks
 - **[Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md)** - SEO with Schema.org, validation, Google integration
 - **[Browser Support Guide](docs/BROWSER-SUPPORT.md)** - Compatibility, fallbacks, minimum requirements
+- **[Portfolio Data Validation Guide](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md)** - Schema validation, type checking, error handling
 - **[JavaScript Modules Documentation](js/README.md)** - Module structure, exports, usage examples
 
 ## Browser Support

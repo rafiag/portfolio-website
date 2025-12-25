@@ -26,7 +26,8 @@
       "Bash(powershell -Command \"Start-Sleep -Seconds 3; try { \\(Invoke-WebRequest -Uri http://localhost:8000 -UseBasicParsing\\).StatusCode } catch { ''Error'' }\")",
       "Bash(taskkill //F //PID 29796)",
       "Bash(taskkill //F //PID 40676)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(start /B python:*)"
     ]
   }
 }

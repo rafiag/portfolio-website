@@ -19,6 +19,7 @@ js/
 │   ├── portfolio-carousel.js  # Portfolio carousel (index page)
 │   ├── portfolio-filter.js    # Portfolio filtering (portfolio page)
 │   ├── portfolio-modal.js     # Portfolio modal system (shared)
+│   ├── portfolio-validator.js # Portfolio data validation (shared)
 │   ├── scroll-animations.js   # Intersection Observer animations
 │   ├── smooth-scroll.js       # Smooth anchor scrolling
 │   └── structured-data.js     # SEO Schema.org structured data
@@ -91,6 +92,15 @@ js/
 - GPU-accelerated animations for performance
 - **Export:** `BackToTop` class
 - **Used by:** Both index.html and portfolio.html
+
+**`portfolio-validator.js`** *(New - 2025-12-25)*
+- Schema-based validation for portfolio data
+- Type checking (string, array) and constraint validation
+- Pattern matching for URLs and paths
+- Development-only validation with detailed error reporting
+- **Exports:** `validatePortfolioItem()`, `validatePortfolioData()`, `formatValidationErrors()`, `getSchema()`, `ValidationError` class
+- **Used by:** portfolio-data.js (auto-validation on localhost)
+- **Documentation:** [Portfolio Data Validation Guide](../docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md)
 
 ### Page-Specific Modules
 

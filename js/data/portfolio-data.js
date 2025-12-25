@@ -3,6 +3,8 @@
  * Centralized data for all portfolio projects
  */
 
+import { validatePortfolioData, formatValidationErrors } from '../modules/portfolio-validator.js';
+
 export const portfolioData = {
     1: {
         title: "The Year of Judge (2022)",
@@ -167,3 +169,19 @@ export const portfolioData = {
     //     link: ""
     // }
 };
+
+// Validate portfolio data in development mode
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    try {
+        const validationResult = validatePortfolioData(portfolioData);
+        const message = formatValidationErrors(validationResult);
+
+        if (validationResult.valid) {
+            console.log('%c[Portfolio Data Validation]', 'color: #4caf50; font-weight: bold', message);
+        } else {
+            console.error('%c[Portfolio Data Validation]', 'color: #f44336; font-weight: bold', '\n' + message);
+        }
+    } catch (error) {
+        console.error('[Portfolio Data Validation] Validation error:', error);
+    }
+}

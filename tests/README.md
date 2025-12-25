@@ -18,8 +18,9 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 | 8 | `seo-meta.js` | SEO & Performance | 33 | Structured data, Twitter Cards, robots.txt, sitemap, **resource hints** |
 | 9 | `error-handling.js` | Error Recovery & Memory | 14 | 404 pages, graceful degradation, fallbacks, **memory leak prevention** |
 | 10 | `security.js` | Security | 6 | CSP compliance, XSS protection, external links, mixed content (static analysis) |
+| 11 | `portfolio-validation.js` | Data Validation | 50+ | Schema validation, type checking, field constraints, edge cases |
 
-**Total: 205 tests** | Files tested: `index.html`, `portfolio.html`
+**Total: 255+ tests** | Files tested: `index.html`, `portfolio.html`, `portfolio-data.js`
 
 ---
 
@@ -62,11 +63,12 @@ Linux/Mac:
 # Run tests individually or create a shell script similar to run-all-tests.bat
 ```
 
-**Option B: Run Security Test Only (No Playwright Required)**
+**Option B: Run Non-Playwright Tests (No Playwright Required)**
 
 ```bash
 # From project root
 node tests/security.js
+node tests/portfolio-validation.js
 ```
 
 **Option C: Run Individual Playwright Tests**
@@ -214,7 +216,7 @@ When adding tests:
 
 ---
 
-**Last Updated**: 2025-12-25 | **Framework**: Playwright | **Total Tests**: 205
+**Last Updated**: 2025-12-25 | **Framework**: Playwright + Native | **Total Tests**: 255+
 
 ---
 
@@ -240,4 +242,13 @@ When adding tests:
    - Timer cleanup validation
    - Component instance cleanup (modals/carousels)
 
-**Test Coverage Improvement:** +16 tests (189 → 205)
+4. **Portfolio Data Validation** (portfolio-validation.js) - 50+ new tests
+   - Schema validation for all fields
+   - Required field validation
+   - Type checking (string, array)
+   - Length constraints validation
+   - Pattern matching (URLs, paths)
+   - Array item validation
+   - Edge case handling
+
+**Test Coverage Improvement:** +66 tests (189 → 255+)
