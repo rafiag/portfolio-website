@@ -117,10 +117,10 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 
 ### High Priority
 - [x] Replace all placeholder content
+- [x] Resource Hints in HTML
 - [ ] Back-to-Top Button (Floating button appearing after scrolling down)
 - [ ] Portfolio Data Validation (Schema validation portfolio-data.js)
 - [ ] Memory Leak Prevention (Cleanup methods in classes to remove event listeners)
-- [ ] Resource Hints in HTML
 - [ ] Native Lazy Loading Strategy (Use loading="lazy" on below-fold images)
 
 ### Medium Priority
@@ -151,11 +151,11 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 For detailed technical guides, see the [docs/](docs/) folder:
 
 - **[Performance Optimization Guide](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)** - 60fps optimization, throttling, RAF, GPU acceleration
+- **[Resource Hints Guide](docs/RESOURCE-HINTS-GUIDE.md)** - DNS prefetch, preconnect, preload, and prefetch optimization
 - **[Print Styles Guide](docs/PRINT-STYLES-GUIDE.md)** - Professional PDF generation, A4 format, page breaks
 - **[Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md)** - SEO with Schema.org, validation, Google integration
 - **[Browser Support Guide](docs/BROWSER-SUPPORT.md)** - Compatibility, fallbacks, minimum requirements
 - **[JavaScript Modules Documentation](js/README.md)** - Module structure, exports, usage examples
-- **[Documentation Index](docs/README.md)** - Complete guide index with quick links
 
 ## Browser Support
 
