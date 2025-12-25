@@ -32,10 +32,11 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 3. **Skills Matrix** - Categorized technical skills with proficiency indicators
 4. **Portfolio Carousel** - Touch-enabled project showcase with navigation
 5. **Testimonials Carousel** - Auto-rotating carousel showing 2 testimonials at once (1 on mobile) with prev/next buttons, navigation dots, and pause-on-hover
-6. **Project Filtering** - Dynamic filtering system on portfolio page
-7. **Modal System** - Detailed project views with overlay and focus trap
-8. **Scroll Animations** - Intersection Observer API for reveal effects
-9. **Parallax Effects** - Subtle hero image movement on scroll
+6. **Animated Statistics Counter** - Count-up animation for experience metrics, triggers on scroll into view
+7. **Project Filtering** - Dynamic filtering system on portfolio page
+8. **Modal System** - Detailed project views with overlay and focus trap
+9. **Scroll Animations** - Intersection Observer API for reveal effects
+10. **Parallax Effects** - Subtle hero image movement on scroll
 
 ### File Structure
 ```
@@ -143,7 +144,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - [x] Add progressive enhancement for older browsers (Browser detection, CSS fallbacks, upgrade notices)
 - [x] Add metrics display on experience section (i.e. total YOE, company, etc)
 - [x] Add short company description to experience details
-- [ ] Animated Statistics Counter (Count-up animation for your experience metrics in hero section, triggers on scroll into view using Intersection Observer)
+- [x] Animated Statistics Counter (Count-up animation for your experience metrics in hero section, triggers on scroll into view using Intersection Observer)
 - [ ] Tooltips for Technical Terms (Hover/click tooltips explaining jargon such as RFM, DBSCAN, etc.)
 - [ ] Dynamic Resume Generator (Generate customizable PDF resume from site data, select which sections to include)
 
@@ -493,6 +494,6 @@ export function initFeatureName() {
 
 ---
 
-**Last Updated:** 2025-12-25
+**Last Updated:** 2025-12-26
 **Author:** Rafi Atha
 **Contact:** rafiatha.g@gmail.com

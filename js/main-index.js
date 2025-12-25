@@ -17,6 +17,7 @@ import BackToTop from './modules/back-to-top.js';
 // Import page-specific modules
 import { PortfolioCarousel } from './modules/portfolio-carousel.js';
 import { TestimonialsCarousel } from './modules/testimonials-carousel.js';
+import { initStatisticsCounter } from './modules/statistics-counter.js';
 import {
     initHeroParallax,
     initExperienceCards,
@@ -36,7 +37,8 @@ const moduleInstances = {
     keyboardNavigation: null,
     portfolioCarousel: null,
     testimonialsCarousel: null,
-    backToTop: null
+    backToTop: null,
+    statisticsCounter: null
 };
 
 // Initialize when DOM is ready
@@ -60,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Index page specific features
     moduleInstances.portfolioCarousel = new PortfolioCarousel();
     moduleInstances.testimonialsCarousel = new TestimonialsCarousel();
+    moduleInstances.statisticsCounter = initStatisticsCounter();
     initHeroParallax();
     initExperienceCards();
     initSkillBarsAnimation();
@@ -82,6 +85,7 @@ window.addEventListener('beforeunload', () => {
     moduleInstances.portfolioCarousel?.destroy();
     moduleInstances.testimonialsCarousel?.destroy();
     moduleInstances.backToTop?.destroy();
+    moduleInstances.statisticsCounter?.cleanup();
 
     // Cleanup function-based modules
     cleanupSmoothScroll();

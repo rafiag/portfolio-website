@@ -676,7 +676,66 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
-    // Test 9: Touch/Swipe Gestures (Carousel)
+    // Test 9: Statistics Counter Animation
+    console.log('\n🔢 Testing statistics counter animation...');
+    try {
+      await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(500);
+
+      const metricsContainer = page.locator('.experience-metrics');
+      const metricsExists = await metricsContainer.isVisible();
+
+      if (metricsExists) {
+        // Check initial state (should be 0)
+        const metricValues = page.locator('.metric-value');
+        const initialValues = await metricValues.allTextContents();
+        const allStartAtZero = initialValues.every(val => val.trim() === '0' || val.trim() === '0+');
+
+        if (allStartAtZero) {
+          console.log('  ✅ Counters start at 0');
+          passed++;
+        } else {
+          console.log(`  ❌ Counters should start at 0, got: ${initialValues.join(', ')}`);
+          failed++;
+        }
+
+        // Scroll to trigger animation
+        await metricsContainer.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(2500); // Wait for 2s animation
+
+        // Check animated values
+        const finalValues = await metricValues.allTextContents();
+        const expectedValues = ['5+', '5', '3', '20+'];
+        const valuesMatch = finalValues.every((val, idx) => val.trim() === expectedValues[idx]);
+
+        if (valuesMatch) {
+          console.log(`  ✅ Counter animation completed: ${finalValues.join(', ')}`);
+          passed++;
+        } else {
+          console.log(`  ❌ Expected ${expectedValues.join(', ')}, got ${finalValues.join(', ')}`);
+          failed++;
+        }
+
+        // Check data attributes
+        const firstValue = metricValues.first();
+        const hasDataAttrs = await firstValue.evaluate(el => el.hasAttribute('data-target'));
+
+        if (hasDataAttrs) {
+          console.log('  ✅ Data attributes present');
+          passed++;
+        } else {
+          console.log('  ❌ Data attributes missing');
+          failed++;
+        }
+      } else {
+        console.log('  ⚠️  Metrics container not found');
+      }
+    } catch (error) {
+      console.log('  ❌ Statistics counter error:', error.message);
+      failed++;
+    }
+
+    // Test 10: Touch/Swipe Gestures (Carousel)
     console.log('\n👆 Testing touch/swipe support on carousel...');
     try {
       await page.goto(TARGET_URL, { waitUntil: 'networkidle' });

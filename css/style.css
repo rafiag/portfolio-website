@@ -577,6 +577,9 @@ body {
     line-height: 1;
     margin-bottom: 0.5rem;
     font-family: 'Playfair Display', serif;
+    /* Counter animation enhancement */
+    font-variant-numeric: tabular-nums;
+    will-change: contents;
 }
 
 .metric-label {

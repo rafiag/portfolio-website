@@ -126,6 +126,21 @@ js/
   - `cardsPerView`: 2 (auto-adjusts on mobile)
 - **Used by:** index.html testimonials section
 
+**`statistics-counter.js`** *(index.html only - New 2025-12-26)*
+- Animated count-up effect for hero section statistics
+- Triggers on scroll into view using Intersection Observer
+- 2-second animation with easeOutExpo easing
+- Parses target values and suffix characters (e.g., "5+", "20+")
+- RequestAnimationFrame-based animation for smooth 60fps performance
+- Animates from 0 to target value, then appends suffix
+- **Export:** `StatisticsCounter` class, `initStatisticsCounter()` function
+- **Used by:** index.html experience metrics section
+- **Features:**
+  - One-time animation (doesn't re-trigger on subsequent scrolls)
+  - Automatic cleanup to prevent memory leaks
+  - Data attributes for target values and suffixes
+  - CSS optimizations (tabular-nums, will-change)
+
 **`portfolio-filter.js`** *(portfolio.html only)*
 - Portfolio filtering by category
 - Smooth show/hide animations
@@ -152,6 +167,7 @@ Entry point for **index.html**. Initializes:
 - All shared modules
 - Portfolio carousel
 - Testimonials carousel
+- Statistics counter
 - Hero parallax
 - Experience cards
 - Skill bars animation
