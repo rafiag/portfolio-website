@@ -19,7 +19,7 @@ I built this portfolio to showcase not just my data analytics work, but also my 
 - **Contact Section** - Direct links to reach me
 
 ### 📂 Portfolio Page ([portfolio.html](portfolio.html))
-- **12 Real Projects** - RFM analysis, customer segmentation, BI dashboards, and more
+- **Real Projects** - RFM analysis, customer segmentation, BI dashboards, and more
 - **Smart Filtering** - Category-based project filtering with smooth animations
 - **Detailed Modals** - Full project descriptions with technologies and impact metrics
 
