@@ -185,9 +185,186 @@ const HEADLESS = false;                       // Browser visible (true for CI/CD
 | Issue | Solution |
 |-------|----------|
 | "Executable doesn't exist" | `npx playwright install` |
-| "Cannot find module 'playwright'" | `npm install playwright` |
+| "Cannot find module 'playwright'" | `npm install --save-dev playwright` (install locally) |
 | Connection refused | Start dev server: `python -m http.server 8000` |
 | Selector mismatches | Update selectors in test files to match actual HTML |
+
+---
+
+## 🤖 For AI Agents: Running Temporary Test Scripts
+
+When creating temporary test scripts for feature validation, follow these guidelines:
+
+### Installing Playwright for Test Scripts
+
+**The Problem:**
+- Test scripts use `require('playwright')` which requires Playwright in `node_modules/`
+- Global Playwright (`npx playwright install`) only installs browsers, not the Node.js module
+- Running `node tests/your-test.js` fails with "Cannot find module 'playwright'"
+
+**The Solution:**
+Install Playwright locally as a dev dependency:
+
+```bash
+# ✅ CORRECT: Install Playwright to node_modules/
+npm install --save-dev playwright
+
+# Then install browser binaries (if not already done)
+npx playwright install
+
+# Now test scripts work
+node tests/your-temporary-test.js
+```
+
+**Alternative - Temporary Installation (No package.json Changes):**
+
+If you want to avoid modifying package.json:
+
+```bash
+# Install to node_modules/ without saving to package.json
+npm install --no-save playwright
+
+# Run test
+node tests/your-temporary-test.js
+```
+
+**Note:** `--no-save` installs Playwright for the current session only. It won't persist in package.json but will be available in `node_modules/`.
+
+**Common Mistakes to Avoid:**
+
+```bash
+# ❌ WRONG: npx -p doesn't inject modules into Node.js resolution
+npx -p playwright node tests/your-test.js
+# Still fails: Cannot find module 'playwright'
+
+# ❌ WRONG: Global installation doesn't help Node.js scripts
+npx playwright install
+node tests/your-test.js
+# Still fails: Cannot find module 'playwright'
+
+# ✅ CORRECT: Install to node_modules/ first
+npm install --save-dev playwright
+node tests/your-test.js
+```
+
+### Temporary Test Workflow
+
+**Step 0: Ensure Playwright is Installed**
+```bash
+# Check if Playwright module exists
+node -e "require('playwright')" 2>nul && echo "Playwright installed" || echo "Not installed"
+
+# If not installed, install it (choose one):
+# Option A: Permanent (recommended for frequent testing)
+npm install --save-dev playwright
+
+# Option B: Temporary (no package.json changes)
+npm install --no-save playwright
+```
+
+**Step 1: Create Test Script**
+```javascript
+// tests/temp-feature-validation.js
+const { chromium } = require('playwright');
+
+(async () => {
+    const browser = await chromium.launch({ headless: false });
+    const page = await browser.newPage();
+
+    // Your test logic here
+    await page.goto('http://localhost:8000');
+
+    await browser.close();
+})();
+```
+
+**Step 2: Run Test**
+```bash
+# From project root - now this works with local installation
+node tests/temp-feature-validation.js
+```
+
+**Step 3: Validate Feature**
+- Check console output for test results
+- Verify feature works as expected
+- Note any failures or issues
+
+**Step 4: Integrate or Clean Up**
+- **If tests should be permanent:** Integrate into existing test files (see table above)
+- **If temporary only:** Delete the test file after validation
+- Update test documentation if adding new test categories
+
+### Best Practices
+
+1. **Naming Convention:** Use `temp-` prefix for temporary test files
+   ```
+   tests/temp-carousel-validation.js
+   tests/temp-modal-focus.js
+   ```
+
+2. **Cleanup:** Always delete temporary test files after validation
+   ```bash
+   # After validation complete
+   del tests/temp-*.js  # Windows
+   rm tests/temp-*.js   # Linux/Mac
+   ```
+
+3. **Integration Over Duplication:**
+   - ✅ Add tests to existing files when possible (e.g., `interactive-features.js`)
+   - ❌ Don't create new test files for features covered by existing categories
+
+4. **Server Requirement:** Always ensure dev server is running
+   ```bash
+   # Check server status first
+   netstat -an | findstr :8000
+
+   # Start if not running
+   python -m http.server 8000
+   ```
+
+### Example: Complete Temporary Test Workflow
+
+```bash
+# 1. One-time setup - Install Playwright if not already installed
+npm install --save-dev playwright
+npx playwright install
+
+# 2. Ensure dev server is running
+netstat -an | findstr :8000
+
+# 3. Create temporary test
+# (Create tests/temp-analytics-validation.js with your test code)
+
+# 4. Run test directly with node
+node tests/temp-analytics-validation.js
+
+# 5. Review results
+# ✅ All tests passed? Great!
+
+# 6. Integrate permanent tests into existing file
+# Add relevant test cases to tests/interactive-features.js
+
+# 7. Clean up temporary file
+del tests/temp-analytics-validation.js
+
+# 8. Run full test suite to verify integration
+tests\run-all-tests.bat
+```
+
+### Why Playwright Needs Local Installation
+
+**Key Understanding:**
+- `require('playwright')` in Node.js looks for modules in `node_modules/` directory
+- Global npm packages (installed with `npm install -g` or via `npx`) are NOT in the module resolution path
+- `npx playwright install` only installs **browser binaries** (Chrome, Firefox, WebKit executables)
+- `npx -p playwright node script.js` makes the **CLI tool** available, but NOT the **Node.js module**
+
+**Two Separate Things:**
+1. **Playwright CLI/Browsers** - Installed globally via `npx playwright install`
+2. **Playwright Node.js Module** - Must be in `node_modules/` for `require('playwright')` to work
+
+**Solution:**
+Install Playwright locally with `npm install --save-dev playwright` so Node.js can find it when test scripts use `require('playwright')`.
 
 ---
 
