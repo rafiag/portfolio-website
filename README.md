@@ -1,198 +1,143 @@
-# Portfolio Website
+# Rafi Atha - Portfolio Website
 
-A distinctive, production-grade portfolio website with an editorial-meets-modern aesthetic.
+My personal portfolio website showcasing 5 years of experience as a Data Analyst in fintech and e-commerce. Built from scratch using vanilla JavaScript, HTML5, and CSS3 - no frameworks, just clean, performant code.
 
-## Features
+<!-- **Live Site:** [Your domain here] -->
 
-### Responsive Design
-The website is fully responsive and optimized for all device sizes:
+## About This Project
 
-- **Desktop (1440px+)**: Full layout with all features
-- **Laptop/Tablet (1024px)**: Optimized two-column and single-column layouts
-- **Tablet Portrait (768px)**: Mobile-friendly single column layout
-- **Mobile (480px)**: Compact design with hamburger menu navigation
-- **Small Mobile (360px)**: Optimized for smallest devices
+I built this portfolio to showcase not just my data analytics work, but also my attention to detail and commitment to quality. Every aspect was crafted with intention - from the smooth animations to the clean code structure and thorough testing.
 
-### Sections
+## What's Inside
 
-1. **Landing Page**
-   - Hero section with photo and career highlights
-   - Previous companies (Kredivo Group, Mapan, LinkAja!, tvOne, Telkom Indonesia)
-   - Key skills
-   - Short bio with call-to-action
+### 🏠 Main Page ([index.html](index.html))
+- **Hero Section** - Career highlights with 5 years experience across fintech and e-commerce
+- **Experience Timeline** - Interactive company cards featuring Kredivo Group, Mapan, LinkAja!, tvOne, and Telkom Indonesia
+- **Skills Matrix** - Technical proficiencies in data analytics, BI tools, Python, SQL, and visualization
+- **Testimonials** - Real feedback from colleagues and managers
+- **Featured Projects** - Touch-enabled carousel showcasing my best work
+- **Contact Section** - Direct links to reach me
 
-2. **Work Experience**
-   - Timeline layout with company logos
-   - Role and date information
-   - Detailed descriptions
+### 📂 Portfolio Page ([portfolio.html](portfolio.html))
+- **12 Real Projects** - RFM analysis, customer segmentation, BI dashboards, and more
+- **Smart Filtering** - Category-based project filtering with smooth animations
+- **Detailed Modals** - Full project descriptions with technologies and impact metrics
 
-3. **Skills**
-   - Four categories: Frontend, Backend, Design, Tools
-   - Animated skill level indicators
+### ⚙️ Technical Highlights
 
-4. **Testimonials**
-   - 4 testimonial cards with quotes
-   - Names, positions, and testimonies
+What makes this portfolio different:
 
-5. **Portfolio Highlights**
-   - Interactive carousel (swipe-enabled on mobile)
-   - Navigation buttons and dots
-   - "See All Projects" button
+- **Modular Architecture** - 14 ES6 modules with clear separation of concerns
+- **Performance First** - GPU-accelerated animations, lazy loading, resource hints
+- **Accessibility** - WCAG 2.1 compliant with full keyboard navigation and ARIA labels
+- **SEO Optimized** - Structured data (Schema.org), Open Graph, Twitter Cards
+- **Print Ready** - Professional PDF generation with intelligent page breaks
+- **Battle Tested** - 189+ automated tests with 92.6% pass rate
+- **Security Hardened** - Content Security Policy, secure external links, XSS protection
+- **Cross-Browser** - Works on Chrome, Firefox, Safari, Edge (no IE11)
 
-6. **All Projects Page**
-   - 12 portfolio items
-   - Filter by category (All, Web Apps, Mobile, Design)
-   - Grid layout that adapts to screen size
+## Project Structure
 
-7. **Contact**
-   - Email, phone, and LinkedIn
-   - Icon-based layout
-
-### Advanced Features
-
-- ✅ **Performance Optimized** - 60fps animations with GPU acceleration
-- ✅ **Accessibility First** - WCAG 2.1 compliant with ARIA labels and keyboard navigation
-- ✅ **SEO Enhanced** - Structured data, Open Graph, and meta tags
-- ✅ **Error Handling** - Graceful fallbacks and user-friendly error states
-- ✅ **Progressive Enhancement** - Works in older browsers with fallbacks
-- ✅ **Security Hardened** - Content Security Policy and secure external links
-- ✅ **Print Optimized** - Professional PDF generation with A4 formatting
-
-## Files
-
-- `index.html` - Main portfolio page
-- `portfolio.html` - All projects page
-- `404.html` - Custom error page
-- `package.json` - Project configuration and scripts
-- `robots.txt` - Search engine crawling instructions
-- `sitemap.xml` - XML sitemap for search engines
-- `css/style.css` - All styles and responsive media queries
-- `css/print.css` - Print/PDF optimized styles
-- `js/main-index.js` - Entry point for index.html (loads modular JS)
-- `js/main-portfolio.js` - Entry point for portfolio.html (loads modular JS)
-- `js/browser-check.js` - Browser compatibility detection
-- `js/modules/` - 13 modular ES6 JavaScript files
-- `js/data/portfolio-data.js` - Portfolio project data
-- `assets/` - Images, logos, and other media assets
-- `docs/` - Technical documentation and guides
-- `tests/` - Comprehensive test suite
-- `tools/` - Development utilities
-
-## Customization
-
-### Update Your Information
-
-1. **Personal Details** (index.html):
-   - Replace "Your Name" with your actual name
-   - Update the photo URL (line 47)
-   - Modify bio, skills, and company information
-   - Update contact details (email, phone, LinkedIn)
-
-2. **Images**:
-   - Add your company logos
-   - Add portfolio project images
-   - Add your profile photo
-
-3. **Colors** (style.css, lines 1-9):
-   - `--color-accent`: Change the red accent color (#ff6b6b)
-   - `--color-bg`: Modify background color (#2b2d31)
-   - `--color-text`: Adjust text color (#f8f9fa)
-
-### Responsive Breakpoints
-
-- **1024px**: Tablet landscape
-- **768px**: Tablet portrait and mobile landscape
-- **480px**: Mobile devices (hamburger menu activates)
-- **360px**: Extra small mobile devices
-
-## Usage
-
-Simply open `index.html` in any modern web browser. All files work together seamlessly.
-
-## Development
-
-### Local Development Server
-```bash
-npm start              # Start local dev server on port 8000
-npm run serve          # Alternative server using Python
-npm run serve:alt      # Alternative using npx http-server
+```
+portfolio-website/
+├── index.html              # Main landing page
+├── portfolio.html          # Full project showcase
+├── css/
+│   ├── style.css          # All styles (unified for both pages)
+│   └── print.css          # Professional PDF/print styles
+├── js/
+│   ├── main-index.js      # Entry point for index page
+│   ├── main-portfolio.js  # Entry point for portfolio page
+│   ├── modules/           # 14 modular ES6 files
+│   └── data/              # Portfolio project data
+├── assets/                # Company logos, project images
+├── docs/                  # Technical documentation
+└── tests/                 # Comprehensive test suite (189+ tests)
 ```
 
-### Testing
+## Running Locally
 
-The portfolio includes a comprehensive **Playwright-based test suite** with **189+ tests** across 10 categories.
-
-**Quick Start:**
+**Quick start:**
 ```bash
-# 1. Install Playwright (first time only)
+# Clone or download this repository
+# Then start a local server:
+npm start              # Starts server on http://localhost:8000
+
+# Or use alternatives:
+npm run serve          # Python-based server
+npm run serve:alt      # npx http-server
+```
+
+Open [http://localhost:8000](http://localhost:8000) in your browser.
+
+## Testing & Quality Assurance
+
+I take quality seriously. This portfolio includes **189+ automated tests** with a **92.6% pass rate** covering:
+
+- **Browser Compatibility** - Chrome, Firefox, Safari/WebKit
+- **Responsive Design** - 8 viewports from 360px to 1920px (56 tests)
+- **Accessibility** - WCAG 2.1 compliance, keyboard navigation
+- **Performance** - Core Web Vitals, lazy loading, load times
+- **SEO** - Structured data, Open Graph, meta tags (30+ tests)
+- **Security** - CSP compliance, XSS protection
+- **Interactive Features** - Carousel, filters, modals
+- **Error Handling** - 404 pages, graceful degradation
+
+**Run the test suite:**
+```bash
+# Install Playwright (first time only)
 npm install --save-dev playwright
 npx playwright install
 
-# 2. Start dev server (keep running)
+# Start dev server
 npm start
 
-# 3. Run security test (no Playwright required)
-node tests/security.js
-
-# 4. Run all Playwright tests (Windows)
+# Run all tests (Windows)
 cd tests
 run-all-tests.bat
 ```
 
-**Test Categories:**
-- Browser compatibility (24 tests) - Chrome, Firefox, Safari/WebKit
-- Responsive design (56 tests) - 8 viewports from 360px to 1920px
-- Interactive features (8 tests) - Carousel, filters, modals, navigation
-- Accessibility (10 tests) - WCAG 2.1 compliance, keyboard nav, ARIA
-- Performance (8 tests) - Load times, Core Web Vitals, lazy loading
-- Content & links (13 tests) - Link security, meta tags, images
-- Cross-browser JavaScript (27 tests) - ES6 support, console errors
-- SEO & meta tags (30+ tests) - Structured data, Open Graph, Twitter Cards
-- Error handling (9 tests) - 404 pages, graceful degradation
-- Security (6 tests) - CSP compliance, XSS protection, secure links
+See detailed test reports in [tests/README.md](tests/README.md)
 
-**Latest Results:** ~92.6% pass rate (169/189+ tests) | See [tests/README.md](tests/README.md) for detailed reports
+## Design Choices
 
-### Validation
-```bash
-npm run validate:html  # Validate HTML markup
-npm run validate:css   # Validate CSS styles
-```
+I wanted this portfolio to feel distinctive yet professional:
 
-## Browser Compatibility
+- **Typography** - Playfair Display for sophistication + Work Sans for readability
+- **Color Scheme** - Dark theme (#2b2d31) with red accents (#ff6b6b) for emphasis
+- **Layout** - Editorial-inspired with clean hierarchy and breathing room
+- **Animations** - Subtle and purposeful, running at 60fps
+- **Mobile-First** - Touch-optimized interactions, hamburger menu at 480px breakpoint
 
-**Minimum Requirements:**
+## Browser Support
+
+Works on all modern browsers:
 - Chrome 80+ (February 2020)
 - Firefox 75+ (April 2020)
 - Safari 13+ (September 2019)
 - Edge 80+ (February 2020)
 
-**Fully Tested:**
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
+IE11 users see an upgrade notice. See [docs/BROWSER-SUPPORT.md](docs/BROWSER-SUPPORT.md) for details.
 
-**Unsupported:** IE11 and older browsers show an upgrade notice.
+## Technical Documentation
 
-## Design Philosophy
+Deep dives into implementation details in the [docs/](docs/) folder:
 
-The website features:
-- **Typography**: Playfair Display (elegant serif) + Work Sans (clean sans-serif)
-- **Color Palette**: Dark theme with red accents
-- **Style**: Editorial sophistication meets modern web design
-- **Animations**: Smooth, purposeful transitions
-- **Mobile-First**: Optimized for touch interactions
+- [Performance Optimization Guide](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md) - 60fps techniques, GPU acceleration
+- [Print Styles Guide](docs/PRINT-STYLES-GUIDE.md) - Professional PDF generation
+- [Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md) - SEO with Schema.org
+- [Browser Support](docs/BROWSER-SUPPORT.md) - Compatibility and fallbacks
+- [JavaScript Modules](js/README.md) - Module architecture and usage
 
-The `tools/` directory contains development utilities including a palette preview tool for design customization.
+## How It Was Built
 
-## Documentation
+This portfolio was developed with assistance from **Claude Code**, Anthropic's AI coding agent. I provided the direction, content, and design vision - Claude helped bring it to life with clean, well-structured code and best practices. It's a collaboration that showcases what's possible when human creativity meets AI capabilities.
 
-Comprehensive technical documentation is available in the `docs/` folder:
-- Performance optimization guides
-- Print styles documentation
-- Structured data implementation
-- Browser support details
-- Code review reports
-- Test summaries
+## License
+
+This is my personal portfolio. Feel free to use the code structure and techniques as learning material, but please don't copy the content or design wholesale - build something that's uniquely yours.
+
+---
+
+Built with care by **Rafi Atha** | Data Analyst with 5 years in fintech & e-commerce
+Developed with assistance from [Claude Code](https://claude.ai/code) by Anthropic
