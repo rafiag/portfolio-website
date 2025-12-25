@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Manual Test Helper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .measurement-id {
+            background: #2a2a2a;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .test-list {
+            list-style: none;
+        }
+
+        .test-list li {
+            background: #1a1a1a;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #4CAF50;
+        }
+
+        .test-list li strong {
+            color: #4CAF50;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .event-table th,
+        .event-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .event-table th {
+            background: #1a1a1a;
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .event-table tr:hover {
+            background: #1a1a1a;
+        }
+
+        .event-table code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4CAF50;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #1e3a5f;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #2196F3;
+        }
+
+        .warning-box {
+            background: #4a3a1e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #FFC107;
+        }
+
+        .success-box {
+            background: #1e4a2e;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 3px solid #4CAF50;
+        }
+
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background: #ff5252;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+        }
+
+        .btn-secondary:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Analytics Manual Testing Guide</h1>
+        <div class="measurement-id">
+            <strong>Measurement ID:</strong> <code>G-XBG7HNQ9YG</code>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="section">
+            <h2>🔗 Quick Links</h2>
+            <a href="http://localhost:8000/index.html" class="btn" target="_blank">Open index.html</a>
+            <a href="http://localhost:8000/portfolio.html" class="btn" target="_blank">Open portfolio.html</a>
+            <a href="https://analytics.google.com/analytics/web/#/p476048916/realtime/overview?params=_u..nav%3Dmaui" class="btn btn-secondary" target="_blank">GA4 Realtime View</a>
+            <a href="https://analytics.google.com/analytics/web/#/p476048916/debugview/overview?params=_u..nav%3Dmaui" class="btn btn-secondary" target="_blank">GA4 DebugView</a>
+        </div>
+
+        <!-- Browser DevTools Setup -->
+        <div class="section">
+            <h2>🛠️ Browser DevTools Setup</h2>
+            <div class="info-box">
+                <strong>Before testing, set up your browser DevTools:</strong>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Open <a href="http://localhost:8000/index.html" target="_blank">http://localhost:8000/index.html</a></li>
+                    <li>Press <code>F12</code> or right-click → Inspect</li>
+                    <li>Go to the <strong>Console</strong> tab</li>
+                    <li>Paste this code to monitor events:
+<pre style="background: #1a1a1a; padding: 10px; border-radius: 5px; overflow-x: auto; margin-top: 10px;">
+// Monitor all gtag events
+window.gtagEvents = [];
+const originalGtag = window.gtag;
+window.gtag = function(...args) {
+    const event = { type: args[0], name: args[1], params: args[2] };
+    window.gtagEvents.push(event);
+    console.log('🎯 GA Event:', event);
+    if (originalGtag) originalGtag.apply(this, args);
+};
+
+// View all events captured
+console.log('✅ Event monitoring enabled. Use window.gtagEvents to view all events.');
+</pre>
+                    </li>
+                    <li>Now interact with the page - each event will be logged in the console</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Manual Test Checklist -->
+        <div class="section">
+            <h2>✅ Manual Test Checklist</h2>
+
+            <h3 style="color: #4CAF50; margin-top: 20px; margin-bottom: 10px;">index.html Tests</h3>
+            <ul class="test-list">
+                <li>
+                    <strong>Navigation Click</strong>
+                    Click any navigation link (About, Experience, Skills, etc.) in the header or mobile menu.<br>
+                    Expected: <code>navigation_click</code> event with <code>link_text</code>, <code>nav_type</code>, <code>destination_section</code>
+                </li>
+                <li>
+                    <strong>Experience Card Click</strong>
+                    Click on a company card in the Experience section.<br>
+                    Expected: <code>experience_interaction</code> event with <code>company</code>, <code>role</code>, <code>action</code>
+                </li>
+                <li>
+                    <strong>Portfolio Carousel Next</strong>
+                    Click the next button on the portfolio carousel.<br>
+                    Expected: <code>portfolio_interaction</code> event with <code>interaction_type: 'carousel_next'</code>, <code>project_title</code>
+                </li>
+                <li>
+                    <strong>Portfolio Carousel Prev</strong>
+                    Click the previous button on the portfolio carousel.<br>
+                    Expected: <code>portfolio_interaction</code> event with <code>interaction_type: 'carousel_prev'</code>
+                </li>
+                <li>
+                    <strong>Portfolio Carousel Dot</strong>
+                    Click a dot navigation button on the carousel.<br>
+                    Expected: <code>portfolio_interaction</code> event with <code>interaction_type: 'dot_click'</code>
+                </li>
+                <li>
+                    <strong>Testimonials Next</strong>
+                    Click the next button on testimonials carousel.<br>
+                    Expected: <code>testimonials_interaction</code> event with <code>action: 'next'</code>, <code>is_auto_rotate: false</code>
+                </li>
+                <li>
+                    <strong>Testimonials Hover</strong>
+                    Hover over a testimonial card (pause auto-rotate).<br>
+                    Expected: <code>testimonials_interaction</code> event with <code>action: 'pause_on_hover'</code>
+                </li>
+                <li>
+                    <strong>Contact - LinkedIn</strong>
+                    Click a LinkedIn link.<br>
+                    Expected: <code>contact_interaction</code> event with <code>contact_method: 'linkedin'</code>, <code>location</code>
+                </li>
+                <li>
+                    <strong>Contact - Email</strong>
+                    Click an email link.<br>
+                    Expected: <code>contact_interaction</code> event with <code>contact_method: 'email'</code>
+                </li>
+                <li>
+                    <strong>Contact - GitHub</strong>
+                    Click a GitHub link.<br>
+                    Expected: <code>contact_interaction</code> event with <code>contact_method: 'github'</code>
+                </li>
+                <li>
+                    <strong>CTA Button</strong>
+                    Click "Show All Projects" or other CTA buttons.<br>
+                    Expected: <code>cta_click</code> event with <code>cta_text</code>, <code>destination</code>
+                </li>
+                <li>
+                    <strong>Back to Top</strong>
+                    Scroll down, then click the back to top button.<br>
+                    Expected: <code>back_to_top_click</code> event with <code>scroll_position</code>, <code>scroll_percentage</code>
+                </li>
+                <li>
+                    <strong>Mobile Menu Toggle</strong>
+                    On mobile (resize window < 480px), click hamburger menu.<br>
+                    Expected: <code>mobile_menu_toggle</code> event with <code>action: 'open'</code>, <code>trigger_type: 'hamburger_click'</code>
+                </li>
+            </ul>
+
+            <h3 style="color: #4CAF50; margin-top: 20px; margin-bottom: 10px;">portfolio.html Tests</h3>
+            <ul class="test-list">
+                <li>
+                    <strong>Filter Click</strong>
+                    Click a filter button (Business Intelligence, Data Visualization, etc.).<br>
+                    Expected: <code>filter_interaction</code> event with <code>filter_category</code>, <code>results_count</code>, <code>previous_filter</code>
+                </li>
+                <li>
+                    <strong>Filter All</strong>
+                    Click the "All" filter button.<br>
+                    Expected: <code>filter_interaction</code> event with <code>filter_category: 'all'</code>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Expected Events Table -->
+        <div class="section">
+            <h2>📋 Expected Events Reference</h2>
+            <table class="event-table">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Key Parameters</th>
+                        <th>Where to Test</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>page_view</code></td>
+                        <td>page_location, page_title</td>
+                        <td>Automatic (GA4 Enhanced Measurement)</td>
+                    </tr>
+                    <tr>
+                        <td><code>navigation_click</code></td>
+                        <td>link_text, nav_type, destination_section</td>
+                        <td>Navigation links</td>
+                    </tr>
+                    <tr>
+                        <td><code>experience_interaction</code></td>
+                        <td>company, role, action, position_index</td>
+                        <td>Experience section company cards</td>
+                    </tr>
+                    <tr>
+                        <td><code>portfolio_interaction</code></td>
+                        <td>interaction_type, project_title, project_category</td>
+                        <td>Portfolio carousel (next/prev/dot)</td>
+                    </tr>
+                    <tr>
+                        <td><code>testimonials_interaction</code></td>
+                        <td>action, testimonial_index, is_auto_rotate</td>
+                        <td>Testimonials carousel</td>
+                    </tr>
+                    <tr>
+                        <td><code>contact_interaction</code></td>
+                        <td>contact_method, location, button_style</td>
+                        <td>Email/LinkedIn/GitHub links</td>
+                    </tr>
+                    <tr>
+                        <td><code>cta_click</code></td>
+                        <td>cta_text, cta_location, destination</td>
+                        <td>CTA buttons (Show All Projects, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td><code>filter_interaction</code></td>
+                        <td>filter_category, results_count, previous_filter</td>
+                        <td>Portfolio page filter buttons</td>
+                    </tr>
+                    <tr>
+                        <td><code>back_to_top_click</code></td>
+                        <td>scroll_position, page_section, scroll_percentage</td>
+                        <td>Back to top button (after scrolling)</td>
+                    </tr>
+                    <tr>
+                        <td><code>mobile_menu_toggle</code></td>
+                        <td>action, trigger_type, page</td>
+                        <td>Mobile hamburger menu (width < 480px)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- GA4 Real-time Verification -->
+        <div class="section">
+            <h2>🔍 Verify in Google Analytics</h2>
+            <div class="success-box">
+                <strong>To see events in GA4 in real-time:</strong>
+                <ol style="margin-left: 20px; margin-top: 10px;">
+                    <li>Go to <a href="https://analytics.google.com" target="_blank">analytics.google.com</a></li>
+                    <li>Select your property: <strong>Rafi Atha Portfolio</strong></li>
+                    <li>Click <strong>Reports</strong> → <strong>Realtime</strong></li>
+                    <li>Or use <strong>Admin</strong> → <strong>DebugView</strong> for detailed event inspection</li>
+                    <li>Perform actions on your site (click buttons, navigate, etc.)</li>
+                    <li>Events should appear within a few seconds</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Important Notes:</strong>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Enhanced Measurement events (page_view, scroll, click) are tracked automatically by GA4</li>
+                    <li>Custom events may take 24-48 hours to appear in standard reports (but show immediately in Realtime/DebugView)</li>
+                    <li>If events don't appear, check browser console for errors</li>
+                    <li>Make sure you're testing on <code>localhost:8000</code> (dev server must be running)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Console Helper Commands -->
+        <div class="section">
+            <h2>⌨️ Console Helper Commands</h2>
+            <div class="info-box">
+                <p>Paste these commands in the browser console for quick debugging:</p>
+<pre style="background: #1a1a1a; padding: 10px; border-radius: 5px; overflow-x: auto; margin-top: 10px;">
+// View all captured events
+window.gtagEvents
+
+// View last event
+window.gtagEvents[window.gtagEvents.length - 1]
+
+// Filter events by type
+window.gtagEvents.filter(e => e.name === 'navigation_click')
+
+// Count events by name
+window.gtagEvents.reduce((acc, e) => {
+    acc[e.name] = (acc[e.name] || 0) + 1;
+    return acc;
+}, {})
+
+// Clear events log
+window.gtagEvents = []
+
+// Check if gtag is loaded
+typeof window.gtag === 'function'
+
+// Check if dataLayer exists
+Array.isArray(window.dataLayer)
+</pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
