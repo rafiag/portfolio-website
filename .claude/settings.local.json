@@ -27,7 +27,10 @@
       "Bash(taskkill //F //PID 29796)",
       "Bash(taskkill //F //PID 40676)",
       "Bash(taskkill:*)",
-      "Bash(start /B python:*)"
+      "Bash(start /B python:*)",
+      "Bash(del \"d:\\\\Project\\\\Portfolio Website\\\\tests\\\\modal-focus-trap.js\")",
+      "Bash(move:*)",
+      "Bash(powershell -Command:*)"
     ]
   }
 }

@@ -81,9 +81,9 @@ const TARGET_URL = 'http://localhost:8000';
       await page.goto(`${TARGET_URL}/portfolio.html`, { waitUntil: 'networkidle' });
       await page.waitForTimeout(500);
 
-      const portfolioItem = page.locator('.portfolio-item').first();
-      if (await portfolioItem.count() > 0) {
-        await portfolioItem.click();
+      const portfolioCard = page.locator('.portfolio-card[data-portfolio-id]').first();
+      if (await portfolioCard.count() > 0) {
+        await portfolioCard.click();
         await page.waitForTimeout(500);
 
         await page.keyboard.press('Escape');
@@ -97,6 +97,103 @@ const TARGET_URL = 'http://localhost:8000';
       }
     } catch (error) {
       console.log('  ❌ Escape key error:', error.message);
+      failed++;
+    }
+
+    // Test 3b: Modal Focus Trap (Accessibility)
+    console.log('\n🔒 Testing modal focus trap for accessibility...');
+    try {
+      await page.goto(`${TARGET_URL}/portfolio.html`, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(500);
+
+      const portfolioCard = page.locator('.portfolio-card[data-portfolio-id]').first();
+      if (await portfolioCard.count() > 0) {
+        // Open modal
+        await portfolioCard.click();
+        await page.waitForTimeout(800);
+
+        const modal = page.locator('#portfolioModal');
+        const isModalActive = await modal.evaluate(el => el.classList.contains('active'));
+
+        if (isModalActive) {
+          // Check that focus is set when modal opens
+          const initialFocus = await page.evaluate(() => {
+            return document.activeElement.tagName !== 'BODY';
+          });
+
+          if (initialFocus) {
+            console.log('  ✅ Modal sets initial focus (not on body)');
+            passed++;
+          } else {
+            console.log('  ⚠️  Modal may not set initial focus correctly');
+            warnings++;
+          }
+
+          // Test that Tab navigation stays within modal
+          const focusableCount = await page.evaluate(() => {
+            const modal = document.getElementById('portfolioModal');
+            if (!modal) return 0;
+            const focusableSelectors = [
+              'a[href]',
+              'button:not([disabled])',
+              'textarea:not([disabled])',
+              'input:not([disabled])',
+              'select:not([disabled])',
+              '[tabindex]:not([tabindex="-1"])'
+            ].join(', ');
+            return Array.from(modal.querySelectorAll(focusableSelectors))
+              .filter(el => el.offsetParent !== null).length;
+          });
+
+          if (focusableCount > 0) {
+            // Tab through all elements and beyond to test trap
+            for (let i = 0; i < focusableCount + 2; i++) {
+              await page.keyboard.press('Tab');
+              await page.waitForTimeout(80);
+            }
+
+            const focusTrapped = await page.evaluate(() => {
+              const modal = document.getElementById('portfolioModal');
+              return modal && modal.contains(document.activeElement);
+            });
+
+            if (focusTrapped) {
+              console.log('  ✅ Focus trap prevents keyboard users from leaving modal');
+              passed++;
+            } else {
+              console.log('  ❌ Focus trap failed - keyboard users can escape modal');
+              failed++;
+            }
+
+            // Test focus restoration
+            await page.keyboard.press('Escape');
+            await page.waitForTimeout(500);
+
+            const focusRestored = await page.evaluate(() => {
+              return document.activeElement.hasAttribute('data-portfolio-id');
+            });
+
+            if (focusRestored) {
+              console.log('  ✅ Focus restored to trigger element (WCAG 2.4.3)');
+              passed++;
+            } else {
+              console.log('  ⚠️  Focus may not be restored to trigger element');
+              warnings++;
+            }
+          } else {
+            console.log('  ⚠️  No focusable elements found in modal');
+            warnings++;
+          }
+        } else {
+          console.log('  ⚠️  Modal did not open for focus trap test');
+          warnings++;
+        }
+      } else {
+        console.log('  ⚠️  No portfolio cards found for focus trap test');
+        warnings++;
+      }
+    } catch (error) {
+      console.log('  ❌ Modal focus trap test error:', error.message);
       failed++;
     }
 

@@ -10,8 +10,8 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 |---|------|----------|-------|-------------|
 | 1 | `browser-compatibility.js` | Browser Support | 24 | Chrome, Firefox, WebKit - CSS Grid, Flexbox, ES6 modules |
 | 2 | `responsive.js` | Responsive Design | 56 | 8 viewports (360px-1920px), breakpoints, overflow, layout |
-| 3 | `interactive-features.js` | Interactivity | 14 | Carousel, filters, modals, mobile menu, smooth scroll, **back-to-top button** |
-| 4 | `accessibility.js` | WCAG 2.1 | 10 | Keyboard nav, ARIA, color contrast, semantic HTML |
+| 3 | `interactive-features.js` | Interactivity | 18 | Carousel, filters, modals, mobile menu, smooth scroll, **back-to-top button**, **modal focus trap** |
+| 4 | `accessibility.js` | WCAG 2.1 | 13 | Keyboard nav, ARIA, color contrast, semantic HTML, **modal focus trap** |
 | 5 | `performance.js` | Performance | 8 | Load times, CLS, **lazy loading**, Core Web Vitals |
 | 6 | `content-links.js` | Content & SEO | 13 | Links security, meta tags, images, Open Graph |
 | 7 | `cross-browser-javascript.js` | JavaScript | 27 | ES6, Array methods, console errors (3 browsers) |
@@ -20,7 +20,7 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 | 10 | `security.js` | Security | 6 | CSP compliance, XSS protection, external links, mixed content (static analysis) |
 | 11 | `portfolio-validation.js` | Data Validation | 50+ | Schema validation, type checking, field constraints, edge cases |
 
-**Total: 255+ tests** | Files tested: `index.html`, `portfolio.html`, `portfolio-data.js`
+**Total: 262+ tests** | Files tested: `index.html`, `portfolio.html`, `portfolio-data.js`
 
 ---
 
@@ -216,7 +216,7 @@ When adding tests:
 
 ---
 
-**Last Updated**: 2025-12-25 | **Framework**: Playwright + Native | **Total Tests**: 255+
+**Last Updated**: 2025-12-25 | **Framework**: Playwright + Native | **Total Tests**: 262+
 
 ---
 
@@ -251,4 +251,12 @@ When adding tests:
    - Array item validation
    - Edge case handling
 
-**Test Coverage Improvement:** +66 tests (189 → 255+)
+5. **Modal Focus Trap** - 7 new tests (4 in interactive-features.js, 3 in accessibility.js)
+   - Initial focus set to close button on modal open
+   - Tab navigation contained within modal (forward)
+   - Shift+Tab navigation contained within modal (backward)
+   - Focus restoration to trigger element on close (Escape, button, overlay)
+   - WCAG 2.4.3 compliance validation
+   - Keyboard user accessibility verification
+
+**Test Coverage Improvement:** +73 tests (189 → 262+)

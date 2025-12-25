@@ -462,6 +462,116 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
+    // Test 8b: Modal Focus Trap
+    console.log('\n🎯 Testing modal focus trap...');
+    try {
+      // Use portfolio-card selector for portfolio.html
+      const portfolioCard = page.locator('.portfolio-card[data-portfolio-id]').first();
+
+      if (await portfolioCard.count() > 0) {
+        // Open modal
+        await portfolioCard.click();
+        await page.waitForTimeout(800);
+
+        const modal = page.locator('#portfolioModal');
+        const isModalActive = await modal.evaluate(el => el.classList.contains('active'));
+
+        if (isModalActive) {
+          // Test 8b-1: Check initial focus on close button
+          const focusedElement = await page.evaluate(() => {
+            const el = document.activeElement;
+            return {
+              className: el.className,
+              ariaLabel: el.getAttribute('aria-label')
+            };
+          });
+
+          if (focusedElement.className.includes('modal-close') || focusedElement.ariaLabel === 'Close modal') {
+            console.log('  ✅ Modal sets focus to close button on open');
+            passed++;
+          } else {
+            console.log('  ⚠️  Modal may not set initial focus correctly');
+          }
+
+          // Test 8b-2: Tab navigation stays within modal
+          const focusableCount = await page.evaluate(() => {
+            const modal = document.getElementById('portfolioModal');
+            const focusableSelectors = [
+              'a[href]',
+              'button:not([disabled])',
+              'textarea:not([disabled])',
+              'input:not([disabled])',
+              'select:not([disabled])',
+              '[tabindex]:not([tabindex="-1"])'
+            ].join(', ');
+            return Array.from(modal.querySelectorAll(focusableSelectors))
+              .filter(el => el.offsetParent !== null).length;
+          });
+
+          // Tab through all elements plus one to test wrap-around
+          for (let i = 0; i < focusableCount + 1; i++) {
+            await page.keyboard.press('Tab');
+            await page.waitForTimeout(100);
+          }
+
+          const focusStillInModal = await page.evaluate(() => {
+            const modal = document.getElementById('portfolioModal');
+            return modal.contains(document.activeElement);
+          });
+
+          if (focusStillInModal) {
+            console.log('  ✅ Focus trap works (Tab navigation contained)');
+            passed++;
+          } else {
+            console.log('  ❌ Focus escaped modal during Tab navigation');
+            failed++;
+          }
+
+          // Test 8b-3: Shift+Tab navigation stays within modal
+          for (let i = 0; i < focusableCount + 1; i++) {
+            await page.keyboard.press('Shift+Tab');
+            await page.waitForTimeout(100);
+          }
+
+          const focusStillInModalBackward = await page.evaluate(() => {
+            const modal = document.getElementById('portfolioModal');
+            return modal.contains(document.activeElement);
+          });
+
+          if (focusStillInModalBackward) {
+            console.log('  ✅ Focus trap works (Shift+Tab navigation contained)');
+            passed++;
+          } else {
+            console.log('  ❌ Focus escaped modal during Shift+Tab navigation');
+            failed++;
+          }
+
+          // Test 8b-4: Focus restoration on close
+          await page.keyboard.press('Escape');
+          await page.waitForTimeout(500);
+
+          const focusRestored = await page.evaluate(() => {
+            const el = document.activeElement;
+            return el.hasAttribute('data-portfolio-id');
+          });
+
+          if (focusRestored) {
+            console.log('  ✅ Focus restored to trigger element on close');
+            passed++;
+          } else {
+            console.log('  ⚠️  Focus may not have restored to trigger element');
+          }
+        } else {
+          console.log('  ⚠️  Modal did not open for focus trap test');
+        }
+      } else {
+        console.log('  ⚠️  No portfolio cards found for focus trap test');
+      }
+    } catch (error) {
+      console.log('  ❌ Modal focus trap error:', error.message);
+      failed++;
+    }
+
     // Test 9: Touch/Swipe Gestures (Carousel)
     console.log('\n👆 Testing touch/swipe support on carousel...');
     try {

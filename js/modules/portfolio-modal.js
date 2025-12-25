@@ -27,6 +27,14 @@ export class PortfolioModal {
                 }
             }
 
+            // Store the element that triggered the modal for focus restoration
+            this.triggerElement = null;
+
+            // Store focusable elements within the modal
+            this.focusableElements = [];
+            this.firstFocusableElement = null;
+            this.lastFocusableElement = null;
+
             // Store bound event handlers for cleanup
             this.boundHandlers = {
                 closeModal: () => this.closeModal(),
@@ -35,6 +43,7 @@ export class PortfolioModal {
                         this.closeModal();
                     }
                 },
+                focusTrapHandler: (e) => this.handleFocusTrap(e),
                 portfolioItemHandlers: new Map()
             };
 
@@ -48,8 +57,11 @@ export class PortfolioModal {
         try {
             // Add click listeners to all portfolio items
             this.portfolioItems.forEach(item => {
-                const handler = () => {
+                const handler = (e) => {
                     try {
+                        // Store the element that triggered the modal
+                        this.triggerElement = e.currentTarget;
+
                         const portfolioId = item.getAttribute('data-portfolio-id');
                         if (portfolioId && portfolioData[portfolioId]) {
                             this.openModal(portfolioData[portfolioId]);
@@ -79,6 +91,63 @@ export class PortfolioModal {
             document.addEventListener('keydown', this.boundHandlers.escapeHandler);
         } catch (error) {
             console.error('PortfolioModal init error:', error);
+        }
+    }
+
+    /**
+     * Get all focusable elements within the modal
+     */
+    getFocusableElements() {
+        const focusableSelectors = [
+            'a[href]',
+            'button:not([disabled])',
+            'textarea:not([disabled])',
+            'input:not([disabled])',
+            'select:not([disabled])',
+            '[tabindex]:not([tabindex="-1"])'
+        ].join(', ');
+
+        return Array.from(this.modal.querySelectorAll(focusableSelectors))
+            .filter(el => {
+                // Filter out hidden elements
+                return el.offsetParent !== null;
+            });
+    }
+
+    /**
+     * Handle focus trap - keeps focus within modal
+     */
+    handleFocusTrap(e) {
+        // Only trap Tab key
+        if (e.key !== 'Tab') {
+            return;
+        }
+
+        // Get current focusable elements (in case modal content changed)
+        this.focusableElements = this.getFocusableElements();
+
+        if (this.focusableElements.length === 0) {
+            // No focusable elements, prevent default
+            e.preventDefault();
+            return;
+        }
+
+        this.firstFocusableElement = this.focusableElements[0];
+        this.lastFocusableElement = this.focusableElements[this.focusableElements.length - 1];
+
+        // Shift + Tab (backward)
+        if (e.shiftKey) {
+            if (document.activeElement === this.firstFocusableElement) {
+                e.preventDefault();
+                this.lastFocusableElement.focus();
+            }
+        }
+        // Tab (forward)
+        else {
+            if (document.activeElement === this.lastFocusableElement) {
+                e.preventDefault();
+                this.firstFocusableElement.focus();
+            }
         }
     }
 
@@ -148,6 +217,16 @@ export class PortfolioModal {
             // Show modal
             this.modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            // Set up focus trap
+            document.addEventListener('keydown', this.boundHandlers.focusTrapHandler);
+
+            // Get focusable elements and focus the first one (close button)
+            this.focusableElements = this.getFocusableElements();
+            if (this.focusableElements.length > 0) {
+                // Focus the close button (first focusable element)
+                this.focusableElements[0].focus();
+            }
         } catch (error) {
             console.error('Error opening modal:', error);
             this.modal.classList.remove('loading');
@@ -159,6 +238,14 @@ export class PortfolioModal {
             this.modal.classList.remove('active');
             this.modal.classList.remove('loading');
             document.body.style.overflow = 'auto';
+
+            // Remove focus trap
+            document.removeEventListener('keydown', this.boundHandlers.focusTrapHandler);
+
+            // Restore focus to the element that triggered the modal
+            if (this.triggerElement) {
+                this.triggerElement.focus();
+            }
         } catch (error) {
             console.error('Error closing modal:', error);
         }
@@ -187,7 +274,14 @@ export class PortfolioModal {
             // Remove escape key listener
             document.removeEventListener('keydown', this.boundHandlers.escapeHandler);
 
+            // Remove focus trap listener
+            document.removeEventListener('keydown', this.boundHandlers.focusTrapHandler);
+
             // Clear references
+            this.triggerElement = null;
+            this.focusableElements = [];
+            this.firstFocusableElement = null;
+            this.lastFocusableElement = null;
             this.modal = null;
             this.modalOverlay = null;
             this.modalClose = null;
