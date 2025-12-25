@@ -117,24 +117,33 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 
 ### High Priority
 - [x] Replace all placeholder content
+- [ ] Back-to-Top Button (Floating button appearing after scrolling down)
+- [ ] Portfolio Data Validation (Schema validation portfolio-data.js)
+- [ ] Memory Leak Prevention (Cleanup methods in classes to remove event listeners)
+- [ ] Resource Hints in HTML
+- [ ] Native Lazy Loading Strategy (Use loading="lazy" on below-fold images)
 
 ### Medium Priority
 - [x] Add error handling and loading states
 - [x] Split JS into modules
 - [x] Add structured data (Person, ProfilePage, Organization, CreativeWork schemas)
+- [ ] Implement analytics (Google Analytics, Plausible, etc.)
+- [ ] Dark/Light Mode Toggle
+- [ ] Modal Focus Trap (Keep tab navigation within modal when open, return focus to trigger element on close)
+- [ ] Testimonials Carousel (Auto-rotating testimonials)
 
 ### Low Priority
 - [x] Add print styles (A4 format, intelligent page breaks, optimized for B&W and color)
 - [x] Improve animation performance (60fps target: GPU acceleration, throttling, RAF, CSS containment)
 - [x] Add progressive enhancement for older browsers (Browser detection, CSS fallbacks, upgrade notices)
-- [ ] Implement analytics (Google Analytics, Plausible, etc.)
-- [ ] Add contact form
+- [x] Add metrics display on experience section (i.e. total YOE, company, etc)
+- [x] Add short company description to experience details
+- [ ] Animated Statistics Counter (Count-up animation for your experience metrics in hero section, triggers on scroll into view using Intersection Observer)
+- [ ] Tooltips for Technical Terms (Hover/click tooltips explaining jargon such as RFM, DBSCAN, etc.)
+- [ ] Dynamic Resume Generator (Generate customizable PDF resume from site data, select which sections to include)
 
 ### Future Enhancements
 - [ ] Add site to Google Search Console
-- [x] Add metrics display on experience section (i.e. total YOE, company, etc)
-- [x] Add short company description to experience details
-
 ---
 
 ## 📚 Documentation

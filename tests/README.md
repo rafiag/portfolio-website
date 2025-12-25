@@ -28,109 +28,123 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 ### 1. Install Playwright (First Time Only)
 
 ```bash
-cd tests
-npm init -y
-npm install playwright
-npx playwright install
-```
-
-### 2. Run Tests
-
-**Security Test (No Playwright Required)**
-```bash
-# Runs static analysis on HTML files
-node tests/security.js
-```
-
-**Other Tests (Playwright Required)**
-
-First, install Playwright:
-```bash
+# From project root directory
 npm install --save-dev playwright
 npx playwright install
 ```
 
-Then start dev server:
+### 2. Start Development Server
+
+Before running tests, start the local web server:
+
 ```bash
-# From project root - keep this running
+# From project root - Keep this terminal window open
 python -m http.server 8000
+
+# Or use Node.js http-server:
+# npx http-server -p 8000
 ```
 
-**Option A: Run all tests with batch script (Windows)**
+Verify the server is running by visiting http://localhost:8000 in your browser.
+
+### 3. Run Tests
+
+**Option A: Run All Tests (Recommended)**
+
+Windows:
 ```bash
-run-all-tests.bat
+# From project root
+tests\run-all-tests.bat
 ```
 
-**Option B: Run individual Playwright tests**
+Linux/Mac:
 ```bash
-cd C:\Users\USER\.claude\plugins\cache\playwright-skill\playwright-skill\4.1.0\skills\playwright-skill
-
-# Run any test (use absolute path or adjust based on your location)
-node run.js "<PROJECT_ROOT>/tests/{filename}.js"
-
-# Examples (replace <PROJECT_ROOT> with your actual path):
-node run.js "<PROJECT_ROOT>/tests/browser-compatibility.js"
-node run.js "<PROJECT_ROOT>/tests/accessibility.js"
+# Run tests individually or create a shell script similar to run-all-tests.bat
 ```
 
----
+**Option B: Run Security Test Only (No Playwright Required)**
 
-## 📊 Test Results
+```bash
+# From project root
+node tests/security.js
+```
 
-### Latest Run (2025-12-24) - All 10 Test Suites Complete
+**Option C: Run Individual Playwright Tests**
 
-| Category | Score | Status | Notes |
-|----------|-------|--------|-------|
-| Browser Compatibility | 100% (24/24) | ✅ Excellent | Perfect cross-browser support |
-| Responsive Testing | 85.7% (48/56) | ✅ Good | Broken placeholder images remain |
-| Interactive Features | 100% (5/5) | ✅ Excellent | All features working |
-| Accessibility | 87.5% (7/8) | ✅ Good | Color contrast issue on 3 SPAN elements |
-| Performance | 100% (8/8) | ✅ Excellent | Sub-2s load, CLS=0 |
-| Content & Links | 84.6% (11/13) | ✅ Very good | Minor issues with images, meta description |
-| Cross-Browser JS | 100% (27/27) | ✅ Excellent | CSP violation fixed, all browsers pass |
-| SEO & Meta | 100% (30/30) | ✅ Excellent | Perfect structured data implementation |
-| Error Handling | 87.5% (7/8) | ✅ Good | Image fallback handlers needed |
-| Security | 100% (6/6) | ✅ Excellent | No inline JS, secure links, CSP meta tag, no XSS vulnerabilities |
+```bash
+# From project root
+node tests/browser-compatibility.js
+node tests/responsive.js
+node tests/interactive-features.js
+node tests/accessibility.js
+node tests/performance.js
+node tests/content-links.js
+node tests/cross-browser-javascript.js
+node tests/seo-meta.js
+node tests/error-handling.js
+```
 
-**Overall: ~92.6% (169/189+ tests passed)**
+### 4. Generate Test Summary Report
 
-### Security Test Details (Latest Run: 2025-12-25)
+After running all tests, create a comprehensive summary report:
 
-**Test Results:**
-- ✅ CSP Compliance: No inline JavaScript detected (0 inline scripts, 0 event handlers)
-- ✅ External Links: All 2 external links are secure (rel="noopener noreferrer")
-- ✅ Sensitive Data: No API keys, tokens, or secrets found
-- ✅ XSS Protection: No dangerous patterns (innerHTML, eval, document.write)
-- ✅ Mixed Content: No HTTP resources on pages
-- ✅ CSP Meta Tag: Content-Security-Policy meta tag present
-- ⚠️ 1 Warning: Suspicious comment pattern detected (false positive on data-portfolio-id)
+**Manual Method:**
+1. Copy the test output from your terminal/console
+2. Create a new file: `docs/TEST-SUMMARY-YYYY-MM-DD.md`
+3. Use this template structure:
 
-**Success Rate: 100% (6/6 tests passed)**
+```markdown
+# Test Summary Report - YYYY-MM-DD
 
-**Note:** Security test uses static HTML analysis (no browser automation required). For production deployment, ensure server-side security headers are configured (HSTS, X-Frame-Options, X-Content-Type-Options).
+## Overview
+- **Date**: YYYY-MM-DD
+- **Total Tests**: X/Y passed
+- **Overall Success Rate**: XX%
 
-📄 Full reports:
-- [docs/TEST-REPORT-2025-12-24.md](../docs/TEST-REPORT-2025-12-24.md) - Initial detailed report
-- [docs/TEST-SUMMARY-UPDATED.md](../docs/TEST-SUMMARY-UPDATED.md) - Latest results with improvements
+## Test Results by Category
 
----
+### 1. Browser Compatibility
+- **Score**: X/24 (XX%)
+- **Status**: ✅/⚠️/❌
+- **Notes**: [Key findings]
 
-## 🎯 Priority Issues to Fix
+### 2. Responsive Design
+- **Score**: X/56 (XX%)
+- **Status**: ✅/⚠️/❌
+- **Notes**: [Key findings]
 
-### 🔴 High Priority (2 issues)
-1. **Color contrast on 3 SPAN elements: 1.00:1** - Needs 4.5:1 minimum (WCAG AA compliance)
-2. **4 broken placeholder images** - Replace with actual project screenshots (1.png, 2.png, 3.png, empty src)
+[... Continue for all 10 test categories ...]
 
-### 🟡 Medium Priority (5 issues)
-3. **Image fallback handlers missing** - Add `onerror` handlers for graceful degradation
-4. **Global error handlers missing** - Implement `window.onerror` and `window.onunhandledrejection`
-5. **Meta description too long** - Trim from 162 to ≤160 characters for SEO
-6. **Resume PDF link verification** - Test failed due to selector error, needs manual check
-7. **Missing alt text on 1 image** - Add for accessibility compliance
+## Issues Found
 
-### 🟢 Low Priority (Cosmetic/Optional)
-8. **Add og:url when deployed** - Set production URL for social sharing
-9. **CSP header for production** - Configure on web server for additional security
+### 🔴 Critical Issues
+1. [Issue description]
+
+### 🟡 Medium Priority
+1. [Issue description]
+
+### 🟢 Low Priority
+1. [Issue description]
+
+## Recommendations
+- [Action items]
+
+## Next Steps
+- [Future improvements]
+```
+
+4. Fill in the test results from console output
+5. Save the file in the `docs/` folder
+
+**Automated Method (Future Enhancement):**
+- A test reporter script could be added to automatically generate markdown reports
+- Example implementation would parse test output and format as markdown
+
+**Best Practices:**
+- Run tests before major commits or deployments
+- Keep test summary reports dated for version tracking
+- Compare results between runs to track improvements
+- Update [docs/README.md](../docs/README.md) index with new report links
 
 ---
 
