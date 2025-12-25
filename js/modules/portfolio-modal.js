@@ -27,6 +27,17 @@ export class PortfolioModal {
                 }
             }
 
+            // Store bound event handlers for cleanup
+            this.boundHandlers = {
+                closeModal: () => this.closeModal(),
+                escapeHandler: (e) => {
+                    if (e.key === 'Escape' && this.modal.classList.contains('active')) {
+                        this.closeModal();
+                    }
+                },
+                portfolioItemHandlers: new Map()
+            };
+
             this.init();
         } catch (error) {
             console.error('PortfolioModal initialization error:', error);
@@ -37,7 +48,7 @@ export class PortfolioModal {
         try {
             // Add click listeners to all portfolio items
             this.portfolioItems.forEach(item => {
-                item.addEventListener('click', () => {
+                const handler = () => {
                     try {
                         const portfolioId = item.getAttribute('data-portfolio-id');
                         if (portfolioId && portfolioData[portfolioId]) {
@@ -50,19 +61,22 @@ export class PortfolioModal {
                     } catch (error) {
                         console.error('Error opening modal:', error);
                     }
-                });
+                };
+                item.addEventListener('click', handler);
+                // Store handler for cleanup
+                this.boundHandlers.portfolioItemHandlers.set(item, handler);
             });
 
             // Close modal handlers
-            this.modalClose?.addEventListener('click', () => this.closeModal());
-            this.modalOverlay?.addEventListener('click', () => this.closeModal());
+            if (this.modalClose) {
+                this.modalClose.addEventListener('click', this.boundHandlers.closeModal);
+            }
+            if (this.modalOverlay) {
+                this.modalOverlay.addEventListener('click', this.boundHandlers.closeModal);
+            }
 
             // Close on Escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && this.modal.classList.contains('active')) {
-                    this.closeModal();
-                }
-            });
+            document.addEventListener('keydown', this.boundHandlers.escapeHandler);
         } catch (error) {
             console.error('PortfolioModal init error:', error);
         }
@@ -147,6 +161,40 @@ export class PortfolioModal {
             document.body.style.overflow = 'auto';
         } catch (error) {
             console.error('Error closing modal:', error);
+        }
+    }
+
+    /**
+     * Cleanup method to remove all event listeners and prevent memory leaks
+     * Call this method when the modal is no longer needed
+     */
+    destroy() {
+        try {
+            // Remove portfolio item listeners
+            this.boundHandlers.portfolioItemHandlers.forEach((handler, item) => {
+                item.removeEventListener('click', handler);
+            });
+            this.boundHandlers.portfolioItemHandlers.clear();
+
+            // Remove close button listeners
+            if (this.modalClose) {
+                this.modalClose.removeEventListener('click', this.boundHandlers.closeModal);
+            }
+            if (this.modalOverlay) {
+                this.modalOverlay.removeEventListener('click', this.boundHandlers.closeModal);
+            }
+
+            // Remove escape key listener
+            document.removeEventListener('keydown', this.boundHandlers.escapeHandler);
+
+            // Clear references
+            this.modal = null;
+            this.modalOverlay = null;
+            this.modalClose = null;
+            this.portfolioItems = null;
+            this.boundHandlers = null;
+        } catch (error) {
+            console.error('PortfolioModal destroy error:', error);
         }
     }
 }

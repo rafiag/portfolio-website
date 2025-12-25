@@ -6,6 +6,13 @@
 
 import { throttle, cacheElementMeasurements, optimizedScrollHandler } from './performance-utils.js';
 
+// Store cleanup handlers for the module
+const cleanupHandlers = {
+    navbarScrollHandler: null,
+    activeNavLinkHandler: null,
+    resizeHandler: null
+};
+
 export function initNavbarScrollEffect() {
     try {
         const nav = document.querySelector('.nav');
@@ -28,6 +35,8 @@ export function initNavbarScrollEffect() {
             });
 
             window.addEventListener('scroll', handleScroll, { passive: true });
+            // Store handler for cleanup
+            cleanupHandlers.navbarScrollHandler = handleScroll;
         } else {
             if (window.location.hostname === 'localhost') {
                 console.warn('Navigation element not found');
@@ -80,13 +89,43 @@ export function initActiveNavLinks() {
 
     // Use passive listener for better scroll performance
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+    // Store handler for cleanup
+    cleanupHandlers.activeNavLinkHandler = updateActiveNavLink;
 
     // Recalculate measurements on resize (debounced)
-    window.addEventListener('resize', throttle(() => {
+    const resizeHandler = throttle(() => {
         sectionMeasurements.forEach((cached, index) => {
             const section = sections[index];
             const newMeasurements = cacheElementMeasurements(section);
             Object.assign(cached, newMeasurements);
         });
-    }, 250), { passive: true });
+    }, 250);
+
+    window.addEventListener('resize', resizeHandler, { passive: true });
+    // Store handler for cleanup
+    cleanupHandlers.resizeHandler = resizeHandler;
+}
+
+/**
+ * Cleanup function to remove all event listeners
+ * Call this function when navbar effects are no longer needed
+ */
+export function cleanupNavbarEffects() {
+    // Remove navbar scroll listener
+    if (cleanupHandlers.navbarScrollHandler) {
+        window.removeEventListener('scroll', cleanupHandlers.navbarScrollHandler);
+        cleanupHandlers.navbarScrollHandler = null;
+    }
+
+    // Remove active nav link scroll listener
+    if (cleanupHandlers.activeNavLinkHandler) {
+        window.removeEventListener('scroll', cleanupHandlers.activeNavLinkHandler);
+        cleanupHandlers.activeNavLinkHandler = null;
+    }
+
+    // Remove resize listener
+    if (cleanupHandlers.resizeHandler) {
+        window.removeEventListener('resize', cleanupHandlers.resizeHandler);
+        cleanupHandlers.resizeHandler = null;
+    }
 }

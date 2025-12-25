@@ -5,13 +5,14 @@
 
 // Import shared modules
 import { MobileMenu } from './modules/mobile-menu.js';
-import { initSmoothScroll } from './modules/smooth-scroll.js';
+import { initSmoothScroll, cleanupSmoothScroll } from './modules/smooth-scroll.js';
 import { initScrollAnimations } from './modules/scroll-animations.js';
-import { initNavbarScrollEffect, initActiveNavLinks } from './modules/navbar-effects.js';
+import { initNavbarScrollEffect, initActiveNavLinks, cleanupNavbarEffects } from './modules/navbar-effects.js';
 import { initGlobalErrorHandlers } from './modules/error-handler.js';
 import { PortfolioModal } from './modules/portfolio-modal.js';
 import { ImageLoader, KeyboardNavigation } from './modules/accessibility.js';
 import { initFontLoader } from './modules/font-loader.js';
+import BackToTop from './modules/back-to-top.js';
 
 // Import page-specific modules
 import { PortfolioCarousel } from './modules/portfolio-carousel.js';
@@ -19,11 +20,22 @@ import {
     initHeroParallax,
     initExperienceCards,
     initSkillBarsAnimation,
-    initPageLoadAnimation
+    initPageLoadAnimation,
+    cleanupIndexPage
 } from './modules/index-page.js';
 
 // Import structured data
 import { initStructuredData } from './modules/structured-data.js';
+
+// Store module instances for cleanup
+const moduleInstances = {
+    mobileMenu: null,
+    portfolioModal: null,
+    imageLoader: null,
+    keyboardNavigation: null,
+    portfolioCarousel: null,
+    backToTop: null
+};
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,19 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initFontLoader();
 
     // Shared components
-    new MobileMenu();
+    moduleInstances.mobileMenu = new MobileMenu();
     initSmoothScroll();
     initNavbarScrollEffect();
     initActiveNavLinks();
-    new PortfolioModal();
-    new ImageLoader();
-    new KeyboardNavigation();
+    moduleInstances.portfolioModal = new PortfolioModal();
+    moduleInstances.imageLoader = new ImageLoader();
+    moduleInstances.keyboardNavigation = new KeyboardNavigation();
+    moduleInstances.backToTop = new BackToTop();
 
     // Scroll animations for index page elements
     initScrollAnimations('.section-header, .experience-item, .skill-category, .testimonial-card, .portfolio-item, .contact-item');
 
     // Index page specific features
-    new PortfolioCarousel();
+    moduleInstances.portfolioCarousel = new PortfolioCarousel();
     initHeroParallax();
     initExperienceCards();
     initSkillBarsAnimation();
@@ -55,3 +68,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize global error handlers
 initGlobalErrorHandlers();
+
+// Cleanup all event listeners and observers on page unload
+window.addEventListener('beforeunload', () => {
+    // Cleanup class instances
+    moduleInstances.mobileMenu?.destroy();
+    moduleInstances.portfolioModal?.destroy();
+    moduleInstances.imageLoader?.destroy();
+    moduleInstances.keyboardNavigation?.destroy();
+    moduleInstances.portfolioCarousel?.destroy();
+    moduleInstances.backToTop?.destroy();
+
+    // Cleanup function-based modules
+    cleanupSmoothScroll();
+    cleanupNavbarEffects();
+    cleanupIndexPage();
+});

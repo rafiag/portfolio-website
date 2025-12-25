@@ -6,6 +6,14 @@
 
 import { optimizedScrollHandler } from './performance-utils.js';
 
+// Store cleanup handlers for the module
+const cleanupHandlers = {
+    parallaxHandler: null,
+    experienceCardHandlers: new Map(),
+    loadHandler: null,
+    skillObserver: null
+};
+
 // Parallax effect for hero image
 export function initHeroParallax() {
     const heroImage = document.querySelector('.hero-image');
@@ -19,6 +27,8 @@ export function initHeroParallax() {
         });
 
         window.addEventListener('scroll', handleParallax, { passive: true });
+        // Store handler for cleanup
+        cleanupHandlers.parallaxHandler = handleParallax;
     }
 }
 
@@ -32,7 +42,7 @@ export function initExperienceCards() {
     }
 
     companyCards.forEach(card => {
-        card.addEventListener('click', () => {
+        const handler = () => {
             const companyId = card.getAttribute('data-company');
 
             // Remove active class from all cards and contents
@@ -45,7 +55,10 @@ export function initExperienceCards() {
             if (activeContent) {
                 activeContent.classList.add('active');
             }
-        });
+        };
+        card.addEventListener('click', handler);
+        // Store handler for cleanup
+        cleanupHandlers.experienceCardHandlers.set(card, handler);
     });
 }
 
@@ -66,11 +79,46 @@ export function initSkillBarsAnimation() {
     }, { threshold: 0.5 });
 
     skillBars.forEach(bar => skillObserver.observe(bar));
+    // Store observer for cleanup
+    cleanupHandlers.skillObserver = skillObserver;
 }
 
 // Page load animation
 export function initPageLoadAnimation() {
-    window.addEventListener('load', () => {
+    const handler = () => {
         document.body.classList.add('loaded');
+    };
+    window.addEventListener('load', handler);
+    // Store handler for cleanup
+    cleanupHandlers.loadHandler = handler;
+}
+
+/**
+ * Cleanup function to remove all event listeners and observers
+ * Call this function when the page is unloaded or navigated away from
+ */
+export function cleanupIndexPage() {
+    // Remove parallax scroll listener
+    if (cleanupHandlers.parallaxHandler) {
+        window.removeEventListener('scroll', cleanupHandlers.parallaxHandler);
+        cleanupHandlers.parallaxHandler = null;
+    }
+
+    // Remove experience card click listeners
+    cleanupHandlers.experienceCardHandlers.forEach((handler, card) => {
+        card.removeEventListener('click', handler);
     });
+    cleanupHandlers.experienceCardHandlers.clear();
+
+    // Remove load listener
+    if (cleanupHandlers.loadHandler) {
+        window.removeEventListener('load', cleanupHandlers.loadHandler);
+        cleanupHandlers.loadHandler = null;
+    }
+
+    // Disconnect IntersectionObserver
+    if (cleanupHandlers.skillObserver) {
+        cleanupHandlers.skillObserver.disconnect();
+        cleanupHandlers.skillObserver = null;
+    }
 }
