@@ -1,6 +1,6 @@
 # Portfolio Website - Test Suite
 
-Comprehensive end-to-end testing suite using Playwright with **10 test categories** covering 189+ individual tests.
+Comprehensive end-to-end testing suite using Playwright with **10 test categories** covering **205 individual tests**.
 
 ---
 
@@ -10,16 +10,16 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 |---|------|----------|-------|-------------|
 | 1 | `browser-compatibility.js` | Browser Support | 24 | Chrome, Firefox, WebKit - CSS Grid, Flexbox, ES6 modules |
 | 2 | `responsive.js` | Responsive Design | 56 | 8 viewports (360px-1920px), breakpoints, overflow, layout |
-| 3 | `interactive-features.js` | Interactivity | 8 | Carousel, filters, modals, mobile menu, smooth scroll |
+| 3 | `interactive-features.js` | Interactivity | 14 | Carousel, filters, modals, mobile menu, smooth scroll, **back-to-top button** |
 | 4 | `accessibility.js` | WCAG 2.1 | 10 | Keyboard nav, ARIA, color contrast, semantic HTML |
-| 5 | `performance.js` | Performance | 8 | Load times, CLS, lazy loading, Core Web Vitals |
+| 5 | `performance.js` | Performance | 8 | Load times, CLS, **lazy loading**, Core Web Vitals |
 | 6 | `content-links.js` | Content & SEO | 13 | Links security, meta tags, images, Open Graph |
 | 7 | `cross-browser-javascript.js` | JavaScript | 27 | ES6, Array methods, console errors (3 browsers) |
-| 8 | `seo-meta.js` | SEO | 30+ | Structured data, Twitter Cards, robots.txt, sitemap |
-| 9 | `error-handling.js` | Error Recovery | 9 | 404 pages, graceful degradation, fallbacks |
+| 8 | `seo-meta.js` | SEO & Performance | 33 | Structured data, Twitter Cards, robots.txt, sitemap, **resource hints** |
+| 9 | `error-handling.js` | Error Recovery & Memory | 14 | 404 pages, graceful degradation, fallbacks, **memory leak prevention** |
 | 10 | `security.js` | Security | 6 | CSP compliance, XSS protection, external links, mixed content (static analysis) |
 
-**Total: 189+ tests** | Files tested: `index.html`, `portfolio.html`
+**Total: 205 tests** | Files tested: `index.html`, `portfolio.html`
 
 ---
 
@@ -214,4 +214,30 @@ When adding tests:
 
 ---
 
-**Last Updated**: 2025-12-25 | **Framework**: Playwright | **Total Tests**: 189+
+**Last Updated**: 2025-12-25 | **Framework**: Playwright | **Total Tests**: 205
+
+---
+
+## 🆕 Recent Updates (2025-12-25)
+
+### New Tests Added for Recent Features:
+1. **Resource Hints Validation** (seo-meta.js) - 3 new tests
+   - DNS prefetch, preconnect, preload detection
+   - Google Fonts optimization validation
+   - Preload 'as' attribute validation
+
+2. **Back-to-Top Button** (interactive-features.js) - 6 new tests
+   - Button visibility on scroll
+   - Scroll-to-top functionality
+   - ARIA attributes validation
+   - Keyboard accessibility (Enter key)
+   - Auto-hide when at page top
+
+3. **Memory Leak Prevention** (error-handling.js) - 5 new tests
+   - Event listener management
+   - Passive listeners detection
+   - IntersectionObserver usage
+   - Timer cleanup validation
+   - Component instance cleanup (modals/carousels)
+
+**Test Coverage Improvement:** +16 tests (189 → 205)

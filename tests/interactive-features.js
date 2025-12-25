@@ -232,6 +232,119 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
+    // Test 6: Back to Top Button
+    console.log('\n⬆️  Testing back-to-top button...');
+    try {
+      // Reset to desktop viewport
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(500);
+
+      const backToTopButton = page.locator('.back-to-top');
+      const buttonExists = await backToTopButton.count() > 0;
+
+      if (buttonExists) {
+        // Test 6a: Button should be hidden at top of page
+        const isHiddenAtTop = await backToTopButton.evaluate(el => {
+          return !el.classList.contains('visible');
+        });
+
+        if (isHiddenAtTop) {
+          console.log('  ✅ Back-to-top button hidden at page top');
+          passed++;
+        } else {
+          console.log('  ⚠️  Back-to-top button visible at page top (should be hidden)');
+        }
+
+        // Test 6b: Scroll down to show button
+        await page.evaluate(() => window.scrollTo(0, 400));
+        await page.waitForTimeout(500);
+
+        const isVisibleAfterScroll = await backToTopButton.evaluate(el => {
+          return el.classList.contains('visible');
+        });
+
+        if (isVisibleAfterScroll) {
+          console.log('  ✅ Back-to-top button appears after scrolling down');
+          passed++;
+        } else {
+          console.log('  ❌ Back-to-top button does not appear after scrolling');
+          failed++;
+        }
+
+        // Test 6c: Button click scrolls to top
+        await backToTopButton.click();
+        await page.waitForTimeout(1000);
+
+        const scrollPosition = await page.evaluate(() => window.pageYOffset);
+        if (scrollPosition < 50) {
+          console.log('  ✅ Back-to-top button scrolls to top on click');
+          passed++;
+        } else {
+          console.log('  ❌ Back-to-top button did not scroll to top');
+          failed++;
+        }
+
+        // Test 6d: Button hides after scrolling to top
+        await page.waitForTimeout(500);
+        const isHiddenAfterScroll = await backToTopButton.evaluate(el => {
+          return !el.classList.contains('visible');
+        });
+
+        if (isHiddenAfterScroll) {
+          console.log('  ✅ Back-to-top button hides when at top');
+          passed++;
+        } else {
+          console.log('  ⚠️  Back-to-top button still visible at top');
+        }
+
+        // Test 6e: ARIA attributes
+        await page.evaluate(() => window.scrollTo(0, 400));
+        await page.waitForTimeout(500);
+
+        const ariaAttributes = await backToTopButton.evaluate(el => {
+          return {
+            ariaLabel: el.getAttribute('aria-label'),
+            ariaHidden: el.getAttribute('aria-hidden'),
+            tabindex: el.getAttribute('tabindex'),
+            hasRole: el.hasAttribute('role')
+          };
+        });
+
+        if (ariaAttributes.ariaLabel && ariaAttributes.ariaHidden === 'false') {
+          console.log('  ✅ Back-to-top button has proper ARIA attributes');
+          passed++;
+        } else {
+          console.log('  ⚠️  Back-to-top button missing some ARIA attributes');
+        }
+
+        // Test 6f: Keyboard accessibility
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.waitForTimeout(500);
+        await page.evaluate(() => window.scrollTo(0, 400));
+        await page.waitForTimeout(500);
+
+        // Focus the button and press Enter
+        await backToTopButton.focus();
+        await page.keyboard.press('Enter');
+        await page.waitForTimeout(1000);
+
+        const scrollAfterKeyboard = await page.evaluate(() => window.pageYOffset);
+        if (scrollAfterKeyboard < 50) {
+          console.log('  ✅ Back-to-top button works with keyboard (Enter)');
+          passed++;
+        } else {
+          console.log('  ⚠️  Back-to-top button keyboard navigation may not work');
+        }
+
+      } else {
+        console.log('  ⚠️  Back-to-top button not found on page');
+      }
+    } catch (error) {
+      console.log('  ❌ Back-to-top button error:', error.message);
+      failed++;
+    }
+
     // ========================================
     // PORTFOLIO.HTML TESTS
     // ========================================
@@ -242,7 +355,7 @@ const TARGET_URL = 'http://localhost:8000';
     await page.goto(`${TARGET_URL}/portfolio.html`, { waitUntil: 'networkidle', timeout: 10000 });
     await page.waitForTimeout(1000);
 
-    // Test 6: Portfolio Filter Buttons
+    // Test 7: Portfolio Filter Buttons
     console.log('\n🔍 Testing portfolio filter buttons...');
     try {
       const filterButtons = await page.locator('.filter-btn').count();
@@ -274,7 +387,7 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
-    // Test 7: Portfolio Modal System
+    // Test 8: Portfolio Modal System
     console.log('\n🖼️  Testing portfolio modal system...');
     try {
       const portfolioItems = await page.locator('.portfolio-item').count();
@@ -349,7 +462,7 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
-    // Test 8: Touch/Swipe Gestures (Carousel)
+    // Test 9: Touch/Swipe Gestures (Carousel)
     console.log('\n👆 Testing touch/swipe support on carousel...');
     try {
       await page.goto(TARGET_URL, { waitUntil: 'networkidle' });

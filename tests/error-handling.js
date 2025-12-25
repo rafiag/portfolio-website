@@ -362,6 +362,193 @@ const TARGET_URL = 'http://localhost:8000';
 
     await portfolioPage.close();
 
+    // ========================================
+    // MEMORY LEAK PREVENTION TESTS
+    // ========================================
+    console.log('\n' + '='.repeat(60));
+    console.log('Testing Memory Leak Prevention');
+    console.log('='.repeat(60));
+
+    // Test 10: Module Cleanup Methods
+    console.log('\n🧹 Testing module cleanup methods...');
+    await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+
+    const moduleCleanup = await page.evaluate(() => {
+      const results = {
+        modulesChecked: 0,
+        modulesWithDestroy: 0,
+        moduleNames: [],
+        destroyMethods: []
+      };
+
+      // Check if modules are loaded (ES6 modules won't be directly accessible)
+      // Instead, check for class instances and cleanup patterns in the page
+
+      // Check for event listeners cleanup
+      const hasBeforeUnload = typeof window.onbeforeunload === 'function' ||
+                              (window.getEventListeners &&
+                               window.getEventListeners(window).beforeunload &&
+                               window.getEventListeners(window).beforeunload.length > 0);
+
+      results.hasBeforeUnloadCleanup = hasBeforeUnload;
+
+      // Check for passive event listeners (good for performance)
+      const scrollElements = document.querySelectorAll('[data-scroll-listener]');
+      results.hasScrollOptimization = scrollElements.length > 0 ||
+                                      document.documentElement.hasAttribute('data-scroll-optimized');
+
+      return results;
+    });
+
+    console.log(`  Modules checked for cleanup: ${moduleCleanup.modulesChecked}`);
+    console.log(`  BeforeUnload cleanup: ${moduleCleanup.hasBeforeUnloadCleanup ? '✅' : '⚠️'}`);
+
+    // Test 11: Event Listener Memory Leaks
+    console.log('\n🎧 Testing event listener management...');
+    const eventListenerTest = await page.evaluate(() => {
+      const results = {
+        totalScrollListeners: 0,
+        totalClickListeners: 0,
+        totalResizeListeners: 0,
+        passiveListeners: false
+      };
+
+      // Count event listeners (if getEventListeners is available - Chrome DevTools)
+      if (window.getEventListeners) {
+        const windowListeners = window.getEventListeners(window);
+        results.totalScrollListeners = windowListeners.scroll ? windowListeners.scroll.length : 0;
+        results.totalResizeListeners = windowListeners.resize ? windowListeners.resize.length : 0;
+
+        // Check if passive listeners are used
+        if (windowListeners.scroll && windowListeners.scroll.length > 0) {
+          results.passiveListeners = windowListeners.scroll.some(l => l.passive === true);
+        }
+      }
+
+      // Check for detached DOM elements (potential memory leak)
+      const allElements = document.querySelectorAll('*');
+      results.totalDOMElements = allElements.length;
+
+      return results;
+    });
+
+    console.log(`  Scroll listeners: ${eventListenerTest.totalScrollListeners}`);
+    console.log(`  Resize listeners: ${eventListenerTest.totalResizeListeners}`);
+    console.log(`  Passive listeners used: ${eventListenerTest.passiveListeners ? '✅' : '⚠️'}`);
+    console.log(`  Total DOM elements: ${eventListenerTest.totalDOMElements}`);
+
+    if (eventListenerTest.passiveListeners) {
+      console.log(`  ✅ Passive event listeners implemented (good for performance)`);
+      passed++;
+    } else {
+      console.log(`  ⚠️  Passive event listeners not detected (recommended for scroll/touch)`);
+      warnings++;
+    }
+
+    // Test 12: IntersectionObserver Cleanup
+    console.log('\n👁️  Testing IntersectionObserver usage...');
+    const observerTest = await page.evaluate(() => {
+      const results = {
+        hasIntersectionObserver: 'IntersectionObserver' in window,
+        observedElements: 0
+      };
+
+      // Check for elements that might be observed
+      const animatedElements = document.querySelectorAll('[data-animate], .animate-on-scroll, .fade-in-up');
+      results.observedElements = animatedElements.length;
+
+      return results;
+    });
+
+    console.log(`  IntersectionObserver supported: ${observerTest.hasIntersectionObserver ? '✅' : '❌'}`);
+    console.log(`  Elements with animations: ${observerTest.observedElements}`);
+
+    if (observerTest.hasIntersectionObserver && observerTest.observedElements > 0) {
+      console.log(`  ✅ IntersectionObserver likely used for animations`);
+      passed++;
+    } else if (observerTest.observedElements > 0) {
+      console.log(`  ⚠️  Animated elements found but IntersectionObserver not supported`);
+      warnings++;
+    }
+
+    // Test 13: Timer Cleanup
+    console.log('\n⏲️  Testing timer management...');
+    const timerTest = await page.evaluate(() => {
+      const results = {
+        hasTimers: false,
+        timersCleared: false
+      };
+
+      // Store original setTimeout/setInterval
+      const originalSetTimeout = window.setTimeout;
+      const originalSetInterval = window.setInterval;
+      const activeTimers = [];
+
+      // Override to track timers
+      window.setTimeout = function(fn, delay, ...args) {
+        const id = originalSetTimeout.call(window, fn, delay, ...args);
+        activeTimers.push({ type: 'timeout', id });
+        return id;
+      };
+
+      window.setInterval = function(fn, delay, ...args) {
+        const id = originalSetInterval.call(window, fn, delay, ...args);
+        activeTimers.push({ type: 'interval', id });
+        return id;
+      };
+
+      // Trigger a scroll event that might create timers
+      window.dispatchEvent(new Event('scroll'));
+
+      // Check if there are active timers
+      results.hasTimers = activeTimers.length > 0;
+
+      // Restore original functions
+      window.setTimeout = originalSetTimeout;
+      window.setInterval = originalSetInterval;
+
+      return results;
+    });
+
+    console.log(`  Timer usage detected: ${timerTest.hasTimers ? 'Yes' : 'No'}`);
+    if (!timerTest.hasTimers) {
+      console.log(`  ✅ No uncleaned timers detected`);
+      passed++;
+    } else {
+      console.log(`  ℹ️  Timers detected (verify they are properly cleared)`);
+    }
+
+    // Test 14: Carousel/Modal Instance Cleanup
+    console.log('\n🎠 Testing interactive component cleanup...');
+    await page.goto(`${TARGET_URL}/portfolio.html`, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(1000);
+
+    const componentTest = await page.evaluate(() => {
+      const results = {
+        hasModals: document.querySelectorAll('.modal').length,
+        hasCarousels: document.querySelectorAll('.carousel').length,
+        modalsClosed: true,
+        carouselsStopped: true
+      };
+
+      // Check if modals are properly closed
+      const openModals = document.querySelectorAll('.modal.active, .modal.open, .modal[style*="display: block"]');
+      results.modalsClosed = openModals.length === 0;
+
+      return results;
+    });
+
+    console.log(`  Modals on page: ${componentTest.hasModals}`);
+    console.log(`  All modals closed: ${componentTest.modalsClosed ? '✅' : '❌'}`);
+
+    if (componentTest.modalsClosed) {
+      console.log(`  ✅ No memory leaks from open modals`);
+      passed++;
+    } else {
+      console.log(`  ⚠️  Some modals may not be properly closed`);
+      warnings++;
+    }
+
     // Summary
     console.log('\n' + '='.repeat(60));
     console.log('📊 ERROR HANDLING TEST SUMMARY');

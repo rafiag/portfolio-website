@@ -370,6 +370,103 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
+    // ========================================
+    // RESOURCE HINTS TESTS
+    // ========================================
+    console.log('\n' + '='.repeat(60));
+    console.log('Testing Resource Hints (Performance Optimization)');
+    console.log('='.repeat(60));
+
+    // Test 15: Resource Hints
+    console.log('\n⚡ Testing resource hints...');
+    const resourceHints = await page.evaluate(() => {
+      const dnsPrefetchLinks = Array.from(document.querySelectorAll('link[rel="dns-prefetch"]'));
+      const preconnectLinks = Array.from(document.querySelectorAll('link[rel="preconnect"]'));
+      const preloadLinks = Array.from(document.querySelectorAll('link[rel="preload"]'));
+      const prefetchLinks = Array.from(document.querySelectorAll('link[rel="prefetch"]'));
+
+      return {
+        dnsPrefetch: {
+          count: dnsPrefetchLinks.length,
+          urls: dnsPrefetchLinks.map(l => l.href)
+        },
+        preconnect: {
+          count: preconnectLinks.length,
+          urls: preconnectLinks.map(l => ({ href: l.href, crossorigin: l.hasAttribute('crossorigin') }))
+        },
+        preload: {
+          count: preloadLinks.length,
+          resources: preloadLinks.map(l => ({ href: l.href, as: l.getAttribute('as') }))
+        },
+        prefetch: {
+          count: prefetchLinks.length,
+          urls: prefetchLinks.map(l => l.href)
+        }
+      };
+    });
+
+    console.log(`  DNS Prefetch links: ${resourceHints.dnsPrefetch.count}`);
+    if (resourceHints.dnsPrefetch.count > 0) {
+      resourceHints.dnsPrefetch.urls.forEach(url => {
+        console.log(`    ✅ ${url}`);
+      });
+    }
+
+    console.log(`  Preconnect links: ${resourceHints.preconnect.count}`);
+    if (resourceHints.preconnect.count > 0) {
+      resourceHints.preconnect.urls.forEach(link => {
+        const crossoriginStatus = link.crossorigin ? '(with crossorigin)' : '';
+        console.log(`    ✅ ${link.href} ${crossoriginStatus}`);
+      });
+    }
+
+    console.log(`  Preload links: ${resourceHints.preload.count}`);
+    if (resourceHints.preload.count > 0) {
+      resourceHints.preload.resources.forEach(res => {
+        console.log(`    ✅ ${res.href} (as: ${res.as || 'not specified'})`);
+      });
+    }
+
+    console.log(`  Prefetch links: ${resourceHints.prefetch.count}`);
+    if (resourceHints.prefetch.count > 0) {
+      resourceHints.prefetch.urls.forEach(url => {
+        console.log(`    ✅ ${url}`);
+      });
+    }
+
+    const totalHints = resourceHints.dnsPrefetch.count + resourceHints.preconnect.count +
+                       resourceHints.preload.count + resourceHints.prefetch.count;
+
+    if (totalHints > 0) {
+      console.log(`  ✅ Resource hints implemented (${totalHints} total)`);
+      passed++;
+
+      // Check for Google Fonts optimization
+      const hasFontsOptimization = resourceHints.dnsPrefetch.urls.some(url => url.includes('fonts.g')) ||
+                                    resourceHints.preconnect.urls.some(link => link.href.includes('fonts.g'));
+
+      if (hasFontsOptimization) {
+        console.log(`  ✅ Google Fonts optimized with resource hints`);
+        passed++;
+      } else {
+        console.log(`  ⚠️  No Google Fonts optimization detected`);
+        warnings++;
+      }
+
+      // Validate preload has 'as' attribute
+      const preloadWithoutAs = resourceHints.preload.resources.filter(r => !r.as).length;
+      if (resourceHints.preload.count > 0 && preloadWithoutAs === 0) {
+        console.log(`  ✅ All preload links have 'as' attribute`);
+        passed++;
+      } else if (preloadWithoutAs > 0) {
+        console.log(`  ⚠️  ${preloadWithoutAs} preload link(s) missing 'as' attribute`);
+        warnings++;
+      }
+    } else {
+      console.log(`  ⚠️  No resource hints found (recommended for performance)`);
+      warnings++;
+    }
+
     // Summary
     console.log('\n' + '='.repeat(60));
     console.log('📊 SEO & META TAGS TEST SUMMARY');

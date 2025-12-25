@@ -118,10 +118,10 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 ### High Priority
 - [x] Replace all placeholder content
 - [x] Resource Hints in HTML
-- [ ] Back-to-Top Button (Floating button appearing after scrolling down)
+- [x] Native Lazy Loading Strategy (Use loading="lazy" on below-fold images)
+- [x] Memory Leak Prevention (Cleanup methods in classes to remove event listeners)
+- [x] Back-to-Top Button (Floating button appearing after scrolling down)
 - [ ] Portfolio Data Validation (Schema validation portfolio-data.js)
-- [ ] Memory Leak Prevention (Cleanup methods in classes to remove event listeners)
-- [ ] Native Lazy Loading Strategy (Use loading="lazy" on below-fold images)
 
 ### Medium Priority
 - [x] Add error handling and loading states

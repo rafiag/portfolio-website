@@ -23,7 +23,7 @@ node run.js "%~dp0responsive.js"
 echo.
 pause
 
-echo [3/10] Interactive Features
+echo [3/10] Interactive Features (inc. Back-to-Top Button)
 echo ========================================
 node run.js "%~dp0interactive-features.js"
 echo.
@@ -35,7 +35,7 @@ node run.js "%~dp0accessibility.js"
 echo.
 pause
 
-echo [5/10] Performance Tests
+echo [5/10] Performance Tests (inc. Lazy Loading)
 echo ========================================
 node run.js "%~dp0performance.js"
 echo.
@@ -53,13 +53,13 @@ node run.js "%~dp0cross-browser-javascript.js"
 echo.
 pause
 
-echo [8/10] SEO & Meta Tags
+echo [8/10] SEO & Meta Tags (inc. Resource Hints)
 echo ========================================
 node run.js "%~dp0seo-meta.js"
 echo.
 pause
 
-echo [9/10] Error Handling
+echo [9/10] Error Handling & Memory Leak Prevention
 echo ========================================
 node run.js "%~dp0error-handling.js"
 echo.
@@ -75,6 +75,12 @@ echo.
 echo ========================================
 echo All tests complete!
 echo ========================================
+echo Total: 205 tests across 10 categories
+echo.
+echo Recent updates include:
+echo - Resource Hints validation (3 tests)
+echo - Back-to-Top Button (6 tests)
+echo - Memory Leak Prevention (5 tests)
 echo.
 echo Check the test reports in the docs/ folder
 echo (TEST-REPORT-2025-12-24.md and TEST-SUMMARY-UPDATED.md)
