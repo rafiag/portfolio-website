@@ -16,6 +16,7 @@ import BackToTop from './modules/back-to-top.js';
 
 // Import page-specific modules
 import { PortfolioCarousel } from './modules/portfolio-carousel.js';
+import { TestimonialsCarousel } from './modules/testimonials-carousel.js';
 import {
     initHeroParallax,
     initExperienceCards,
@@ -34,6 +35,7 @@ const moduleInstances = {
     imageLoader: null,
     keyboardNavigation: null,
     portfolioCarousel: null,
+    testimonialsCarousel: null,
     backToTop: null
 };
 
@@ -57,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Index page specific features
     moduleInstances.portfolioCarousel = new PortfolioCarousel();
+    moduleInstances.testimonialsCarousel = new TestimonialsCarousel();
     initHeroParallax();
     initExperienceCards();
     initSkillBarsAnimation();
@@ -77,6 +80,7 @@ window.addEventListener('beforeunload', () => {
     moduleInstances.imageLoader?.destroy();
     moduleInstances.keyboardNavigation?.destroy();
     moduleInstances.portfolioCarousel?.destroy();
+    moduleInstances.testimonialsCarousel?.destroy();
     moduleInstances.backToTop?.destroy();
 
     // Cleanup function-based modules

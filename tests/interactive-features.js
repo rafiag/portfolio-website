@@ -1,5 +1,5 @@
 // Interactive Features Testing Suite
-// Tests portfolio carousel, filters, modals, work experience cards, mobile menu, smooth scroll
+// Tests portfolio carousel, testimonials carousel, filters, modals, work experience cards, mobile menu, smooth scroll
 
 const { chromium } = require('playwright');
 
@@ -229,6 +229,110 @@ const TARGET_URL = 'http://localhost:8000';
       }
     } catch (error) {
       console.log('  ❌ Smooth scroll error:', error.message);
+      failed++;
+    }
+
+    // Test 5b: Testimonials Carousel Auto-Rotation
+    console.log('\n🎠 Testing testimonials carousel auto-rotation...');
+    try {
+      // Reset to desktop viewport
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
+      await page.waitForTimeout(500);
+
+      const carousel = page.locator('.testimonials-carousel');
+      const carouselExists = await carousel.count() > 0;
+
+      if (carouselExists) {
+        // Test 5b-1: Check structure
+        const cards = await page.locator('.testimonial-card').count();
+        const dots = await page.locator('.testimonial-dot').count();
+
+        if (cards === dots && cards > 0) {
+          console.log(`  ✅ Carousel structure correct (${cards} cards, ${dots} dots)`);
+          passed++;
+        } else {
+          console.log(`  ❌ Card/dot mismatch (${cards} cards, ${dots} dots)`);
+          failed++;
+        }
+
+        // Test 5b-2: Check initial state
+        const firstCardActive = await page.locator('.testimonial-card').first().evaluate(el =>
+          el.classList.contains('active') && el.getAttribute('aria-hidden') === 'false'
+        );
+
+        if (firstCardActive) {
+          console.log('  ✅ First card active on load');
+          passed++;
+        } else {
+          console.log('  ❌ First card not active');
+          failed++;
+        }
+
+        // Test 5b-3: Check auto-rotation
+        console.log('  ⏱️  Waiting 5.5s for auto-rotation...');
+        await page.waitForTimeout(5500);
+
+        const secondCardActive = await page.locator('.testimonial-card').nth(1).evaluate(el =>
+          el.classList.contains('active')
+        );
+
+        if (secondCardActive) {
+          console.log('  ✅ Auto-rotation works (second card became active)');
+          passed++;
+        } else {
+          console.log('  ❌ Auto-rotation failed');
+          failed++;
+        }
+
+        // Test 5b-4: Check manual navigation via dots
+        await page.locator('.testimonial-dot').nth(2).click();
+        await page.waitForTimeout(700);
+
+        const thirdCardActive = await page.locator('.testimonial-card').nth(2).evaluate(el =>
+          el.classList.contains('active')
+        );
+
+        if (thirdCardActive) {
+          console.log('  ✅ Manual navigation via dots works');
+          passed++;
+        } else {
+          console.log('  ❌ Manual navigation failed');
+          failed++;
+        }
+
+        // Test 5b-5: Check pause on hover
+        await carousel.hover();
+        const cardBeforeHover = 2; // Currently on third card
+        await page.waitForTimeout(6000); // Wait longer than rotation interval
+
+        const cardStillThird = await page.locator('.testimonial-card').nth(2).evaluate(el =>
+          el.classList.contains('active')
+        );
+
+        if (cardStillThird) {
+          console.log('  ✅ Pause on hover works (no rotation during hover)');
+          passed++;
+        } else {
+          console.log('  ⚠️  Carousel may have rotated during hover');
+        }
+
+        // Test 5b-6: Check accessibility attributes
+        const carouselRole = await carousel.getAttribute('role');
+        const carouselLabel = await carousel.getAttribute('aria-label');
+        const dotsRole = await page.locator('.testimonials-dots').getAttribute('role');
+
+        if (carouselRole === 'region' && carouselLabel && dotsRole === 'tablist') {
+          console.log('  ✅ Carousel has proper ARIA attributes');
+          passed++;
+        } else {
+          console.log('  ⚠️  Some ARIA attributes may be missing');
+        }
+      } else {
+        console.log('  ⚠️  Testimonials carousel not found');
+      }
+    } catch (error) {
+      console.log('  ❌ Testimonials carousel error:', error.message);
       failed++;
     }
 

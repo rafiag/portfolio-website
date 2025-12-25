@@ -14,7 +14,7 @@ I built this portfolio to showcase not just my data analytics work, but also my 
 - **Hero Section** - Career highlights with 5 years experience across fintech and e-commerce
 - **Experience Timeline** - Interactive company cards featuring Kredivo Group, Mapan, LinkAja!, tvOne, and Telkom Indonesia
 - **Skills Matrix** - Technical proficiencies in data analytics, BI tools, Python, SQL, and visualization
-- **Testimonials** - Real feedback from colleagues and managers
+- **Testimonials Carousel** - Auto-rotating carousel displaying 2 testimonials at once (1 on mobile) with manual controls and pause-on-hover
 - **Featured Projects** - Touch-enabled carousel showcasing my best work
 - **Contact Section** - Direct links to reach me
 
@@ -27,7 +27,7 @@ I built this portfolio to showcase not just my data analytics work, but also my 
 
 What makes this portfolio different:
 
-- **Modular Architecture** - 14 ES6 modules with clear separation of concerns
+- **Modular Architecture** - 16 ES6 modules with clear separation of concerns
 - **Performance First** - GPU-accelerated animations, lazy loading, resource hints
 - **Accessibility** - WCAG 2.1 compliant with full keyboard navigation and ARIA labels
 - **SEO Optimized** - Structured data (Schema.org), Open Graph, Twitter Cards
@@ -48,7 +48,7 @@ portfolio-website/
 ├── js/
 │   ├── main-index.js      # Entry point for index page
 │   ├── main-portfolio.js  # Entry point for portfolio page
-│   ├── modules/           # 14 modular ES6 files
+│   ├── modules/           # 16 modular ES6 files
 │   └── data/              # Portfolio project data
 ├── assets/                # Company logos, project images
 ├── docs/                  # Technical documentation

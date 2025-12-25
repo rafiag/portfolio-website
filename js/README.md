@@ -22,7 +22,8 @@ js/
 │   ├── portfolio-validator.js # Portfolio data validation (shared)
 │   ├── scroll-animations.js   # Intersection Observer animations
 │   ├── smooth-scroll.js       # Smooth anchor scrolling
-│   └── structured-data.js     # SEO Schema.org structured data
+│   ├── structured-data.js     # SEO Schema.org structured data
+│   └── testimonials-carousel.js # Auto-rotating testimonials carousel (index page)
 ├── main-index.js              # Entry point for index.html
 └── main-portfolio.js          # Entry point for portfolio.html
 ```
@@ -110,6 +111,21 @@ js/
 - Prev/next buttons
 - **Export:** `PortfolioCarousel` class
 
+**`testimonials-carousel.js`** *(index.html only - New 2025-12-25)*
+- Auto-rotating testimonials carousel
+- Displays 2 testimonials side-by-side (1 on mobile)
+- 5-second rotation interval with pause-on-hover
+- Manual navigation via prev/next buttons and dots
+- Smooth fade transitions with GPU acceleration
+- Responsive: adapts to viewport (2 cards on desktop, 1 on mobile <769px)
+- Full accessibility with ARIA attributes
+- **Export:** `TestimonialsCarousel` class
+- **Configuration:**
+  - `autoRotateInterval`: 5000ms (default)
+  - `transitionDuration`: 600ms (default)
+  - `cardsPerView`: 2 (auto-adjusts on mobile)
+- **Used by:** index.html testimonials section
+
 **`portfolio-filter.js`** *(portfolio.html only)*
 - Portfolio filtering by category
 - Smooth show/hide animations
@@ -135,6 +151,7 @@ js/
 Entry point for **index.html**. Initializes:
 - All shared modules
 - Portfolio carousel
+- Testimonials carousel
 - Hero parallax
 - Experience cards
 - Skill bars animation
