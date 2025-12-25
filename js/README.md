@@ -10,6 +10,7 @@ js/
 │   └── portfolio-data.js      # Centralized portfolio project data
 ├── modules/
 │   ├── accessibility.js       # Image loading & keyboard navigation
+│   ├── back-to-top.js         # Back to top floating button (shared)
 │   ├── error-handler.js       # Global error handling
 │   ├── index-page.js          # Index page specific features
 │   ├── mobile-menu.js         # Mobile navigation menu
@@ -81,6 +82,15 @@ js/
 - Layout measurement caching utilities
 - **Exports:** `throttle()`, `debounce()`, `raf()`, `optimizedScrollHandler()`, `cacheElementMeasurements()`, more
 - **Used by:** navbar-effects.js, index-page.js, portfolio-carousel.js
+
+**`back-to-top.js`** *(New - 2025-12-25)*
+- Floating back-to-top button that appears after scrolling
+- Shows/hides based on scroll position (300px threshold)
+- Smooth scroll animation to top
+- Keyboard accessible with focus management
+- GPU-accelerated animations for performance
+- **Export:** `BackToTop` class
+- **Used by:** Both index.html and portfolio.html
 
 ### Page-Specific Modules
 
@@ -224,5 +234,5 @@ Updated script tags to use ES6 modules:
 
 ---
 
-**Last Updated:** 2025-12-24
+**Last Updated:** 2025-12-25
 **Migration Date:** 2025-12-24
