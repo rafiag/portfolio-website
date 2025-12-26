@@ -87,7 +87,7 @@ export class TestimonialsCarousel {
 
     checkViewport() {
         const previousIsMobile = this.isMobile;
-        this.isMobile = window.innerWidth < 769; // Tablet breakpoint
+        this.isMobile = window.innerWidth <= 1024; // Match CSS tablet breakpoint (max-width: 1024px)
         this.cardsPerView = this.isMobile ? 1 : 2;
 
         // If viewport changed, update carousel
