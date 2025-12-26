@@ -39,6 +39,7 @@ coverage/
 *.test.log
 .playwright-mcp/
 docs/lighthouse/
+tests/screenshots/
 
 # Server logs (from development server)
 server.log
