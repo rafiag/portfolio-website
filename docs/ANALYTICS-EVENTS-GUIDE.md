@@ -31,7 +31,7 @@ These events are tracked automatically by Google Analytics when Enhanced Measure
 | **Type** | Page View |
 | **Trigger** | Every time a page loads (index.html, portfolio.html) |
 | **Source** | GA4 Built-in (Enhanced Measurement) |
-| **Implemented** | ⬜ False *(pending GA4 setup)* |
+| **Implemented** | ✅ True |
 
 **Event Properties:**
 - `page_location` - Full URL of the page
@@ -48,7 +48,7 @@ These events are tracked automatically by Google Analytics when Enhanced Measure
 | **Type** | Scroll Depth |
 | **Trigger** | When user scrolls to 90% of page depth |
 | **Source** | GA4 Built-in (Enhanced Measurement) |
-| **Implemented** | ⬜ False *(pending GA4 setup)* |
+| **Implemented** | ✅ True |
 
 **Event Properties:**
 - `percent_scrolled` - Always 90 (GA4 default threshold)
@@ -63,7 +63,7 @@ These events are tracked automatically by Google Analytics when Enhanced Measure
 | **Type** | Outbound Click |
 | **Trigger** | Clicks on external links (LinkedIn, GitHub, email mailto:, external project links) |
 | **Source** | GA4 Built-in (Enhanced Measurement) |
-| **Implemented** | ⬜ False *(pending GA4 setup)* |
+| **Implemented** | ✅ True |
 
 **Event Properties:**
 - `link_domain` - Destination domain
@@ -86,7 +86,7 @@ These events are tracked automatically by Google Analytics when Enhanced Measure
 | **Type** | File Download |
 | **Trigger** | Clicks on downloadable files (PDF, DOC, etc.) |
 | **Source** | GA4 Built-in (Enhanced Measurement) |
-| **Implemented** | ⬜ False *(pending GA4 setup)* |
+| **Implemented** | ✅ True |
 
 **Event Properties:**
 - `file_extension` - File type (pdf, doc, etc.)
@@ -96,6 +96,123 @@ These events are tracked automatically by Google Analytics when Enhanced Measure
 **Tracked Downloads:**
 - Resume PDF (when implemented)
 - Any other downloadable assets
+
+---
+
+## Implementation Details
+
+### Files
+
+1. **[js/ga4-init.js](../js/ga4-init.js)** - External GA4 initialization script
+   - CSP-compliant (no inline scripts)
+   - Initializes GA4 with measurement ID
+   - Enables automatic page_view tracking
+
+2. **[index.html](../index.html)** - Main page
+   - Loads GA4 gtag.js library (async)
+   - Loads ga4-init.js for configuration
+   - Updated CSP to allow GA4 domains
+
+3. **[portfolio.html](../portfolio.html)** - Portfolio page
+   - Same GA4 setup as index.html
+
+### Content Security Policy (CSP)
+
+Both HTML files include these CSP directives for GA4:
+
+```
+script-src: https://www.googletagmanager.com https://www.google-analytics.com
+img-src: https://www.google-analytics.com https://www.googletagmanager.com
+connect-src: https://www.google-analytics.com https://analytics.google.com
+```
+
+### Resource Hints
+
+DNS prefetch hints are added to improve GA4 loading performance:
+
+```html
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+```
+
+---
+
+## Testing Analytics
+
+### 1. Real-time Reports
+View live user activity:
+- **URL:** https://analytics.google.com/analytics/web/#/p480360623/realtime/overview
+- Shows active users, page views, events in real-time
+- Verify page_view events fire when you navigate
+
+### 2. DebugView (Recommended)
+Detailed event debugging:
+- **URL:** https://analytics.google.com/analytics/web/#/a286422688w406987313p480360623/debugview/overview
+- Enable debug mode: Install "Google Analytics Debugger" Chrome extension
+- See all events with parameters as they fire
+- Verify scroll, click, and file_download events
+
+### 3. Browser Console
+Monitor GA4 in your browser:
+
+```javascript
+// Check if GA4 is loaded
+console.log('GA4 loaded:', typeof gtag === 'function');
+
+// View dataLayer contents
+console.log('dataLayer:', window.dataLayer);
+
+// Monitor new events (run before interacting with page)
+const originalPush = window.dataLayer.push;
+window.dataLayer.push = function() {
+    console.log('GA4 Event:', arguments);
+    return originalPush.apply(this, arguments);
+};
+```
+
+### 4. Manual Testing Checklist
+
+Test these interactions and verify in DebugView:
+
+- [ ] **Page View**
+  - Load index.html → verify `page_view` event
+  - Navigate to portfolio.html → verify `page_view` event
+
+- [ ] **Scroll**
+  - Scroll to bottom of page → verify `scroll` event (90% depth)
+
+- [ ] **Outbound Clicks**
+  - Click any external link (if available) → verify `click` event
+
+- [ ] **File Downloads**
+  - Click "Download Resume" button → verify `file_download` event
+
+---
+
+## Viewing Data in GA4 Dashboard
+
+### Reports Location
+
+1. **Realtime Report**
+   - Shows last 30 minutes of activity
+   - Path: Reports → Realtime
+
+2. **Engagement Reports**
+   - Page views and screens
+   - Events (scroll, click, file_download)
+   - Path: Reports → Engagement
+
+3. **User Acquisition**
+   - Traffic sources (direct, referral, organic search)
+   - Path: Reports → Acquisition
+
+### Custom Exploration
+
+Create custom reports:
+1. Go to "Explore" in left sidebar
+2. Create new exploration
+3. Add dimensions: Event name, Page location, Country
+4. Add metrics: Event count, Users, Sessions
 
 ---
 
@@ -374,18 +491,19 @@ To maintain consistency across all analytics events, follow these naming convent
 ### Development Phase
 - [x] Add GA4 tracking script to [index.html](../index.html)
 - [x] Add GA4 tracking script to [portfolio.html](../portfolio.html)
-- [x] Create [js/modules/analytics.js](../js/modules/analytics.js) module
-- [x] Implement `portfolio_interaction` event tracking
-- [x] Implement `experience_interaction` event tracking
-- [x] Implement `navigation_click` event tracking
-- [x] Implement `contact_interaction` event tracking
-- [x] Implement `testimonials_interaction` event tracking
-- [x] Implement `cta_click` event tracking
-- [x] Implement `filter_interaction` event tracking
-- [x] Implement `back_to_top_click` event tracking
-- [x] Implement `mobile_menu_toggle` event tracking
-- [x] Initialize analytics module in [main-index.js](../js/main-index.js)
-- [x] Initialize analytics module in [main-portfolio.js](../js/main-portfolio.js)
+- [x] Create external [js/ga4-init.js](../js/ga4-init.js) initialization file
+- [ ] Create [js/modules/analytics.js](../js/modules/analytics.js) module *(not needed for Enhanced Measurement only)*
+- [ ] Implement `portfolio_interaction` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `experience_interaction` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `navigation_click` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `contact_interaction` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `testimonials_interaction` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `cta_click` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `filter_interaction` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `back_to_top_click` event tracking *(not implemented - future enhancement)*
+- [ ] Implement `mobile_menu_toggle` event tracking *(not implemented - future enhancement)*
+- [ ] Initialize analytics module in [main-index.js](../js/main-index.js) *(not needed - using only built-in tracking)*
+- [ ] Initialize analytics module in [main-portfolio.js](../js/main-portfolio.js) *(not needed - using only built-in tracking)*
 
 ### Testing Phase
 - [ ] Test all events fire correctly in GA4 DebugView
@@ -449,6 +567,80 @@ To maintain consistency across all analytics events, follow these naming convent
 
 4. **User Journey Flow:**
    - Sequential events: `page_view` → `experience_interaction` → `portfolio_interaction` → `contact_interaction`
+
+---
+
+## Troubleshooting
+
+### Analytics Not Loading
+
+**Check browser console for errors:**
+```javascript
+// Should return true
+typeof gtag === 'function'
+
+// Should show config event
+window.dataLayer.some(item => item['0'] === 'config')
+```
+
+**Common Issues:**
+1. **CSP blocking scripts** - Check browser console for CSP violations
+2. **Ad blocker enabled** - GA4 may be blocked by ad blockers
+3. **Script loading failed** - Check network tab for failed requests
+
+### Events Not Showing in GA4
+
+1. **Wait 24-48 hours** - Standard reports may have delay
+2. **Use Realtime/DebugView** - See events immediately
+3. **Check Enhanced Measurement** - Verify it's enabled in GA4 Admin
+4. **Clear browser cache** - Old cached scripts may not track
+
+### Verification Steps
+
+Run this in browser console:
+```javascript
+// 1. Check gtag exists
+console.log('gtag:', typeof gtag);
+
+// 2. Check dataLayer has config
+console.log('GA4 configured:', window.dataLayer?.some(i => i['1'] === 'G-XBG7HNQ9YG'));
+
+// 3. Monitor for 30 seconds
+let eventCount = 0;
+const original = window.dataLayer.push;
+window.dataLayer.push = function() {
+    eventCount++;
+    console.log(`Event ${eventCount}:`, arguments[0]);
+    return original.apply(this, arguments);
+};
+console.log('Monitoring events for 30 seconds...');
+setTimeout(() => {
+    console.log(`Total events captured: ${eventCount}`);
+    window.dataLayer.push = original;
+}, 30000);
+```
+
+### Future Custom Event Enhancements
+
+Potential custom tracking to add later (not currently implemented):
+- Portfolio carousel interactions (slide changes)
+- Filter button clicks on portfolio page
+- Work experience card expansions
+- Testimonials carousel interactions
+- Mobile menu toggle
+- Contact button clicks
+- Back-to-top button usage
+
+**Note:** Custom events would require implementing a custom analytics module. Current implementation uses only GA4 built-in features to avoid complexity and potential tracking issues.
+
+---
+
+## Resources
+
+- **GA4 Dashboard:** https://analytics.google.com/analytics/web/#/p480360623/
+- **GA4 Enhanced Measurement:** https://support.google.com/analytics/answer/9216061
+- **GA4 Events Reference:** https://support.google.com/analytics/answer/9322688
+- **Measurement Protocol (API):** https://developers.google.com/analytics/devguides/collection/protocol/ga4
 
 ---
 
