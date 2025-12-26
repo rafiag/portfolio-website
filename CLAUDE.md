@@ -129,7 +129,8 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - If running → Use existing server
 - If not → `python -m http.server 8000` (use Bash tool with `run_in_background=true`)
 - Verify: Check netstat or test with PowerShell HTTP request
-- Stop: Use `KillShell` tool
+- **IMPORTANT:** Do NOT kill server after testing - leave it running for future tests
+- Stop: Use `KillShell` tool ONLY when explicitly asked by user
 
 ### Code Quality
 
