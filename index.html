@@ -20,8 +20,6 @@
     <!-- DNS Prefetch: Resolve DNS early for external domains -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://www.google-analytics.com">
 
     <!-- Preconnect: Establish early connection to critical external origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +29,7 @@
     <link rel="preload" href="css/style.css" as="style">
     <link rel="preload" href="js/browser-check.js" as="script">
     <link rel="modulepreload" href="js/main-index.js">
-    <link rel="preload" href="assets/images/profile-800w.webp" as="image" type="image/webp">
+    <link rel="preload" href="assets/images/profile-800w.webp" as="image" type="image/webp" imagesrcset="assets/images/profile-400w.webp 400w, assets/images/profile-600w.webp 600w, assets/images/profile-800w.webp 800w" imagesizes="(max-width: 768px) 350px, 400px">
 
     <!-- Prefetch: Load resources likely needed for next navigation -->
     <link rel="prefetch" href="portfolio.html">
@@ -134,13 +132,13 @@
             </div>
             <div class="hero-image">
                 <div class="image-frame">
-                    <img src="assets/images/profile-800w.webp" 
-                         srcset="assets/images/profile-400w.webp 400w, 
-                                 assets/images/profile-600w.webp 600w, 
-                                 assets/images/profile-800w.webp 800w" 
-                         sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 400px" 
-                         alt="Rafi Atha - Data Analyst" 
-                         width="800" height="800" 
+                    <img src="assets/images/profile-800w.webp"
+                         srcset="assets/images/profile-400w.webp 400w,
+                                 assets/images/profile-600w.webp 600w,
+                                 assets/images/profile-800w.webp 800w"
+                         sizes="(max-width: 768px) 350px, 400px"
+                         alt="Rafi Atha - Data Analyst"
+                         width="800" height="800"
                          fetchpriority="high">
                     <div class="image-overlay"></div>
                 </div>
@@ -488,8 +486,8 @@
                     <div class="testimonial-card active" aria-hidden="false">
                         <div class="testimonial-quote">"</div>
                         <p class="testimonial-text">
-                            Highly skilled in product analytics and has the ability to get to the root of complex problems with precision and clarity.
-                            Shown strong ownership in ensuring that stakeholders have the right data at the right time, enabling quicker and more informed decisions.
+                            <span class="highlight">Highly skilled</span> in <span class="highlight">product analytics</span> and has the ability to get to the root of complex problems with <span class="highlight">precision and clarity</span>.
+                            Shown <span class="highlight">strong ownership</span> in ensuring that stakeholders have the right data at the right time, enabling quicker and more informed decisions.
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
@@ -502,8 +500,8 @@
                     <div class="testimonial-card" aria-hidden="true">
                         <div class="testimonial-quote">"</div>
                         <p class="testimonial-text">
-                            Invaluable member of our analytics team since he joined.
-                            Consistently demonstrated a deep understanding of business intelligence principles and practices.
+                            <span class="highlight">Invaluable member</span> of our analytics team since he joined.
+                            Consistently demonstrated a <span class="highlight">deep understanding</span> of <span class="highlight">business intelligence</span> principles and practices.
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
@@ -516,8 +514,8 @@
                     <div class="testimonial-card" aria-hidden="true">
                         <div class="testimonial-quote">"</div>
                         <p class="testimonial-text">
-                            Always the first one to step in; helping us monitor, analyze what went wrong, and push things forward until we found the right solution.
-                            "He never treats work like a competition, he shares knowledge and updates openly, even if it's outside his scope.
+                            <span class="highlight">Always the first one to step in</span>; helping us monitor, analyze what went wrong, and push things forward until we found the <span class="highlight">right solution</span>.
+                            "He never treats work like a competition, he <span class="highlight">shares knowledge</span> and updates openly, even if it's outside his scope.
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
@@ -530,8 +528,8 @@
                     <div class="testimonial-card" aria-hidden="true">
                         <div class="testimonial-quote">"</div>
                         <p class="testimonial-text">
-                            Very reliable BI person who could collaborate really well with other stakeholders especially PMM in delivering always thorough and structured analysis.
-                            Able to translate brief and hypothesis into compact yet insightful analysis so people can easily understand.
+                            Very <span class="highlight">reliable BI person</span> who could <span class="highlight">collaborate really well</span> with other stakeholders especially PMM in delivering always <span class="highlight">thorough and structured analysis</span>.
+                            Able to translate brief and hypothesis into <span class="highlight">compact yet insightful analysis</span> so people can easily understand.
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
@@ -685,7 +683,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p class="footer-text">&copy; 2026 Rafi Atha. Crafted with care and attention to detail.</p>
+            <p class="footer-text">&copy; 2026 Rafi Atha.</p>
         </div>
     </footer>
 

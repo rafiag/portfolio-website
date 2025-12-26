@@ -37,6 +37,7 @@ tools/
 # Test outputs and coverage
 coverage/
 *.test.log
+.playwright-mcp/
 
 # Server logs (from development server)
 server.log

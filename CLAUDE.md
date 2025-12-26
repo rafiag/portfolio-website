@@ -18,7 +18,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 
 **Tech Stack:** HTML5, CSS3, Vanilla JavaScript (ES6+), Google Fonts (Playfair Display + Work Sans)
 
-**Core Features:** Responsive Navigation, Interactive Experience Timeline, Skills Matrix, Portfolio Carousel, Testimonials Carousel, Statistics Counter, Project Filtering, Modal System, Scroll Animations, Parallax Effects
+**Core Features:** Responsive Navigation, Interactive Experience Timeline, Skills Matrix, Portfolio Carousel, Testimonials Carousel with Keyword Highlighting, Statistics Counter, Project Filtering, Modal System, Scroll Animations, Parallax Effects
 
 **Design:** Mobile-first, dark theme (#2b2d31) with red accent (#ff6b6b), performance-focused, accessibility-first, progressive enhancement
 
