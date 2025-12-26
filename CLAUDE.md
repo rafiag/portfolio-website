@@ -99,6 +99,101 @@ Chrome 80+, Firefox 75+, Safari 13+, Edge 80+ (Feb 2020+). IE11 shows upgrade no
 
 ---
 
+## 📝 Documentation Management Policy
+
+**CRITICAL: Before Creating Any New Documentation File**
+
+When a task requires creating documentation, you MUST follow this process:
+
+### 1. **Check Existing Documentation First**
+   - Review all files in [docs/](docs/) folder (see list above)
+   - Check if the new content fits into an existing guide
+   - Ask yourself: "Can this be a new section in an existing doc?"
+
+### 2. **Where to Add Documentation**
+
+**Preferred locations (in order):**
+
+1. **Existing docs in [docs/](docs/) folder** - Add as new section if related
+   - Example: New performance technique → Add to [PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
+   - Example: New analytics event → Add to [ANALYTICS-EVENTS-GUIDE.md](docs/ANALYTICS-EVENTS-GUIDE.md)
+   - Example: New build optimization → Add to [BUILD-SUMMARY.md](docs/BUILD-SUMMARY.md)
+
+2. **Module-specific README** - For module documentation
+   - [js/README.md](js/README.md) - JavaScript module documentation
+   - [tests/README.md](tests/README.md) - Test documentation
+
+3. **User-facing README** - For user-oriented features
+   - [README.md](README.md) - Feature descriptions, setup instructions
+
+4. **New file in [docs/](docs/) folder** - ONLY if content is:
+   - Substantial (200+ lines)
+   - Completely distinct from existing guides
+   - Not fitting into any existing category
+   - Will be referenced multiple times
+
+### 3. **❌ NEVER Create Documentation In:**
+   - ❌ **Root folder** (e.g., `GUIDE.md`, `INSTRUCTIONS.md`, `NOTES.md`)
+   - ❌ **Random subfolders** (e.g., `css/STYLES-GUIDE.md`, `assets/IMAGE-GUIDE.md`)
+   - ❌ Except: `README.md`, `CLAUDE.md`, `LICENSE` (these are standard root files)
+
+### 4. **Creating New Documentation Files (Last Resort)**
+
+If you absolutely must create a new documentation file:
+
+1. **Ask the user first:**
+   - "I need to document [topic]. I could either:"
+   - "A) Add it as a section to [existing-doc.md]"
+   - "B) Create a new [docs/NEW-GUIDE.md]"
+   - "Which would you prefer?"
+
+2. **If creating new file, it must:**
+   - ✅ Go in [docs/](docs/) folder (NEVER root)
+   - ✅ Use UPPERCASE-KEBAB-CASE.md naming (e.g., `FEATURE-NAME-GUIDE.md`)
+   - ✅ Include frontmatter: Overview, Table of Contents, Last Updated date
+   - ✅ Follow existing doc structure (see any file in [docs/](docs/) for template)
+   - ✅ Be added to the "Technical Guides" list in this CLAUDE.md file
+   - ✅ Be referenced in README.md if user-relevant
+
+### 5. **Documentation Update Process**
+
+When updating existing documentation:
+- ✅ Update "Last Updated" date at bottom of file
+- ✅ Add to Table of Contents if adding new section
+- ✅ Update CLAUDE.md if adding new doc file
+- ✅ Update README.md if adding user-facing features
+
+### 6. **Examples of Correct Decision Making**
+
+**Scenario: Need to document a new JavaScript utility function**
+- ❌ Create `docs/UTILITY-FUNCTIONS-GUIDE.md`
+- ✅ Add section to [js/README.md](js/README.md) under "Utility Modules"
+
+**Scenario: Need to document new testing approach**
+- ❌ Create `TESTING-GUIDE.md` in root
+- ✅ Add section to [tests/README.md](tests/README.md)
+
+**Scenario: Need to document new performance technique**
+- ❌ Create `docs/LAZY-LOADING-GUIDE.md`
+- ✅ Add section to [docs/PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
+
+**Scenario: Need to document entirely new feature (e.g., Dark Mode Toggle with complex implementation)**
+- ❌ Create `DARK-MODE.md` in root
+- ✅ Create [docs/DARK-MODE-GUIDE.md](docs/DARK-MODE-GUIDE.md) (substantial, distinct topic)
+- ✅ Ask user first before creating
+
+**Scenario: Quick notes about a small code change**
+- ❌ Create any documentation file
+- ✅ Add code comments in the relevant JS/CSS file
+- ✅ Update README.md feature list if user-visible
+
+### 7. **When In Doubt**
+- Ask the user: "Should I add this to [existing-doc] or create a new guide?"
+- Prefer updating existing docs over creating new ones
+- Keep documentation consolidated and discoverable
+
+---
+
 ## 🛠️ Development Instructions for AI Agents
 
 ### Professional Feedback & Collaboration
