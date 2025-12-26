@@ -82,14 +82,17 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - [js/README.md](js/README.md) - JavaScript module architecture, exports, migration notes
 - [tests/README.md](tests/README.md) - Complete test suite (265+ tests, 10 categories), Playwright setup
 
-**Technical Guides in [docs/](docs/):**
-- [Performance Optimization Guide](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
-- [Memory Leak Prevention](docs/MEMORY-LEAK-PREVENTION.md)
-- [Resource Hints Guide](docs/RESOURCE-HINTS-GUIDE.md)
-- [Print Styles Guide](docs/PRINT-STYLES-GUIDE.md)
-- [Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md)
+**Technical Guides in [docs/](docs/):** (10 guides)
+- [Analytics Events Guide](docs/ANALYTICS-EVENTS-GUIDE.md)
 - [Browser Support Guide](docs/BROWSER-SUPPORT.md)
+- [Build Summary](docs/BUILD-SUMMARY.md)
+- [Deployment Guide](docs/DEPLOYMENT.md)
+- [Memory Leak Prevention](docs/MEMORY-LEAK-PREVENTION.md)
+- [Performance Optimization Guide](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
 - [Portfolio Data Validation Guide](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md)
+- [Print Styles Guide](docs/PRINT-STYLES-GUIDE.md)
+- [Resource Hints Guide](docs/RESOURCE-HINTS-GUIDE.md)
+- [Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md)
 
 **Browser Support:**
 Chrome 80+, Firefox 75+, Safari 13+, Edge 80+ (Feb 2020+). IE11 shows upgrade notice. See [docs/BROWSER-SUPPORT.md](docs/BROWSER-SUPPORT.md) for details.

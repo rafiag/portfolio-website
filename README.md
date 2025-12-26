@@ -28,12 +28,12 @@ I built this portfolio to showcase not just my data analytics work, but also my 
 
 What makes this portfolio different:
 
-- **Modular Architecture** - 16 ES6 modules with clear separation of concerns
+- **Modular Architecture** - 17 ES6 modules with clear separation of concerns
 - **Performance First** - GPU-accelerated animations, lazy loading, resource hints
 - **Accessibility** - WCAG 2.1 compliant with full keyboard navigation and ARIA labels
 - **SEO Optimized** - Structured data (Schema.org), Open Graph, Twitter Cards
 - **Print Ready** - Professional PDF generation with intelligent page breaks
-- **Battle Tested** - 189+ automated tests with 92.6% pass rate
+- **Battle Tested** - 265+ automated tests covering 10 categories
 - **Security Hardened** - Content Security Policy, secure external links, XSS protection
 - **Cross-Browser** - Works on Chrome, Firefox, Safari, Edge (no IE11)
 
@@ -43,17 +43,78 @@ What makes this portfolio different:
 portfolio-website/
 ├── index.html              # Main landing page
 ├── portfolio.html          # Full project showcase
+├── 404.html               # Custom 404 error page
+├── robots.txt             # Search engine instructions
+├── sitemap.xml            # Site structure for SEO
+├── CNAME                  # Custom domain configuration
+├── .nojekyll              # Bypass Jekyll processing on GitHub Pages
 ├── css/
 │   ├── style.css          # All styles (unified for both pages)
 │   └── print.css          # Professional PDF/print styles
 ├── js/
 │   ├── main-index.js      # Entry point for index page
 │   ├── main-portfolio.js  # Entry point for portfolio page
-│   ├── modules/           # 16 modular ES6 files
-│   └── data/              # Portfolio project data
-├── assets/                # Company logos, project images
-├── docs/                  # Technical documentation
-└── tests/                 # Comprehensive test suite (189+ tests)
+│   ├── browser-check.js   # IE11 detection and upgrade notice
+│   ├── ga4-init.js        # Google Analytics 4 initialization
+│   ├── modules/           # 17 modular ES6 files
+│   │   ├── accessibility.js
+│   │   ├── back-to-top.js
+│   │   ├── error-handler.js
+│   │   ├── font-loader.js
+│   │   ├── index-page.js
+│   │   ├── mobile-menu.js
+│   │   ├── navbar-effects.js
+│   │   ├── performance-utils.js
+│   │   ├── portfolio-carousel.js
+│   │   ├── portfolio-filter.js
+│   │   ├── portfolio-modal.js
+│   │   ├── portfolio-validator.js
+│   │   ├── scroll-animations.js
+│   │   ├── smooth-scroll.js
+│   │   ├── statistics-counter.js
+│   │   ├── structured-data.js
+│   │   └── testimonials-carousel.js
+│   └── data/
+│       └── portfolio-data.js  # Portfolio project data
+├── assets/
+│   ├── images/
+│   │   ├── companies/     # Company logos (5 companies)
+│   │   ├── portfolio/     # Project screenshots
+│   │   └── profile.webp   # Profile photo
+│   ├── og-image.webp      # Open Graph social media image
+│   └── resume.pdf         # Downloadable resume
+├── docs/                  # 10 technical guides
+│   ├── ANALYTICS-EVENTS-GUIDE.md
+│   ├── BROWSER-SUPPORT.md
+│   ├── BUILD-SUMMARY.md
+│   ├── DEPLOYMENT.md
+│   ├── MEMORY-LEAK-PREVENTION.md
+│   ├── PERFORMANCE-OPTIMIZATION-GUIDE.md
+│   ├── PORTFOLIO-DATA-VALIDATION-GUIDE.md
+│   ├── PRINT-STYLES-GUIDE.md
+│   ├── RESOURCE-HINTS-GUIDE.md
+│   └── STRUCTURED-DATA-GUIDE.md
+├── tests/                 # Comprehensive test suite (12 test files)
+│   ├── accessibility.js
+│   ├── analytics-basic-test.cjs
+│   ├── browser-compatibility.js
+│   ├── content-links.js
+│   ├── cross-browser-javascript.js
+│   ├── error-handling.js
+│   ├── interactive-features.js
+│   ├── performance.js
+│   ├── portfolio-validation.js
+│   ├── responsive.js
+│   ├── security.js
+│   ├── seo-meta.js
+│   ├── run-all-tests.bat
+│   └── README.md
+├── build/                 # Build output directory
+├── dist/                  # Distribution files (minified)
+├── tools/                 # Build and development tools
+├── .github/               # GitHub Actions workflows
+├── package.json           # npm dependencies and scripts
+└── CLAUDE.md              # AI assistant project instructions
 ```
 
 ## Running Locally
@@ -73,7 +134,7 @@ Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ## Testing & Quality Assurance
 
-I take quality seriously. This portfolio includes **189+ automated tests** with a **92.6% pass rate** covering:
+I take quality seriously. This portfolio includes **265+ automated tests** across **10 categories** covering:
 
 - **Browser Compatibility** - Chrome, Firefox, Safari/WebKit
 - **Responsive Design** - 8 viewports from 360px to 1920px (56 tests)
