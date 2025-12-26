@@ -31,7 +31,9 @@
       "Bash(del \"d:\\\\Project\\\\Portfolio Website\\\\tests\\\\modal-focus-trap.js\")",
       "Bash(move:*)",
       "Bash(powershell -Command:*)",
-      "Bash(tasklist:*)"
+      "Bash(tasklist:*)",
+      "Skill(playwright-skill)",
+      "Skill(playwright-skill:*)"
     ]
   }
 }
