@@ -26,12 +26,13 @@ All frequently animated elements now use GPU-accelerated properties:
 /* After */
 .element {
     transition: transform 0.4s ease, opacity 0.4s ease;
-    will-change: transform;
     transform: translateZ(0); /* Force GPU layer */
 }
 ```
 
 **Why:** The `all` property triggers transitions on every CSS property, including expensive ones like `width`, `height`, `top`, `left` that cause layout recalculations. Specific properties (especially `transform` and `opacity`) are GPU-accelerated and don't trigger reflow.
+
+**Note on `will-change`:** Previously included in examples, but removed from production due to excessive memory consumption. Use `transform: translateZ(0)` for GPU acceleration instead, or apply `will-change` dynamically via JavaScript only when needed.
 
 **Optimized Elements:**
 - [style.css:38-56](css/style.css#L38-L56) - Navigation bar
@@ -239,7 +240,7 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
 - IntersectionObserver unobserves after animation
 - Class-based animations (GPU-accelerated)
 - Specific transition properties only
-- `will-change` and `translateZ(0)` for GPU layers
+- `translateZ(0)` for GPU layers (no permanent `will-change` to avoid memory issues)
 - Passive event listeners for smooth scrolling
 - RequestAnimationFrame for 60fps sync
 
@@ -356,10 +357,11 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
    - Resize events: debounce to 250ms
    - Input events: debounce to 300ms
 
-4. **Use `will-change` Sparingly**
-   - Only on elements that will animate
-   - Remove after animation complete
-   - Max 4-5 elements with `will-change` simultaneously
+4. **Avoid Permanent `will-change` Declarations**
+   - ❌ Don't use `will-change` as permanent CSS (causes excessive memory consumption)
+   - ✅ Use `transform: translateZ(0)` for GPU acceleration instead
+   - ✅ If needed, apply `will-change` dynamically via JavaScript before animation, remove after
+   - Max 4-5 elements with `will-change` simultaneously (if using JS approach)
 
 5. **Batch DOM Operations**
    - Read all measurements first
@@ -463,12 +465,12 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
 **Check:**
 1. Are scroll handlers throttled? (Look for `throttle()` or `optimizedScrollHandler()`)
 2. Are you reading layout properties in handlers? (Search for `offsetTop`, `offsetHeight`)
-3. Is `will-change` on too many elements? (Max 4-5)
+3. Console warning: "Will-change memory consumption is too high"?
 
 **Fix:**
 - Add throttling: `throttle(handler, 16)`
 - Cache measurements outside handlers
-- Remove `will-change` after animation
+- Remove permanent `will-change` declarations from CSS (use `translateZ(0)` instead)
 
 ### Issue: Jittery Animations
 
@@ -487,12 +489,12 @@ heroImage.style.transform = `translate3d(0, ${rate}px, 0)`;
 **Check:**
 1. IntersectionObserver unobserving elements?
 2. Event listeners being removed?
-3. `will-change` on static elements?
+3. Console warning: "Will-change memory consumption is too high"?
 
 **Fix:**
 - Add `observer.unobserve(element)` after animation
 - Remove listeners in cleanup functions
-- Only use `will-change` on animating elements
+- Remove all permanent `will-change` declarations from CSS (this project uses `translateZ(0)` instead)
 
 ## Resources
 

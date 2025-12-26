@@ -55,7 +55,6 @@ body {
     border-bottom: 1px solid var(--color-border);
     animation: slideDown 0.6s ease-out;
     /* GPU acceleration */
-    will-change: box-shadow;
     transform: translateZ(0);
     transition: box-shadow 0.3s ease;
 }
@@ -92,7 +91,6 @@ body {
     text-decoration: none;
     letter-spacing: -0.02em;
     transition: var(--transition-color), var(--transition-transform);
-    will-change: transform;
 }
 
 .nav-logo:hover {
@@ -401,7 +399,6 @@ body {
     position: relative;
     animation: fadeInRight 0.8s ease-out 0.2s backwards;
     /* GPU acceleration for parallax */
-    will-change: transform;
     transform: translateZ(0);
 }
 
@@ -579,7 +576,6 @@ body {
     font-family: 'Playfair Display', serif;
     /* Counter animation enhancement */
     font-variant-numeric: tabular-nums;
-    will-change: contents;
 }
 
 .metric-label {
@@ -919,7 +915,6 @@ body {
     height: 100%; /* Fill track height */
     overflow: hidden; /* Prevent content overflow */
     /* GPU acceleration */
-    will-change: opacity, transform;
     backface-visibility: hidden;
 }
 
@@ -1067,7 +1062,6 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
     /* GPU acceleration for smooth scrolling */
-    will-change: scroll-position;
     transform: translateZ(0);
 }
 
@@ -1473,7 +1467,6 @@ body {
     width: calc(50% - 3rem);
     margin: 1.5rem;
     /* GPU acceleration */
-    will-change: transform;
     transform: translateZ(0);
     /* CSS containment for performance */
     contain: layout style paint;
@@ -2351,7 +2344,6 @@ body {
     z-index: 10000;
     animation: modalSlideIn 0.4s ease-out;
     /* GPU acceleration for modal animation */
-    will-change: transform, opacity;
     transform: translateZ(0);
     /* CSS containment */
     contain: layout style paint;
@@ -2830,7 +2822,6 @@ button:focus-visible,
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    will-change: opacity, transform;
 }
 
 .animated-in {
@@ -2901,7 +2892,6 @@ button:focus-visible,
                 background-color 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     /* GPU acceleration */
-    will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
 }
