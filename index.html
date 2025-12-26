@@ -16,10 +16,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
 
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XBG7HNQ9YG"></script>
-    <script src="js/ga4-init.js"></script>
-
     <!-- Resource Hints -->
     <!-- DNS Prefetch: Resolve DNS early for external domains -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -145,7 +141,7 @@
                          sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 400px" 
                          alt="Rafi Atha - Data Analyst" 
                          width="800" height="800" 
-                         loading="lazy">
+                         fetchpriority="high">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="image-decoration"></div>
@@ -725,5 +721,10 @@
 
     <!-- Modular JavaScript -->
     <script type="module" src="js/main-index.js"></script>
+
+    <!-- Google Analytics 4 -->
+    <script defer src="https://www.googletagmanager.com/gtag/js?id=G-XBG7HNQ9YG"></script>
+    <script defer src="js/ga4-init.js"></script>
+
 </body>
 </html>
