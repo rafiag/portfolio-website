@@ -49,7 +49,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 **Main:**
 - [README.md](README.md) - User docs, structure, features, setup
 - [js/README.md](js/README.md) - Module architecture, exports
-- [tests/README.md](tests/README.md) - Test suite (265+ tests, 10 categories)
+- [tests/README.md](tests/README.md) - Test suite (270+ tests, 11 categories)
 
 **Technical Guides ([docs/](docs/)):**
 - [Analytics Events](docs/ANALYTICS-EVENTS-GUIDE.md), [Browser Support](docs/BROWSER-SUPPORT.md), [Build Summary](docs/BUILD-SUMMARY.md), [Deployment](docs/DEPLOYMENT.md), [Memory Leak Prevention](docs/MEMORY-LEAK-PREVENTION.md), [Performance Optimization](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md), [Portfolio Data Validation](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md), [Print Styles](docs/PRINT-STYLES-GUIDE.md), [Resource Hints](docs/RESOURCE-HINTS-GUIDE.md), [Structured Data](docs/STRUCTURED-DATA-GUIDE.md)
@@ -107,7 +107,7 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - Implement per approved plan
 
 **3. Test Coverage**
-- Review [tests/](tests/) folder (265+ tests, 10 categories)
+- Review [tests/](tests/) folder (270+ tests, 11 categories)
 - Prefer integrating into existing test files vs creating new
 - Rerun updated tests, fix failures
 - Run `tests\run-all-tests.bat` if multiple files modified

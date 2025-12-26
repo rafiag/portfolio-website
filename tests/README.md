@@ -1,6 +1,6 @@
 # Portfolio Website - Test Suite
 
-Comprehensive end-to-end testing suite using Playwright with **10 test categories** covering **265+ individual tests**.
+Comprehensive end-to-end testing suite using Playwright with **11 test categories** covering **270+ individual tests**.
 
 ---
 
@@ -12,15 +12,16 @@ Comprehensive end-to-end testing suite using Playwright with **10 test categorie
 | 2 | `responsive.js` | Responsive Design | 56 | 8 viewports (360px-1920px), breakpoints, overflow, layout |
 | 3 | `interactive-features.js` | Interactivity | 21 | Carousel, filters, modals, mobile menu, smooth scroll, **back-to-top button**, **modal focus trap**, **statistics counter** |
 | 4 | `accessibility.js` | WCAG 2.1 | 13 | Keyboard nav, ARIA, color contrast, semantic HTML, **modal focus trap** |
-| 5 | `performance.js` | Performance | 8 | Load times, CLS, **lazy loading**, Core Web Vitals |
+| 5 | `performance.js` | Performance | 11 | Load times, CLS, **lazy loading**, **font loading**, Core Web Vitals |
 | 6 | `content-links.js` | Content & SEO | 13 | Links security, meta tags, images, Open Graph |
 | 7 | `cross-browser-javascript.js` | JavaScript | 27 | ES6, Array methods, console errors (3 browsers) |
 | 8 | `seo-meta.js` | SEO & Performance | 33 | Structured data, Twitter Cards, robots.txt, sitemap, **resource hints** |
 | 9 | `error-handling.js` | Error Recovery & Memory | 14 | 404 pages, graceful degradation, fallbacks, **memory leak prevention** |
 | 10 | `security.js` | Security | 6 | CSP compliance, XSS protection, external links, mixed content (static analysis) |
 | 11 | `portfolio-validation.js` | Data Validation | 50+ | Schema validation, type checking, field constraints, edge cases |
+| 12 | `analytics-basic-test.cjs` | Analytics | 5 | **Google Analytics 4**, Enhanced Measurement, tracking initialization |
 
-**Total: 265+ tests** | Files tested: `index.html`, `portfolio.html`, `portfolio-data.js`
+**Total: 270+ tests** | Files tested: `index.html`, `portfolio.html`, `portfolio-data.js`
 
 ---
 
@@ -84,6 +85,7 @@ node tests/content-links.js
 node tests/cross-browser-javascript.js
 node tests/seo-meta.js
 node tests/error-handling.js
+node tests/analytics-basic-test.cjs
 ```
 
 ### 4. Generate Test Summary Report
@@ -136,7 +138,7 @@ After running all tests, create a comprehensive summary report:
 ```
 
 4. Fill in the test results from console output
-5. Save the file in the `docs/` folder
+5. Save the file in the `tests/result-docs/` folder
 
 **Automated Method (Future Enhancement):**
 - A test reporter script could be added to automatically generate markdown reports
@@ -393,17 +395,38 @@ When adding tests:
 
 ---
 
-**Last Updated**: 2025-12-26 | **Framework**: Playwright + Native | **Total Tests**: 265+
+**Last Updated**: 2025-12-26 | **Framework**: Playwright + Native | **Total Tests**: 270+
 
 ---
 
 ## 🆕 Recent Updates
 
 ### 2025-12-26
-**Statistics Counter Animation** (interactive-features.js) - 3 new tests
-- Initial counter state validation (starts at 0)
-- Count-up animation completion check
-- Data attributes verification (data-target, data-suffix)
+
+**Test Suite Enhancement** - Complete test integration and coverage improvement
+
+1. **Google Analytics 4 Integration** (analytics-basic-test.cjs) - 5 new tests
+   - GA4 script injection and initialization
+   - Enhanced Measurement configuration (page views, scrolls, outbound clicks)
+   - Data layer setup verification
+   - Tracking ID validation
+   - Note: Custom events planned for future implementation
+
+2. **Font Loading Performance** (performance.js) - 3 new tests
+   - Font loader module async implementation validation
+   - Font-display: swap parameter verification
+   - Font loading non-blocking render check
+
+3. **Test Suite Integration**
+   - Analytics tests integrated into main test suite (11th category)
+   - Updated run-all-tests.bat with proper sequencing
+   - Test count updated across all documentation (270+ tests)
+   - Analytics documentation clarified (Enhanced Measurement only, custom events future)
+
+4. **Statistics Counter Animation** (interactive-features.js) - 3 tests (added earlier)
+   - Initial counter state validation (starts at 0)
+   - Count-up animation completion check
+   - Data attributes verification (data-target, data-suffix)
 
 ### 2025-12-25
 

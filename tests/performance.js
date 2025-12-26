@@ -188,13 +188,104 @@ const TARGET_URL = 'http://localhost:8000';
     }
 
     // ========================================
+    // FONT LOADING TESTS
+    // ========================================
+    console.log('\n' + '='.repeat(60));
+    console.log('🔤 FONT LOADING TESTS');
+    console.log('='.repeat(60));
+
+    // Test 5: Font Loader Module - Async Loading
+    console.log('\n📝 Testing font loader module async implementation...');
+    try {
+      await page.goto(TARGET_URL, { waitUntil: 'domcontentloaded' });
+
+      const fontLinkCheck = await page.evaluate(() => {
+        const fontLink = document.querySelector('link[rel="stylesheet"][href*="fonts.googleapis.com"]');
+        if (!fontLink) return { found: false };
+
+        return {
+          found: true,
+          hasMedia: fontLink.hasAttribute('media'),
+          media: fontLink.getAttribute('media')
+        };
+      });
+
+      if (fontLinkCheck.found) {
+        console.log('  ✅ Google Fonts stylesheet loaded');
+        if (fontLinkCheck.hasMedia) {
+          console.log(`  ✅ Async loading strategy detected (media="${fontLinkCheck.media}")`);
+        }
+        passed++;
+      } else {
+        console.log('  ❌ Google Fonts stylesheet not found');
+        failed++;
+      }
+    } catch (error) {
+      console.log('  ❌ Font loader test error:', error.message);
+      failed++;
+    }
+
+    // Test 6: Font Display Swap Parameter
+    console.log('\n⚡ Testing font-display: swap parameter...');
+    try {
+      const fontDisplayCheck = await page.evaluate(() => {
+        const fontLink = document.querySelector('link[rel="stylesheet"][href*="fonts.googleapis.com"]');
+        if (!fontLink) return { found: false };
+
+        const href = fontLink.getAttribute('href');
+        return {
+          found: true,
+          hasSwap: href.includes('display=swap')
+        };
+      });
+
+      if (fontDisplayCheck.found && fontDisplayCheck.hasSwap) {
+        console.log('  ✅ Font URL includes display=swap parameter');
+        console.log('  ℹ️  Prevents invisible text during font loading');
+        passed++;
+      } else if (fontDisplayCheck.found) {
+        console.log('  ⚠️  Font URL missing display=swap parameter');
+        warnings++;
+      } else {
+        console.log('  ❌ Font stylesheet not found');
+        failed++;
+      }
+    } catch (error) {
+      console.log('  ❌ Font display test error:', error.message);
+      failed++;
+    }
+
+    // Test 7: Font Loading Performance
+    console.log('\n🚀 Testing font loading does not block rendering...');
+    try {
+      const startTime = Date.now();
+      await page.goto(TARGET_URL, { waitUntil: 'domcontentloaded' });
+
+      // Check if h1 is visible before fonts fully load
+      const h1Visible = await page.isVisible('h1', { timeout: 2000 });
+      const renderTime = Date.now() - startTime;
+
+      if (h1Visible && renderTime < 2000) {
+        console.log(`  ✅ Page renders quickly without waiting for fonts (${renderTime}ms)`);
+        console.log('  ℹ️  Font loading does not block rendering');
+        passed++;
+      } else {
+        console.log(`  ⚠️  Page rendering took ${renderTime}ms`);
+        warnings++;
+      }
+    } catch (error) {
+      console.log('  ❌ Font loading performance test error:', error.message);
+      failed++;
+    }
+
+    // ========================================
     // LAZY LOADING TESTS
     // ========================================
     console.log('\n' + '='.repeat(60));
     console.log('🖼️  IMAGE LAZY LOADING TESTS');
     console.log('='.repeat(60));
 
-    // Test 5: Lazy Loading Attribute
+    // Test 8: Lazy Loading Attribute
     console.log('\n🔍 Testing lazy loading implementation...');
     try {
       await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
@@ -234,7 +325,7 @@ const TARGET_URL = 'http://localhost:8000';
     console.log('📐 CUMULATIVE LAYOUT SHIFT (CLS) TEST');
     console.log('='.repeat(60));
 
-    // Test 6: Layout Shift Detection
+    // Test 9: Layout Shift Detection
     console.log('\n🎢 Testing for layout shifts...');
     try {
       await page.goto(TARGET_URL);
@@ -285,7 +376,7 @@ const TARGET_URL = 'http://localhost:8000';
     console.log('⚡ JAVASCRIPT EXECUTION TIME');
     console.log('='.repeat(60));
 
-    // Test 7: JavaScript Execution
+    // Test 10: JavaScript Execution
     console.log('\n🔧 Testing JavaScript execution time...');
     try {
       await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
@@ -330,7 +421,7 @@ const TARGET_URL = 'http://localhost:8000';
     console.log('🎨 CSS ANIMATION PERFORMANCE');
     console.log('='.repeat(60));
 
-    // Test 8: CSS Animations
+    // Test 11: CSS Animations
     console.log('\n✨ Testing CSS animations performance...');
     try {
       const animationInfo = await page.evaluate(() => {

@@ -218,7 +218,11 @@ Create custom reports:
 
 ## Custom Events (Manual Implementation)
 
-These events require custom JavaScript code in the analytics module.
+> **⚠️ IMPLEMENTATION STATUS:** Custom event tracking is **NOT YET IMPLEMENTED**. This section documents the planned custom events for future implementation. Currently, only GA4 Enhanced Measurement (automatic events) is active.
+>
+> **Current Testing:** The analytics test suite ([tests/analytics-basic-test.cjs](../tests/analytics-basic-test.cjs)) verifies Enhanced Measurement only. Custom event tests will be added when these features are implemented.
+
+These events require custom JavaScript code in a dedicated analytics module.
 
 ### Event: `portfolio_interaction`
 
