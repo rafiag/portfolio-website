@@ -1378,7 +1378,8 @@ body {
 
 /* Portfolio Full Page */
 .portfolio-header {
-    padding: 10rem 3rem 4rem;
+    position: relative;
+    padding: 8rem 3rem 4rem;
     text-align: center;
     background: linear-gradient(to bottom, var(--color-card-bg), var(--color-bg));
 }
@@ -1389,7 +1390,7 @@ body {
     gap: 0.5rem;
     color: var(--color-text-muted);
     text-decoration: none;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     transition: var(--transition);
 }
 
@@ -1400,17 +1401,18 @@ body {
 
 .portfolio-header-title {
     font-family: var(--font-display);
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     font-weight: 900;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     letter-spacing: -0.02em;
 }
 
 .portfolio-header-subtitle {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--color-text-muted);
     max-width: 600px;
     margin: 0 auto;
+    line-height: 1.5;
 }
 
 .portfolio-filters {
@@ -1906,15 +1908,15 @@ body {
     }
 
     .portfolio-header {
-        padding: 8rem 1.5rem 3rem;
+        padding: 7rem 1.5rem 2rem;
     }
 
     .portfolio-header-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
 
     .portfolio-header-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
     }
 
     .portfolio-grid {
@@ -2234,15 +2236,15 @@ body {
     }
 
     .portfolio-header {
-        padding: 6rem 1rem 2rem;
+        padding: 5.5rem 1rem 1.5rem;
     }
 
     .portfolio-header-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .portfolio-header-subtitle {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .portfolio-filters {
