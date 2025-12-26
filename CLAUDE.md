@@ -128,17 +128,25 @@ You are expected to provide honest, professional feedback on user suggestions:
 
 When asked to create or implement a new feature, you MUST follow this workflow:
 
-**1. Conflict Detection and User Confirmation**
-   - Before implementing, analyze how the new feature interacts with existing features
-   - Check for potential conflicts with:
-     - Existing JavaScript modules in [js/modules/](js/modules/) (see [js/README.md](js/README.md) for module list)
-     - CSS styles and animations
-     - HTML structure and semantics
-     - Event listeners and DOM manipulations
-   - If conflicts are detected, ask the user for confirmation before proceeding
-   - Explain what existing functionality might be affected
+**1. Development Plan & User Approval**
+   - **CRITICAL: Create a development plan BEFORE starting any implementation**
+   - The plan must include:
+     - Feature overview and objectives
+     - Implementation approach (technical strategy, libraries/APIs to use, etc.)
+     - Files to be created/modified
+     - Potential conflicts with existing features (check [js/modules/](js/modules/), CSS, HTML, event listeners)
+     - Testing strategy
+     - Documentation updates needed
+   - **Present the complete plan to the user and ask: "Does this approach look good? Should I proceed with implementation?"**
+   - **Wait for explicit user approval before writing any code**
+   - If conflicts are detected, explain what existing functionality might be affected and propose solutions
 
-**2. Test Coverage Review**
+**2. Implementation**
+   - Once the plan is approved, proceed with implementing the feature
+   - Follow all code quality standards and guidelines outlined in this document
+   - Implement the feature according to the approved plan
+
+**3. Test Coverage Review**
    - After feature implementation, review test scripts in [tests/](tests/) folder
    - Check [tests/README.md](tests/README.md) for existing test categories (10 categories, 265+ tests)
    - Integration approach:
@@ -146,13 +154,13 @@ When asked to create or implement a new feature, you MUST follow this workflow:
      - **Only create new test file if:** Feature introduces entirely new category not covered by existing tests
    - Common test categories: accessibility, interactive-features, performance, responsive, browser-compatibility
 
-**3. Test Validation**
+**4. Test Validation**
    - If new test cases are added, rerun the updated test script(s)
    - Verify the new feature is implemented properly
    - Fix any test failures before completing the task
    - Run full test suite if multiple files were modified: `tests\run-all-tests.bat`
 
-**4. Documentation Updates**
+**5. Documentation Updates**
    - After feature implementation and testing, update all relevant documentation
    - **Required updates:**
      - [CLAUDE.md](CLAUDE.md) - Add to "Core Features", update "File Structure" if needed, mark To-Do items as completed
@@ -163,10 +171,13 @@ When asked to create or implement a new feature, you MUST follow this workflow:
      - Create new guide in [docs/](docs/) folder for complex features
      - Update relevant existing guides in [docs/](docs/) if feature modifies existing behavior
 
-**5. User Review & Version Control**
+**6. User Review & Version Control**
    - After completing all above steps, present the feature to the user for review
    - Show summary of: what was implemented, files modified/created, test results, documentation updates
-   - **Wait for user approval before proceeding to git operations**
+   - **CRITICAL: Always ask user for explicit confirmation before ANY git operation**
+     - Do NOT proceed with `git add`, `git commit`, or `git push` without user approval
+     - Present a clear summary and ask: "Should I proceed with committing and pushing these changes?"
+     - Wait for explicit "yes" or confirmation before executing any git commands
    - Once approved, commit and push changes:
      ```bash
      git add <relevant-files>
@@ -175,6 +186,7 @@ When asked to create or implement a new feature, you MUST follow this workflow:
      ```
    - **Important:**
      - One feature = One commit (keep commits atomic and focused)
+     - If there are other changes made from outside the session, leave them as is - don't include them in the commit and don't revert them
      - Always verify what's being committed with `git status` and `git diff`
      - Never push without explicit user approval
      - If pushing to main/master, double-check with user first
