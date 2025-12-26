@@ -38,6 +38,7 @@ tools/
 coverage/
 *.test.log
 .playwright-mcp/
+docs/lighthouse/
 
 # Server logs (from development server)
 server.log
