@@ -130,7 +130,7 @@ body {
 
 .nav-cta {
     padding: 0.6rem 1.5rem;
-    background-color: var(--color-accent);
+    background-color: #d62828; /* Darker red for WCAG AA contrast (4.5:1) */
     color: white;
     border-radius: 50px;
     transition: var(--transition);
@@ -229,7 +229,7 @@ body {
 
 .hero-label {
     padding: 0.4rem 1rem;
-    background-color: var(--color-accent);
+    background-color: #d62828; /* Darker red for WCAG AA contrast (4.5:1) */
     color: white;
     border-radius: 50px;
     font-weight: 500;

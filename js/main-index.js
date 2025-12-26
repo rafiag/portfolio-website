@@ -41,6 +41,46 @@ const moduleInstances = {
     statisticsCounter: null
 };
 
+/**
+ * Lazy load carousels using Intersection Observer
+ * Only initializes when sections are about to become visible
+ */
+function lazyLoadCarousels() {
+    const portfolioSection = document.querySelector('#portfolio');
+    const testimonialsSection = document.querySelector('#testimonials');
+
+    if (!portfolioSection && !testimonialsSection) return;
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '200px', // Load 200px before entering viewport
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const section = entry.target;
+
+                // Initialize portfolio carousel
+                if (section.id === 'portfolio' && !moduleInstances.portfolioCarousel) {
+                    moduleInstances.portfolioCarousel = new PortfolioCarousel();
+                    observer.unobserve(section);
+                }
+
+                // Initialize testimonials carousel
+                if (section.id === 'testimonials' && !moduleInstances.testimonialsCarousel) {
+                    moduleInstances.testimonialsCarousel = new TestimonialsCarousel();
+                    observer.unobserve(section);
+                }
+            }
+        });
+    }, observerOptions);
+
+    if (portfolioSection) observer.observe(portfolioSection);
+    if (testimonialsSection) observer.observe(testimonialsSection);
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Load fonts asynchronously (CSP compliant)
@@ -60,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations('.section-header, .experience-item, .skill-category, .testimonial-card, .portfolio-item, .contact-item');
 
     // Index page specific features
-    moduleInstances.portfolioCarousel = new PortfolioCarousel();
-    moduleInstances.testimonialsCarousel = new TestimonialsCarousel();
+    // Lazy load carousels only when they're about to be visible
+    lazyLoadCarousels();
     moduleInstances.statisticsCounter = initStatisticsCounter();
     initHeroParallax();
     initExperienceCards();

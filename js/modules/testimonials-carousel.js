@@ -112,12 +112,15 @@ export class TestimonialsCarousel {
             for (let slideIndex = 0; slideIndex < numSlides; slideIndex++) {
                 const dot = document.createElement('div');
                 dot.classList.add('testimonial-dot');
-                dot.setAttribute('role', 'button');
+                dot.setAttribute('role', 'tab');
                 const cardIndices = slideIndex * this.cardsPerView;
                 dot.setAttribute('aria-label', `Go to slide ${slideIndex + 1}`);
+                dot.setAttribute('tabindex', slideIndex === 0 ? '0' : '-1');
                 if (slideIndex === 0) {
                     dot.classList.add('active');
-                    dot.setAttribute('aria-current', 'true');
+                    dot.setAttribute('aria-selected', 'true');
+                } else {
+                    dot.setAttribute('aria-selected', 'false');
                 }
 
                 const handler = () => this.goToSlide(cardIndices);
@@ -247,10 +250,12 @@ export class TestimonialsCarousel {
             this.dots.forEach((dot, index) => {
                 if (index === activeSlideIndex) {
                     dot.classList.add('active');
-                    dot.setAttribute('aria-current', 'true');
+                    dot.setAttribute('aria-selected', 'true');
+                    dot.setAttribute('tabindex', '0');
                 } else {
                     dot.classList.remove('active');
-                    dot.setAttribute('aria-current', 'false');
+                    dot.setAttribute('aria-selected', 'false');
+                    dot.setAttribute('tabindex', '-1');
                 }
             });
         } catch (error) {

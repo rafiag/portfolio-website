@@ -15,6 +15,11 @@ export class ImageLoader {
 
     init() {
         this.images.forEach(img => {
+            // Skip hero/LCP images with fetchpriority="high" to avoid render delay
+            if (img.getAttribute('fetchpriority') === 'high') {
+                return;
+            }
+
             // Add loading class
             img.classList.add('image-loading');
 

@@ -30,6 +30,8 @@
     <link rel="preload" href="js/browser-check.js" as="script">
     <link rel="modulepreload" href="js/main-index.js">
     <link rel="preload" href="assets/images/profile-800w.webp" as="image" type="image/webp" imagesrcset="assets/images/profile-400w.webp 400w, assets/images/profile-600w.webp 600w, assets/images/profile-800w.webp 800w" imagesizes="(max-width: 768px) 350px, 400px">
+    <link rel="preload" href="https://fonts.gstatic.com/s/worksans/v24/QGYsz_wNahGAdqQ43Rh_fKDp.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2" as="font" type="font/woff2" crossorigin>
 
     <!-- Prefetch: Load resources likely needed for next navigation -->
     <link rel="prefetch" href="portfolio.html">
@@ -62,8 +64,8 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/print.css" media="print"> -->
     <!-- Load fonts asynchronously without inline handlers for CSP compliance -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap" media="print" id="google-fonts">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=swap"></noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=optional" media="print" id="google-fonts">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Work+Sans:wght@300;400;500;600&display=optional"></noscript>
 
     <!-- Browser compatibility check - runs before ES6 modules -->
     <script src="js/browser-check.js"></script>
@@ -78,7 +80,7 @@
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="nav-logo" aria-label="Home - Rafi Atha">RAG</a>
+            <a href="#" class="nav-logo" aria-label="RA - Home">RA</a>
             <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -491,7 +493,7 @@
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <h4 class="author-name">Vishal S.</h4>
+                                <h3 class="author-name">Vishal S.</h3>
                                 <p class="author-position">Head of Product, Kredivo Group</p>
                             </div>
                         </div>
@@ -505,7 +507,7 @@
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <h4 class="author-name">Sylvia A.</h4>
+                                <h3 class="author-name">Sylvia A.</h3>
                                 <p class="author-position">Head of Insight & Analytics, Mapan</p>
                             </div>
                         </div>
@@ -519,7 +521,7 @@
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <h4 class="author-name">Wan Angelica A.</h4>
+                                <h3 class="author-name">Wan Angelica A.</h3>
                                 <p class="author-position">Product Manager, Kredivo Group</p>
                             </div>
                         </div>
@@ -533,7 +535,7 @@
                         </p>
                         <div class="testimonial-author">
                             <div class="author-info">
-                                <h4 class="author-name">Adhitya P.</h4>
+                                <h3 class="author-name">Adhitya P.</h3>
                                 <p class="author-position">Head of Product Marketing, Mapan</p>
                             </div>
                         </div>
