@@ -36,5 +36,11 @@
       "Skill(playwright-skill:*)",
       "Bash(npm run build:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "sequential-thinking",
+    "github",
+    "playwright",
+    "context7"
+  ]
 }

@@ -43,4 +43,4 @@ tests/screenshots/
 
 # Server logs (from development server)
 server.log
-*.log.*
+*.log.*.mcp.local.json
