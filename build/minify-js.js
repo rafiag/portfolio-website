@@ -55,8 +55,9 @@ async function minifyFile({ input, output }) {
     const originalSize = Buffer.byteLength(code, 'utf8');
     totalOriginalSize += originalSize;
 
-    // Remove localhost-only console logs
-    code = removeLocalhostLogs(code);
+    // Note: localhost console log removal disabled due to complexity with template literals
+    // The logs are useful for debugging and have minimal impact on file size
+    // code = removeLocalhostLogs(code);
 
     // Minify with Terser
     let result;
@@ -80,16 +81,28 @@ async function minifyFile({ input, output }) {
         format: {
             comments: false,
             ecma: 2020
+        },
+        parse: {
+            // Better handling of template literals and edge cases
+            ecma: 2020
         }
         });
     } catch (error) {
         console.error(`  ✗ Error minifying ${input}:`);
         console.error(`    ${error.message}`);
-        // Use unminified code if minification fails
+        // Use unminified code if minification fails, but still update imports
         result = { code };
     }
 
-    const minified = result.code || code;
+    let minified = result.code || code;
+
+    // Update import paths to point to .min.js files in production
+    // Update all relative imports to use .min.js extension
+    minified = minified.replace(/from"\.\/([^"]+)\.js"/g, 'from"./$1.min.js"');
+    minified = minified.replace(/from'\.\/([^']+)\.js'/g, "from'./$1.min.js'");
+    minified = minified.replace(/from"\.\.\/([^"]+)\.js"/g, 'from"../$1.min.js"');
+    minified = minified.replace(/from'\.\.\/([^']+)\.js'/g, "from'../$1.min.js'");
+
     const minifiedSize = Buffer.byteLength(minified, 'utf8');
     totalMinifiedSize += minifiedSize;
 
@@ -99,16 +112,10 @@ async function minifyFile({ input, output }) {
     console.log(`  ✓ ${input} (${savings}% smaller)`);
 }
 
-// Helper function to remove localhost console logs
-function removeLocalhostLogs(code) {
-    // Remove if blocks that check for localhost and only contain console statements
-    code = code.replace(/if\s*\(window\.location\.hostname\s*===\s*['"]localhost['"]\)\s*\{[^}]*console\.(log|warn|error|info)\([^}]*\}/g, '');
-
-    // Remove inline localhost checks with console
-    code = code.replace(/if\s*\(window\.location\.hostname\s*===\s*['"]localhost['"]\)\s*console\.(log|warn|error|info)\([^;]*;/g, '');
-
-    return code;
-}
+// Note: removeLocalhostLogs function removed
+// Regex-based removal of console logs with template literals is too error-prone
+// and can corrupt code. The localhost console logs are useful for debugging
+// and have minimal impact on production file size.
 
 // Minify all files
 console.log('');

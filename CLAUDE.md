@@ -58,7 +58,6 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - [x] Testimonials Carousel
 - [x] Implement analytics (Google Analytics, Plausible, etc.)
 - [x] Set up build process with minification
-- [x] Remove localhost console logs from production
 - [ ] Dark/Light Mode Toggle
 
 ### Low Priority

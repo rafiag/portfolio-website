@@ -25,10 +25,16 @@ async function minifyHtml(filename) {
     const originalSize = Buffer.byteLength(html, 'utf8');
 
     // Update asset references to minified versions
+    // Script sources
     html = html.replace(/src="js\/main-index\.js"/g, 'src="js/main-index.min.js"');
     html = html.replace(/src="js\/main-portfolio\.js"/g, 'src="js/main-portfolio.min.js"');
     html = html.replace(/src="js\/browser-check\.js"/g, 'src="js/browser-check.min.js"');
     html = html.replace(/src="js\/ga4-init\.js"/g, 'src="js/ga4-init.min.js"');
+
+    // Link rel preloads and prefetches
+    html = html.replace(/href="js\/main-index\.js"/g, 'href="js/main-index.min.js"');
+    html = html.replace(/href="js\/main-portfolio\.js"/g, 'href="js/main-portfolio.min.js"');
+    html = html.replace(/href="js\/browser-check\.js"/g, 'href="js/browser-check.min.js"');
     html = html.replace(/href="css\/style\.css"/g, 'href="css/style.min.css"');
 
     // Minify HTML
