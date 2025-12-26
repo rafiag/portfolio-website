@@ -35,7 +35,7 @@
     <link rel="preload" href="css/style.css" as="style">
     <link rel="preload" href="js/browser-check.js" as="script">
     <link rel="modulepreload" href="js/main-index.js">
-    <link rel="preload" href="assets/images/profile.webp" as="image" type="image/webp">
+    <link rel="preload" href="assets/images/profile-800w.webp" as="image" type="image/webp">
 
     <!-- Prefetch: Load resources likely needed for next navigation -->
     <link rel="prefetch" href="portfolio.html">
@@ -138,7 +138,14 @@
             </div>
             <div class="hero-image">
                 <div class="image-frame">
-                    <img src="assets/images/profile.webp" alt="Rafi Atha - Data Analyst" width="800" height="800" loading="lazy">
+                    <img src="assets/images/profile-800w.webp" 
+                         srcset="assets/images/profile-400w.webp 400w, 
+                                 assets/images/profile-600w.webp 600w, 
+                                 assets/images/profile-800w.webp 800w" 
+                         sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 400px" 
+                         alt="Rafi Atha - Data Analyst" 
+                         width="800" height="800" 
+                         loading="lazy">
                     <div class="image-overlay"></div>
                 </div>
                 <div class="image-decoration"></div>

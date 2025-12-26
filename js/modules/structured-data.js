@@ -19,7 +19,7 @@ export function generatePersonSchema() {
         "email": "rafiatha.g@gmail.com",
         "telephone": "+6282118764518",
         "url": window.location.origin,
-        "image": `${window.location.origin}/assets/images/profile.webp`,
+        "image": `${window.location.origin}/assets/images/profile-800w.webp`,
         "sameAs": [
             "https://linkedin.com/in/rafi-atha"
         ],

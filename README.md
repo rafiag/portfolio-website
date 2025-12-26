@@ -80,7 +80,9 @@ portfolio-website/
 │   ├── images/
 │   │   ├── companies/     # Company logos (5 companies)
 │   │   ├── portfolio/     # Project screenshots
-│   │   └── profile.webp   # Profile photo
+│   │   ├── profile-400w.webp  # Profile photo (400px)
+│   │   ├── profile-600w.webp  # Profile photo (600px)
+│   │   └── profile-800w.webp  # Profile photo (800px)
 │   ├── og-image.webp      # Open Graph social media image
 │   └── resume.pdf         # Downloadable resume
 ├── docs/                  # 10 technical guides

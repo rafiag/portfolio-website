@@ -119,7 +119,9 @@ dist/
 │   └── data/ (all .min.js files)
 └── assets/
     ├── images/
-    │   ├── profile.webp
+    │   ├── profile-400w.webp
+    │   ├── profile-600w.webp
+    │   ├── profile-800w.webp
     │   ├── companies/ (5 logos)
     │   └── portfolio/ (3 images)
     └── resume.pdf

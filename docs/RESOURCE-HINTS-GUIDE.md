@@ -62,7 +62,7 @@ Resource hints are `<link>` elements that provide the browser with suggestions a
 <link rel="preload" href="css/style.css" as="style">
 <link rel="preload" href="js/browser-check.js" as="script">
 <link rel="preload" href="js/main-index.js" as="script">
-<link rel="preload" href="assets/images/profile.webp" as="image" type="image/webp">
+<link rel="preload" href="assets/images/profile-800w.webp" as="image" type="image/webp">
 ```
 
 #### portfolio.html

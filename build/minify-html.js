@@ -73,7 +73,9 @@ console.log('\n📦 Copying static assets...');
 const assetsToCopy = [
     { from: 'assets/resume.pdf', to: 'dist/assets/resume.pdf' },
     { from: 'assets/og-image.webp', to: 'dist/assets/og-image.webp' },
-    { from: 'assets/images/profile.webp', to: 'dist/assets/images/profile.webp' },
+    { from: 'assets/images/profile-400w.webp', to: 'dist/assets/images/profile-400w.webp' },
+    { from: 'assets/images/profile-600w.webp', to: 'dist/assets/images/profile-600w.webp' },
+    { from: 'assets/images/profile-800w.webp', to: 'dist/assets/images/profile-800w.webp' },
     { from: 'favicon.ico', to: 'dist/favicon.ico' },
     { from: 'assets/images/favicon-16x16.png', to: 'dist/assets/images/favicon-16x16.png' },
     { from: 'assets/images/favicon-32x32.png', to: 'dist/assets/images/favicon-32x32.png' },
