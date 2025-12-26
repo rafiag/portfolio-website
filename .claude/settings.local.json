@@ -33,7 +33,8 @@
       "Bash(powershell -Command:*)",
       "Bash(tasklist:*)",
       "Skill(playwright-skill)",
-      "Skill(playwright-skill:*)"
+      "Skill(playwright-skill:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

@@ -25,7 +25,6 @@ nul
 
 # Build
 dist/
-build/
 .cache/
 
 # Logs

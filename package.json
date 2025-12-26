@@ -7,6 +7,12 @@
     "start": "python -m http.server 8000",
     "serve": "python -m http.server 8000",
     "serve:alt": "npx http-server -p 8000 -c-1",
+    "build": "npm run build:clean && npm run build:css && npm run build:js && npm run build:html",
+    "build:clean": "node build/clean.js",
+    "build:css": "node build/minify-css.js",
+    "build:js": "node build/minify-js.js",
+    "build:html": "node build/minify-html.js",
+    "build:serve": "npm run build && npx http-server dist -p 8000 -c-1",
     "test": "echo \"No tests configured yet. See docs/CODE-REVIEW-2025-12-24.md for testing recommendations.\" && exit 0",
     "validate:html": "echo \"HTML validation not configured. Run manually at https://validator.w3.org/\" && exit 0",
     "validate:css": "echo \"CSS validation not configured. Run manually at https://jigsaw.w3.org/css-validator/\" && exit 0"
@@ -31,7 +37,11 @@
     "url": "https://rafiatha.github.io"
   },
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "csso": "^5.0.5",
+    "terser": "^5.36.0",
+    "html-minifier-terser": "^7.2.0"
+  },
   "engines": {
     "node": ">=14.0.0",
     "npm": ">=6.0.0"

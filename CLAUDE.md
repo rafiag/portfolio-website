@@ -56,7 +56,9 @@ A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 
 - [x] Add structured data (Schema.org)
 - [x] Modal Focus Trap
 - [x] Testimonials Carousel
-- [ ] Implement analytics (Google Analytics, Plausible, etc.)
+- [x] Implement analytics (Google Analytics, Plausible, etc.)
+- [x] Set up build process with minification
+- [x] Remove localhost console logs from production
 - [ ] Dark/Light Mode Toggle
 
 ### Low Priority
