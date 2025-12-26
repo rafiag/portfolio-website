@@ -2,468 +2,211 @@
 
 ## What
 
-A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 years of experience in fintech and e-commerce. The site showcases professional work experience, technical skills, project portfolio, and testimonials through an interactive, accessible web interface.
+A modern, responsive portfolio website for **Rafi Atha**, a Data Analyst with 5 years of experience in fintech and e-commerce. Showcases work experience, skills, projects, and testimonials through an interactive, accessible interface.
 
 **Key Pages:**
-- [index.html](index.html) - Main landing page with hero, experience, skills, testimonials, featured projects, and contact
-- [portfolio.html](portfolio.html) - Full project showcase with filtering capabilities
+- [index.html](index.html) - Landing page with hero, experience, skills, testimonials, projects, contact
+- [portfolio.html](portfolio.html) - Full project showcase with filtering
 
 ## Why
 
-**Purpose:** To present a professional online presence that:
-- Demonstrates technical expertise in data analytics, BI, and visualization
-- Showcases real-world projects with measurable impact
-- Provides an engaging user experience that reflects attention to detail
-- Serves as a central hub for career opportunities and professional networking
+**Purpose:** Professional online presence demonstrating technical expertise in data analytics, BI, and visualization with measurable impact.
 
-**Target Audience:** Recruiters, hiring managers, potential clients, and professional connections in the data analytics and business intelligence space.
+**Target Audience:** Recruiters, hiring managers, clients, and professional connections in data analytics/BI.
 
 ## How
 
-### Technical Stack
-- **HTML5** - Semantic markup with accessibility features
-- **CSS3** - Custom properties, flexbox, grid, animations, responsive design
-- **Vanilla JavaScript** - No frameworks, modern ES6+ features
-- **Fonts** - Playfair Display (headings) + Work Sans (body) from Google Fonts
+**Tech Stack:** HTML5, CSS3, Vanilla JavaScript (ES6+), Google Fonts (Playfair Display + Work Sans)
 
-### Core Features
-1. Responsive Navigation, 2. Interactive Work Experience, 3. Skills Matrix, 4. Portfolio Carousel, 5. Testimonials Carousel, 6. Animated Statistics Counter, 7. Project Filtering, 8. Modal System with Focus Trap, 9. Scroll Animations, 10. Parallax Effects
+**Core Features:** Responsive Navigation, Interactive Experience Timeline, Skills Matrix, Portfolio Carousel, Testimonials Carousel, Statistics Counter, Project Filtering, Modal System, Scroll Animations, Parallax Effects
 
-**See [README.md](README.md) for detailed feature descriptions and project structure.**
+**Design:** Mobile-first, dark theme (#2b2d31) with red accent (#ff6b6b), performance-focused, accessibility-first, progressive enhancement
 
-### Design Philosophy
-- **Mobile-first** responsive approach
-- **Dark theme** (#2b2d31) with red accent (#ff6b6b)
-- **Performance-focused** with lazy loading and minimal dependencies
-- **Accessibility-first** with ARIA labels, semantic HTML, keyboard navigation
-- **Progressive enhancement** for broader browser support
+**Details:** See [README.md](README.md) for complete feature descriptions and project structure.
 
 ---
 
 ## To-Do List
 
 ### High Priority
-- [x] Replace all placeholder content
-- [x] Resource Hints in HTML
-- [x] Native Lazy Loading Strategy
-- [x] Memory Leak Prevention
-- [x] Back-to-Top Button
-- [x] Portfolio Data Validation
+- [x] Replace placeholder content, Resource hints, Lazy loading, Memory leak prevention, Back-to-top button, Portfolio validation
 
 ### Medium Priority
-- [x] Add error handling and loading states
-- [x] Split JS into modules
-- [x] Add structured data (Schema.org)
-- [x] Modal Focus Trap
-- [x] Testimonials Carousel
-- [x] Implement analytics (Google Analytics, Plausible, etc.)
-- [x] Set up build process with minification
+- [x] Error handling, Module architecture, Structured data, Modal focus trap, Testimonials carousel, Analytics, Build process
 - [ ] Dark/Light Mode Toggle
 
 ### Low Priority
-- [x] Add print styles (A4 format)
-- [x] Improve animation performance (60fps target)
-- [x] Add progressive enhancement for older browsers
-- [x] Add metrics display on experience section
-- [x] Add short company description to experience details
-- [x] Animated Statistics Counter
-- [ ] Tooltips for Technical Terms
-- [ ] Dynamic Resume Generator
+- [x] Print styles, Animation performance (60fps), Progressive enhancement, Metrics display, Statistics counter
+- [ ] Tooltips for technical terms, Dynamic resume generator
 
-### Future Enhancements
-- [ ] Add site to Google Search Console
+### Future
+- [ ] Google Search Console integration
 
 ---
 
-## 📚 Documentation Overview
+## 📚 Documentation
 
-**Main Documentation:**
-- [README.md](README.md) - User-facing documentation, project structure, features, setup instructions
-- [js/README.md](js/README.md) - JavaScript module architecture, exports, migration notes
-- [tests/README.md](tests/README.md) - Complete test suite (265+ tests, 10 categories), Playwright setup
+**Main:**
+- [README.md](README.md) - User docs, structure, features, setup
+- [js/README.md](js/README.md) - Module architecture, exports
+- [tests/README.md](tests/README.md) - Test suite (265+ tests, 10 categories)
 
-**Technical Guides in [docs/](docs/):** (10 guides)
-- [Analytics Events Guide](docs/ANALYTICS-EVENTS-GUIDE.md)
-- [Browser Support Guide](docs/BROWSER-SUPPORT.md)
-- [Build Summary](docs/BUILD-SUMMARY.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
-- [Memory Leak Prevention](docs/MEMORY-LEAK-PREVENTION.md)
-- [Performance Optimization Guide](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
-- [Portfolio Data Validation Guide](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md)
-- [Print Styles Guide](docs/PRINT-STYLES-GUIDE.md)
-- [Resource Hints Guide](docs/RESOURCE-HINTS-GUIDE.md)
-- [Structured Data Guide](docs/STRUCTURED-DATA-GUIDE.md)
+**Technical Guides ([docs/](docs/)):**
+- [Analytics Events](docs/ANALYTICS-EVENTS-GUIDE.md), [Browser Support](docs/BROWSER-SUPPORT.md), [Build Summary](docs/BUILD-SUMMARY.md), [Deployment](docs/DEPLOYMENT.md), [Memory Leak Prevention](docs/MEMORY-LEAK-PREVENTION.md), [Performance Optimization](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md), [Portfolio Data Validation](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md), [Print Styles](docs/PRINT-STYLES-GUIDE.md), [Resource Hints](docs/RESOURCE-HINTS-GUIDE.md), [Structured Data](docs/STRUCTURED-DATA-GUIDE.md)
 
-**Browser Support:**
-Chrome 80+, Firefox 75+, Safari 13+, Edge 80+ (Feb 2020+). IE11 shows upgrade notice. See [docs/BROWSER-SUPPORT.md](docs/BROWSER-SUPPORT.md) for details.
+**Browser Support:** Chrome 80+, Firefox 75+, Safari 13+, Edge 80+ (Feb 2020+). IE11 shows upgrade notice.
 
 ---
 
-## 📝 Documentation Management Policy
+## 📝 Documentation Management
 
-**CRITICAL: Before Creating Any New Documentation File**
+**CRITICAL:** Before creating ANY documentation file, follow this process:
 
-When a task requires creating documentation, you MUST follow this process:
+**Priority Order:**
+1. **Update existing [docs/](docs/) file** - Add new section if related
+2. **Update module README** - [js/README.md](js/README.md) or [tests/README.md](tests/README.md)
+3. **Update [README.md](README.md)** - For user-facing features
+4. **Create new file in [docs/](docs/)** - ONLY if substantial (200+ lines), distinct topic, ask user first
 
-### 1. **Check Existing Documentation First**
-   - Review all files in [docs/](docs/) folder (see list above)
-   - Check if the new content fits into an existing guide
-   - Ask yourself: "Can this be a new section in an existing doc?"
+**Rules:**
+- ❌ NEVER create docs in root folder (except README.md, CLAUDE.md, LICENSE)
+- ❌ NEVER create docs in random subfolders (css/, assets/, etc.)
+- ✅ Ask user: "Should I add this to [existing-doc] or create new [docs/NEW-GUIDE.md]?"
+- ✅ New files must: use UPPERCASE-KEBAB-CASE.md, include frontmatter, update this file's guide list
 
-### 2. **Where to Add Documentation**
+**Examples:**
+- JS utility → Add to [js/README.md](js/README.md), not new file
+- Testing approach → Add to [tests/README.md](tests/README.md), not new file
+- Performance technique → Add to [PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md), not new file
+- Major new feature (200+ lines) → Ask user, then create [docs/FEATURE-GUIDE.md](docs/)
 
-**Preferred locations (in order):**
-
-1. **Existing docs in [docs/](docs/) folder** - Add as new section if related
-   - Example: New performance technique → Add to [PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
-   - Example: New analytics event → Add to [ANALYTICS-EVENTS-GUIDE.md](docs/ANALYTICS-EVENTS-GUIDE.md)
-   - Example: New build optimization → Add to [BUILD-SUMMARY.md](docs/BUILD-SUMMARY.md)
-
-2. **Module-specific README** - For module documentation
-   - [js/README.md](js/README.md) - JavaScript module documentation
-   - [tests/README.md](tests/README.md) - Test documentation
-
-3. **User-facing README** - For user-oriented features
-   - [README.md](README.md) - Feature descriptions, setup instructions
-
-4. **New file in [docs/](docs/) folder** - ONLY if content is:
-   - Substantial (200+ lines)
-   - Completely distinct from existing guides
-   - Not fitting into any existing category
-   - Will be referenced multiple times
-
-### 3. **❌ NEVER Create Documentation In:**
-   - ❌ **Root folder** (e.g., `GUIDE.md`, `INSTRUCTIONS.md`, `NOTES.md`)
-   - ❌ **Random subfolders** (e.g., `css/STYLES-GUIDE.md`, `assets/IMAGE-GUIDE.md`)
-   - ❌ Except: `README.md`, `CLAUDE.md`, `LICENSE` (these are standard root files)
-
-### 4. **Creating New Documentation Files (Last Resort)**
-
-If you absolutely must create a new documentation file:
-
-1. **Ask the user first:**
-   - "I need to document [topic]. I could either:"
-   - "A) Add it as a section to [existing-doc.md]"
-   - "B) Create a new [docs/NEW-GUIDE.md]"
-   - "Which would you prefer?"
-
-2. **If creating new file, it must:**
-   - ✅ Go in [docs/](docs/) folder (NEVER root)
-   - ✅ Use UPPERCASE-KEBAB-CASE.md naming (e.g., `FEATURE-NAME-GUIDE.md`)
-   - ✅ Include frontmatter: Overview, Table of Contents, Last Updated date
-   - ✅ Follow existing doc structure (see any file in [docs/](docs/) for template)
-   - ✅ Be added to the "Technical Guides" list in this CLAUDE.md file
-   - ✅ Be referenced in README.md if user-relevant
-
-### 5. **Documentation Update Process**
-
-When updating existing documentation:
-- ✅ Update "Last Updated" date at bottom of file
-- ✅ Add to Table of Contents if adding new section
-- ✅ Update CLAUDE.md if adding new doc file
-- ✅ Update README.md if adding user-facing features
-
-### 6. **Examples of Correct Decision Making**
-
-**Scenario: Need to document a new JavaScript utility function**
-- ❌ Create `docs/UTILITY-FUNCTIONS-GUIDE.md`
-- ✅ Add section to [js/README.md](js/README.md) under "Utility Modules"
-
-**Scenario: Need to document new testing approach**
-- ❌ Create `TESTING-GUIDE.md` in root
-- ✅ Add section to [tests/README.md](tests/README.md)
-
-**Scenario: Need to document new performance technique**
-- ❌ Create `docs/LAZY-LOADING-GUIDE.md`
-- ✅ Add section to [docs/PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md)
-
-**Scenario: Need to document entirely new feature (e.g., Dark Mode Toggle with complex implementation)**
-- ❌ Create `DARK-MODE.md` in root
-- ✅ Create [docs/DARK-MODE-GUIDE.md](docs/DARK-MODE-GUIDE.md) (substantial, distinct topic)
-- ✅ Ask user first before creating
-
-**Scenario: Quick notes about a small code change**
-- ❌ Create any documentation file
-- ✅ Add code comments in the relevant JS/CSS file
-- ✅ Update README.md feature list if user-visible
-
-### 7. **When In Doubt**
-- Ask the user: "Should I add this to [existing-doc] or create a new guide?"
-- Prefer updating existing docs over creating new ones
-- Keep documentation consolidated and discoverable
+**When updating docs:** Update "Last Updated" date, add to TOC if new section, update CLAUDE.md/README.md if new file
 
 ---
 
-## 🛠️ Development Instructions for AI Agents
+## 🛠️ Development Instructions
 
-### Professional Feedback & Collaboration
+### Professional Feedback
 
-**IMPORTANT: Don't Be a Yes-Man**
-
-You are expected to provide honest, professional feedback on user suggestions:
-
-- **If a suggestion has potential issues**, explain them clearly:
-  - Performance implications (e.g., "This approach might cause memory leaks because...")
-  - Accessibility concerns (e.g., "This could break keyboard navigation for...")
-  - Security risks (e.g., "Using innerHTML here exposes the site to XSS attacks...")
-  - Maintenance issues (e.g., "This creates tight coupling that will make future changes harder...")
-  - Better alternatives (e.g., "Instead of X, consider Y because...")
-
-- **When providing feedback:**
-  - Be respectful but direct
-  - Explain the "why" behind your concerns
-  - Offer alternative solutions when possible
-  - Use concrete examples to illustrate the issue
-  - Acknowledge valid parts of the suggestion while addressing problems
-
-- **Good feedback examples:**
-  - ✅ "This approach could work, but it would conflict with the existing carousel implementation. Instead, we could extend the current carousel module to support this feature, which would maintain consistency and reduce code duplication."
-  - ✅ "Adding this animation to the scroll event handler would cause performance issues on mobile devices. A better approach would be to use Intersection Observer API with throttling, which aligns with the performance budgets in this project."
-  - ❌ "Sure, I'll implement that exactly as you suggested." (when there are obvious issues)
-
-- **Your role is to be a collaborative partner, not just an order-taker.** The user values quality over blind agreement.
+**Don't Be a Yes-Man** - Provide honest, professional feedback:
+- Flag performance issues, accessibility concerns, security risks, maintenance problems
+- Explain "why", offer alternatives, use concrete examples
+- Be respectful but direct - user values quality over blind agreement
+- ✅ Good: "This would conflict with carousel. Instead, extend existing module to reduce duplication."
+- ❌ Bad: "Sure, I'll implement exactly as suggested." (when there are issues)
 
 ### Feature Development Workflow
 
-When asked to create or implement a new feature, you MUST follow this workflow:
-
-**1. Development Plan & User Approval**
-   - **CRITICAL: Create a development plan BEFORE starting any implementation**
-   - The plan must include:
-     - Feature overview and objectives
-     - Implementation approach (technical strategy, libraries/APIs to use, etc.)
-     - Files to be created/modified
-     - Potential conflicts with existing features (check [js/modules/](js/modules/), CSS, HTML, event listeners)
-     - Testing strategy
-     - Documentation updates needed
-   - **Present the complete plan to the user and ask: "Does this approach look good? Should I proceed with implementation?"**
-   - **Wait for explicit user approval before writing any code**
-   - If conflicts are detected, explain what existing functionality might be affected and propose solutions
+**1. Plan & Approval (REQUIRED)**
+- Create plan BEFORE coding: overview, approach, files, conflicts, testing, docs
+- Ask: "Does this approach look good? Should I proceed?"
+- Wait for explicit approval
 
 **2. Implementation**
-   - Once the plan is approved, proceed with implementing the feature
-   - Follow all code quality standards and guidelines outlined in this document
-   - Implement the feature according to the approved plan
+- Follow code quality standards below
+- Implement per approved plan
 
-**3. Test Coverage Review**
-   - After feature implementation, review test scripts in [tests/](tests/) folder
-   - Check [tests/README.md](tests/README.md) for existing test categories (10 categories, 265+ tests)
-   - Integration approach:
-     - **Prefer:** Integrate new tests into existing relevant test scripts
-     - **Only create new test file if:** Feature introduces entirely new category not covered by existing tests
-   - Common test categories: accessibility, interactive-features, performance, responsive, browser-compatibility
+**3. Test Coverage**
+- Review [tests/](tests/) folder (265+ tests, 10 categories)
+- Prefer integrating into existing test files vs creating new
+- Rerun updated tests, fix failures
+- Run `tests\run-all-tests.bat` if multiple files modified
 
-**4. Test Validation**
-   - If new test cases are added, rerun the updated test script(s)
-   - Verify the new feature is implemented properly
-   - Fix any test failures before completing the task
-   - Run full test suite if multiple files were modified: `tests\run-all-tests.bat`
+**4. Documentation**
+- **Required:** Update [CLAUDE.md](CLAUDE.md) (mark todos, add features), [README.md](README.md) (describe features)
+- **Optional:** Update [tests/README.md](tests/README.md), [js/README.md](js/README.md), or create/update [docs/](docs/) guide
 
-**5. Documentation Updates**
-   - After feature implementation and testing, update all relevant documentation
-   - **Required updates:**
-     - [CLAUDE.md](CLAUDE.md) - Add to "Core Features", update "File Structure" if needed, mark To-Do items as completed
-     - [README.md](README.md) - Add feature description, update screenshots/examples if visual changes
-   - **Optional updates (if applicable):**
-     - [tests/README.md](tests/README.md) - Document new test categories
-     - [js/README.md](js/README.md) - Document new modules and their exports
-     - Create new guide in [docs/](docs/) folder for complex features
-     - Update relevant existing guides in [docs/](docs/) if feature modifies existing behavior
+**5. Version Control**
+- Present summary: implemented, files changed, test results, docs updated
+- **Ask user:** "Should I proceed with committing and pushing?"
+- Wait for explicit approval
+- One feature = one atomic commit
+- Leave unrelated changes alone, verify with `git status`/`git diff`
 
-**6. User Review & Version Control**
-   - After completing all above steps, present the feature to the user for review
-   - Show summary of: what was implemented, files modified/created, test results, documentation updates
-   - **CRITICAL: Always ask user for explicit confirmation before ANY git operation**
-     - Do NOT proceed with `git add`, `git commit`, or `git push` without user approval
-     - Present a clear summary and ask: "Should I proceed with committing and pushing these changes?"
-     - Wait for explicit "yes" or confirmation before executing any git commands
-   - Once approved, commit and push changes:
-     ```bash
-     git add <relevant-files>
-     git commit -m "<type>: <description>"  # See Git Commit Guidelines below
-     git push origin <branch-name>
-     ```
-   - **Important:**
-     - One feature = One commit (keep commits atomic and focused)
-     - If there are other changes made from outside the session, leave them as is - don't include them in the commit and don't revert them
-     - Always verify what's being committed with `git status` and `git diff`
-     - Never push without explicit user approval
-     - If pushing to main/master, double-check with user first
+### Development Server
 
-### Starting the Development Server
+**Check first:** `netstat -an | findstr :8000`
+- If running → Use existing server
+- If not → `python -m http.server 8000` (use Bash tool with `run_in_background=true`)
+- Verify: Check netstat or test with PowerShell HTTP request
+- Stop: Use `KillShell` tool
 
-**IMPORTANT: Always Check for Existing Servers First**
+### Code Quality
 
-Before starting a new development server, check if one is already running:
+**JavaScript:**
+- ES6+ (const/let, arrows, templates, modules), modular architecture ([js/modules/](js/modules/))
+- All modules need `cleanup()` for memory leak prevention ([docs/MEMORY-LEAK-PREVENTION.md](docs/MEMORY-LEAK-PREVENTION.md))
+- Descriptive names, JSDoc for complex functions, graceful error handling
 
-```bash
-# Check if server is already running on port 8000
-netstat -an | findstr :8000
-```
+**CSS:**
+- CSS variables (`:root`), mobile-first, semantic classes (`.hero-section`)
+- GPU animations: `transform`/`opacity` only ([docs/PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md))
+- Dark theme: #2b2d31 bg, #ff6b6b accent
 
-**If a server is already running:**
-- ✅ Use the existing server - no need to start a new one
-- ✅ Verify it's serving the correct directory
-- ❌ Do NOT start another server on the same port (causes conflicts)
+**Accessibility:**
+- Keyboard accessible, semantic HTML, ARIA labels, WCAG 2.1 AA contrast (4.5:1), test keyboard navigation
 
-**If no server is running:**
+**Performance:**
+- Page load <2s (3G), TTI <3s, CLS <0.1, FCP <1.5s, animations 60fps, modules <15KB
 
-```bash
-# Windows Environment - Use Bash tool with run_in_background=true
-python -m http.server 8000
-```
+**Security:**
+- Never `innerHTML` with user content (use `textContent`), external links need `rel="noopener noreferrer"`
+- Validate [portfolio-data.js](js/data/portfolio-data.js) ([docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md))
+- No inline JS, follow CSP patterns
 
-**Why:** DO NOT use `start /B python -m http.server 8000` - the `/B` flag can be misinterpreted as drive B: in Windows. The Bash tool's `run_in_background` parameter handles backgrounding correctly.
-
-**After Starting - Verify:**
-```bash
-netstat -an | findstr :8000
-# Or test with HTTP request:
-powershell -Command "Start-Sleep -Seconds 2; try { (Invoke-WebRequest -Uri http://localhost:8000 -UseBasicParsing).StatusCode } catch { 'Error' }"
-```
-
-**Stopping the Server:** Use the `KillShell` tool with the appropriate shell_id.
-
-### Code Quality Standards
-
-**JavaScript Guidelines:**
-- Use ES6+ features (const/let, arrow functions, template literals, modules)
-- Follow modular architecture - create separate modules in [js/modules/](js/modules/) (see [js/README.md](js/README.md) for module structure)
-- All modules must export their main functionality and include cleanup methods to prevent memory leaks (see [docs/MEMORY-LEAK-PREVENTION.md](docs/MEMORY-LEAK-PREVENTION.md))
-- Use descriptive variable/function names (no single letters except loop counters)
-- Add JSDoc comments for complex functions
-- Handle errors gracefully - never let errors crash the page silently
-
-**CSS Guidelines:**
-- Use CSS custom properties (variables) defined in `:root` for colors and common values
-- Follow mobile-first approach - base styles for mobile, media queries for desktop
-- Use semantic class names (`.hero-section`, not `.box1`)
-- Leverage GPU acceleration for animations - `transform` and `opacity` only (see [docs/PERFORMANCE-OPTIMIZATION-GUIDE.md](docs/PERFORMANCE-OPTIMIZATION-GUIDE.md))
-- Maintain dark theme consistency (#2b2d31 background, #ff6b6b accent)
-
-**Accessibility Requirements:**
-- All interactive elements must be keyboard accessible (tab navigation)
-- Use semantic HTML (`<nav>`, `<main>`, `<section>`, etc.)
-- Include ARIA labels for icon buttons and complex widgets
-- Maintain WCAG 2.1 AA contrast ratios (4.5:1 for normal text)
-- Test with keyboard-only navigation before completing features
-
-**Performance Budgets:**
-- Initial page load: < 2 seconds on 3G
-- Time to Interactive (TTI): < 3 seconds
-- Cumulative Layout Shift (CLS): < 0.1
-- First Contentful Paint (FCP): < 1.5 seconds
-- All animations: 60fps (use Chrome DevTools Performance tab)
-- JavaScript bundle: Keep each module < 15KB unminified
-
-**Security Checklist:**
-- Never use `innerHTML` with user-generated content (use `textContent`)
-- All external links must have `rel="noopener noreferrer"`
-- Validate all data in [portfolio-data.js](js/data/portfolio-data.js) using the validator (see [docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md](docs/PORTFOLIO-DATA-VALIDATION-GUIDE.md))
-- No inline JavaScript in HTML
-- Follow existing Content Security Policy patterns
-
-### Git Commit Guidelines
-
-Follow these conventions based on the project's commit history:
+### Git Commits
 
 **Format:** `<type>: <description>` (lowercase, no period)
 
-**Types:**
-- `implement` - New features (e.g., "implement modal focus trap")
-- `add` - New content or files (e.g., "add portfolio-data validation")
-- `update` - Modifications to existing features (e.g., "update readme.md")
-- `fix` - Bug fixes (e.g., "fix carousel touch events")
-- `refactor` - Code restructuring without behavior change
-- `test` - Test updates (e.g., "update and rerun test case")
+**Types:** `implement` (new features), `add` (new content/files), `update` (modify existing), `fix` (bugs), `refactor`, `test`
 
-**Examples:**
-```bash
-implement back to top button
-add memory leak prevention
-update project description in README.md
-fix navbar scroll behavior
-```
+**Examples:** `implement back to top button`, `fix carousel touch events`
 
-**Important:**
-- Keep descriptions concise but descriptive
-- Use lowercase for the entire message
-- No period at the end
-- Focus on what changed, not why (details go in commit body if needed)
+### Module Architecture
 
-### Module Architecture Guidelines
+**Requirements:**
+1. File: `kebab-case.js` in [js/modules/](js/modules/)
+2. Structure: Export class with `init()` and `cleanup()` methods
+3. Import in [main-index.js](js/main-index.js) or [main-portfolio.js](js/main-portfolio.js)
+4. Memory: Implement `cleanup()` ([docs/MEMORY-LEAK-PREVENTION.md](docs/MEMORY-LEAK-PREVENTION.md))
 
-When creating new JavaScript modules, follow the structure in [js/README.md](js/README.md).
-
-**Key Requirements:**
-1. **File Naming:** Use kebab-case: `feature-name.js`
-2. **Module Structure:** Export class with `init()` and `cleanup()` methods
-3. **Integration:** Import in [main-index.js](js/main-index.js) or [main-portfolio.js](js/main-portfolio.js)
-4. **Memory Management:** Always implement `cleanup()` method (see [docs/MEMORY-LEAK-PREVENTION.md](docs/MEMORY-LEAK-PREVENTION.md))
-
-**Example:**
+**Template:**
 ```javascript
 // js/modules/feature-name.js
 export class FeatureName {
     constructor() {
         this.elements = {};
-        this.state = {};
         this.listeners = []; // Track for cleanup
     }
-
     init() {
         this.cacheElements();
         this.attachEventListeners();
         return this;
     }
-
     cleanup() {
-        // Remove all event listeners and clear references
+        // Remove listeners, clear references
     }
 }
-
 export function initFeatureName() {
     return new FeatureName().init();
 }
 ```
 
-See [js/README.md](js/README.md) for detailed module documentation and examples.
+See [js/README.md](js/README.md) for details.
 
-### Common Pitfalls & Troubleshooting
+### Common Pitfalls
 
-**Before Implementation:**
-- ❌ Don't guess file paths - always use Read or Glob to verify files exist
-- ❌ Don't assume existing code structure - read the actual implementation first
-- ❌ Don't create duplicate functionality - check existing modules in [js/modules/](js/modules/) (see [js/README.md](js/README.md))
-- ✅ Do use the Task tool with Explore agent for codebase discovery
+**Before:** Read files first (don't guess paths), check existing modules, use Task tool with Explore agent
 
-**During Development:**
-- ❌ Don't use `getElementById` without null checks
-- ❌ Don't add event listeners without planning how to remove them
-- ❌ Don't hardcode values that are already in CSS custom properties
-- ❌ Don't modify [portfolio-data.js](js/data/portfolio-data.js) without running the validator
-- ✅ Do test in multiple viewports (mobile: 375px, tablet: 768px, desktop: 1920px)
-- ✅ Do check browser console for errors after changes
+**During:** Null checks for DOM queries, plan listener cleanup, use CSS variables (not hardcoded), validate portfolio data, test viewports (375px, 768px, 1920px), check console
 
-**Testing Issues:**
-- If tests fail, check that the dev server is running on port 8000
-- Playwright tests expect specific URLs: `http://localhost:8000/` and `http://localhost:8000/portfolio.html`
-- See [tests/README.md](tests/README.md) for complete testing guide and troubleshooting
+**Testing:** Server on port 8000, URLs: `http://localhost:8000/` and `/portfolio.html`, see [tests/README.md](tests/README.md)
 
-**Module Integration Issues:**
-- Modules must be imported with `.js` extension in ES6 imports
-- Check entry point files: [main-index.js](js/main-index.js) for index.html, [main-portfolio.js](js/main-portfolio.js) for portfolio.html
-- Module execution order matters - init functions should be called in dependency order
+**Modules:** Import with `.js` extension, check entry points ([main-index.js](js/main-index.js), [main-portfolio.js](js/main-portfolio.js)), init order matters
 
-**CSS Issues:**
-- Check media query breakpoints: 480px (mobile menu), 768px (tablet), 1024px (desktop)
-- Dark theme colors must use existing CSS variables, not hardcoded values
-- Animation jank usually means you're animating non-GPU properties (use `transform` and `opacity` only)
+**CSS:** Breakpoints: 480px (mobile menu), 768px (tablet), 1024px (desktop), use CSS variables, GPU props only (`transform`/`opacity`)
 
-**Git Issues:**
-- Always check git status before committing to see what actually changed
-- Don't commit debugging code (console.logs, commented code, test files)
-- Commit message should match existing convention (see Git Commit Guidelines above)
+**Git:** Check status before commit, no debug code (console.logs, comments), follow commit conventions
 
 ---
 
