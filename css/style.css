@@ -1006,7 +1006,8 @@ body {
 
 /* Testimonials Navigation Dots */
 .testimonials-dots {
-    display: flex;
+    display: none;
+    /* Hidden at user request */
     justify-content: center;
     gap: 0.8rem;
     margin-top: 2rem;
@@ -1049,7 +1050,7 @@ body {
     z-index: 10;
     transition: var(--transition);
     font-size: 1.5rem;
-    color: var(--color-text);
+    color: var(--color-accent);
 }
 
 .testimonials-btn:hover {
@@ -1213,7 +1214,7 @@ body {
     z-index: 10;
     transition: var(--transition);
     font-size: 1.5rem;
-    color: var(--color-text);
+    color: var(--color-accent);
 }
 
 .carousel-btn:hover {
@@ -1231,7 +1232,8 @@ body {
 }
 
 .carousel-dots {
-    display: flex;
+    display: none;
+    /* Hidden at user request */
     justify-content: center;
     gap: 0.8rem;
     margin-top: 2rem;
