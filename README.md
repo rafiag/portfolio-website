@@ -15,7 +15,7 @@ I built this portfolio to showcase not just my data analytics work, but also my 
 - **Animated Statistics** - Count-up animation for experience metrics (5+ years, 5 companies, 3 industries, 20+ products)
 - **Experience Timeline** - Interactive company cards featuring Kredivo Group, Mapan, LinkAja!, tvOne, and Telkom Indonesia
 - **Skills Matrix** - Technical proficiencies in data analytics, BI tools, Python, SQL, and visualization
-- **Testimonials Carousel** - Auto-rotating carousel displaying 2 testimonials at once (1 on mobile) with manual controls, pause-on-hover, and keyword highlighting for emphasis
+- **Testimonials Carousel** - Smooth-scrolling carousel displaying 3 testimonials at once on desktop (1 on mobile/tablet), featuring 5 professional testimonials with one-by-one navigation and keyword highlighting for emphasis
 - **Featured Projects** - Touch-enabled carousel showcasing my best work
 - **Contact Section** - Direct links to reach me
 

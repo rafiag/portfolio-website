@@ -68,6 +68,7 @@ body {
         transform: translateY(-100%);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -130,7 +131,8 @@ body {
 
 .nav-cta {
     padding: 0.6rem 1.5rem;
-    background-color: #d62828; /* Darker red for WCAG AA contrast (4.5:1) */
+    background-color: #d62828;
+    /* Darker red for WCAG AA contrast (4.5:1) */
     color: white;
     border-radius: 50px;
     transition: var(--transition);
@@ -152,7 +154,8 @@ body {
     cursor: pointer;
     padding: 5px;
     z-index: 1001;
-    color: var(--color-text); /* Ensure contrast for accessibility */
+    color: var(--color-text);
+    /* Ensure contrast for accessibility */
 }
 
 .menu-toggle span {
@@ -204,6 +207,7 @@ body {
         opacity: 0;
         transform: translateX(-30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -229,7 +233,8 @@ body {
 
 .hero-label {
     padding: 0.4rem 1rem;
-    background-color: #d62828; /* Darker red for WCAG AA contrast (4.5:1) */
+    background-color: #d62828;
+    /* Darker red for WCAG AA contrast (4.5:1) */
     color: white;
     border-radius: 50px;
     font-weight: 500;
@@ -268,6 +273,7 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -407,6 +413,7 @@ body {
         opacity: 0;
         transform: translateX(30px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -454,9 +461,12 @@ body {
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(0, 0);
     }
+
     50% {
         transform: translate(-10px, -10px);
     }
@@ -480,6 +490,7 @@ body {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -493,10 +504,13 @@ body {
 }
 
 @keyframes scrollMove {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scaleY(1);
         opacity: 1;
     }
+
     50% {
         transform: scaleY(0.5);
         opacity: 0.5;
@@ -890,60 +904,43 @@ body {
     position: relative;
     overflow: visible;
     margin-bottom: 3rem;
-    padding: 0 80px; /* Space for buttons on desktop */
+    padding: 0 80px;
+    /* Space for buttons on desktop */
 }
 
 .testimonials-track {
-    position: relative;
-    height: 320px; /* Fixed height instead of min-height */
     display: flex;
-    gap: 2.5rem;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+    /* GPU acceleration for smooth scrolling */
+    transform: translateZ(0);
+    padding-bottom: 1rem;
+    /* Prevent bottom clipping */
+}
+
+.testimonials-track::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .testimonial-card {
-    padding: 2rem 2.5rem; /* Reduced padding for compactness */
+    /* Enforce exact width: (container width - 2 gaps of 2rem) / 3 cards */
+    flex: 0 0 calc((100% - 4rem) / 3);
+    width: calc((100% - 4rem) / 3);
+    max-width: calc((100% - 4rem) / 3);
+    scroll-snap-align: start;
+    padding: 2rem 2.5rem;
     border: 1px solid var(--color-border);
     border-radius: 2px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    visibility: hidden; /* Hidden by default - prevents flash */
-    height: 100%; /* Fill track height */
-    overflow: hidden; /* Prevent content overflow */
+    transition: border-color 0.3s ease;
     /* GPU acceleration */
     backface-visibility: hidden;
-}
-
-.testimonial-card:nth-child(1).active,
-.testimonial-card:nth-child(2).active {
-    left: 0;
-    width: calc(50% - 1.25rem); /* Half width minus half gap */
-}
-
-.testimonial-card:nth-child(2).active {
-    left: calc(50% + 1.25rem); /* Start after first card plus gap */
-}
-
-.testimonial-card:nth-child(3).active,
-.testimonial-card:nth-child(4).active {
-    left: 0;
-    width: calc(50% - 1.25rem);
-}
-
-.testimonial-card:nth-child(4).active {
-    left: calc(50% + 1.25rem);
-}
-
-.testimonial-card.active {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible; /* Show active cards */
-    z-index: 1;
 }
 
 .testimonial-card:hover {
@@ -952,7 +949,8 @@ body {
 
 .testimonial-quote {
     font-family: var(--font-display);
-    font-size: 4rem; /* Reduced from 6rem for compactness */
+    font-size: 4rem;
+    /* Reduced from 6rem for compactness */
     color: var(--color-accent);
     opacity: 0.2;
     line-height: 1;
@@ -962,16 +960,26 @@ body {
 }
 
 .testimonial-text {
-    font-size: 1rem; /* Reduced from 1.1rem */
-    line-height: 1.65; /* Reduced from 1.8 for tighter spacing */
+    font-size: 1rem;
+    /* Reduced from 1.1rem */
+    line-height: 1.65;
+    /* Reduced from 1.8 for tighter spacing */
     color: var(--color-text-muted);
-    margin-bottom: 1.5rem; /* Reduced from 2rem */
+    margin-bottom: 1.5rem;
+    /* Reduced from 2rem */
     position: relative;
     z-index: 1;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 7; /* Limit to 7 lines */
+    line-clamp: 7;
+    /* Limit to 7 lines */
+    -webkit-line-clamp: 7;
+    /* Limit to 7 lines */
     -webkit-box-orient: vertical;
+    white-space: normal;
+    /* Ensure text wraps properly */
+    word-wrap: break-word;
+    /* Break long words if needed */
 }
 
 .testimonial-text .highlight {
@@ -984,14 +992,16 @@ body {
 }
 
 .author-name {
-    font-size: 1.1rem; /* Slightly reduced from 1.2rem */
+    font-size: 1.1rem;
+    /* Slightly reduced from 1.2rem */
     font-weight: 600;
     margin-bottom: 0.2rem;
 }
 
 .author-position {
     color: var(--color-text-muted);
-    font-size: 0.9rem; /* Reduced from 0.95rem */
+    font-size: 0.9rem;
+    /* Reduced from 0.95rem */
 }
 
 /* Testimonials Navigation Dots */
@@ -1470,8 +1480,8 @@ body {
     border-radius: 2px;
     overflow: hidden;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     animation: fadeInUp 0.8s ease-out forwards;
     cursor: pointer;
@@ -1644,21 +1654,17 @@ body {
     }
 
     .testimonials-carousel {
-        padding: 0 60px; /* Reduced padding for tablet */
+        padding: 0 60px;
+        /* Reduced padding for tablet */
     }
 
     .testimonials-track {
-        height: 280px; /* Fixed height for tablet */
-        gap: 0; /* No gap needed with absolute positioning */
+        gap: 1.5rem;
     }
 
-    /* Reset card positioning for single column on tablet */
-    .testimonial-card:nth-child(1).active,
-    .testimonial-card:nth-child(2).active,
-    .testimonial-card:nth-child(3).active,
-    .testimonial-card:nth-child(4).active {
-        left: 0 !important;
-        width: 100% !important; /* Full width for single card */
+    /* Single card view on tablet */
+    .testimonial-card {
+        min-width: 100%;
     }
 
     .testimonials-btn {
@@ -1923,6 +1929,51 @@ body {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
+
+    /* Tablet testimonial carousel - 2 cards */
+    .testimonials-carousel {
+        padding: 0 50px;
+    }
+
+    .testimonials-track {
+        gap: 1.5rem;
+    }
+
+    .testimonial-card {
+        flex: 0 0 calc((100% - 1.5rem) / 2);
+        width: calc((100% - 1.5rem) / 2);
+        max-width: calc((100% - 1.5rem) / 2);
+        padding: 1.75rem 1.5rem;
+    }
+
+    .testimonial-quote {
+        font-size: 3rem;
+        top: 8px;
+        left: 10px;
+    }
+
+    .testimonial-text {
+        font-size: 0.95rem;
+        line-clamp: 8;
+        -webkit-line-clamp: 8;
+    }
+
+    .author-name {
+        font-size: 1rem;
+    }
+
+    .author-position {
+        font-size: 0.85rem;
+    }
+
+    .testimonial-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .testimonial-dot.active {
+        width: 24px;
+    }
 }
 
 /* Mobile devices (480px) */
@@ -2102,23 +2153,25 @@ body {
     .skill-badge:not(.active) {
         display: none;
     }
+}
 
+/* Mobile devices (480px and below) - Single card testimonial view */
+@media (max-width: 480px) {
     .testimonials-carousel {
-        padding: 0 50px; /* Space for buttons on mobile */
+        padding: 0 45px;
+        /* Space for buttons on mobile */
     }
 
     .testimonials-track {
-        height: 340px; /* Fixed height for mobile (taller due to single column) */
-        gap: 0;
+        gap: 1rem;
     }
 
-    /* Reset card positioning for single column on mobile */
-    .testimonial-card:nth-child(1).active,
-    .testimonial-card:nth-child(2).active,
-    .testimonial-card:nth-child(3).active,
-    .testimonial-card:nth-child(4).active {
-        left: 0 !important;
-        width: 100% !important;
+    /* Single card view on mobile */
+    .testimonial-card {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem 1.2rem;
     }
 
     .testimonials-btn {
@@ -2135,37 +2188,33 @@ body {
         right: 5px;
     }
 
-    .testimonial-card {
-        padding: 1.5rem 1.2rem; /* Slightly increased horizontal padding */
-    }
-
     .testimonial-quote {
-        font-size: 2.5rem; /* Further reduced for mobile */
+        font-size: 2.5rem;
         top: 8px;
         left: 8px;
     }
 
     .testimonial-text {
-        font-size: 0.95rem; /* Slightly smaller on mobile */
-        line-clamp: 8; /* Allow one more line on mobile */
-        -webkit-line-clamp: 8;
+        font-size: 0.9rem;
+        line-clamp: 9;
+        -webkit-line-clamp: 9;
     }
 
     .author-name {
-        font-size: 1rem; /* Reduced for mobile */
+        font-size: 0.95rem;
     }
 
     .author-position {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .testimonial-dot {
-        width: 8px;
-        height: 8px;
+        width: 7px;
+        height: 7px;
     }
 
     .testimonial-dot.active {
-        width: 24px;
+        width: 20px;
     }
 
     .portfolio-item {
@@ -2366,6 +2415,7 @@ body {
         transform: translateY(50px) scale(0.95);
         opacity: 0;
     }
+
     to {
         transform: translateY(0) scale(1);
         opacity: 1;
@@ -2642,7 +2692,8 @@ button:focus-visible,
 /* Loading States */
 .image-loading {
     position: relative;
-    opacity: 1 !important; /* Prevent grey tint */
+    opacity: 1 !important;
+    /* Prevent grey tint */
     transition: opacity 0.3s ease;
 }
 
@@ -2666,7 +2717,8 @@ button:focus-visible,
 }
 
 .image-loaded::before {
-    display: none; /* Remove shimmer effect once loaded */
+    display: none;
+    /* Remove shimmer effect once loaded */
 }
 
 .image-error {
@@ -2683,6 +2735,7 @@ button:focus-visible,
     0% {
         background-position: 200% 0;
     }
+
     100% {
         background-position: -200% 0;
     }
@@ -2692,6 +2745,7 @@ button:focus-visible,
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -2812,7 +2866,8 @@ button:focus-visible,
 .btn-loading {
     position: relative;
     pointer-events: none;
-    color: rgba(255, 255, 255, 0.01); /* Nearly invisible but not transparent for contrast */
+    color: rgba(255, 255, 255, 0.01);
+    /* Nearly invisible but not transparent for contrast */
 }
 
 .btn-loading::after {
@@ -2843,6 +2898,7 @@ button:focus-visible,
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -2899,9 +2955,9 @@ button:focus-visible,
     visibility: hidden;
     transform: translateY(20px) scale(0.8);
     transition: opacity 0.3s ease,
-                visibility 0.3s ease,
-                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                background-color 0.3s ease;
+        visibility 0.3s ease,
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     /* GPU acceleration */
     backface-visibility: hidden;

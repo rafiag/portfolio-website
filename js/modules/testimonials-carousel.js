@@ -1,13 +1,13 @@
 /**
  * Testimonials Carousel Module
- * Handles auto-rotating testimonials with pause-on-hover functionality
- * OPTIMIZED: Uses RAF for smooth animations and proper cleanup
+ * Handles smooth scroll-based testimonials navigation
+ * OPTIMIZED: Uses scroll-snap and throttled scroll tracking
  */
 
 import { throttle } from './performance-utils.js';
 
 export class TestimonialsCarousel {
-    constructor(options = {}) {
+    constructor() {
         try {
             this.container = document.querySelector('.testimonials-carousel');
             this.track = document.querySelector('.testimonials-track');
@@ -16,30 +16,14 @@ export class TestimonialsCarousel {
             this.prevBtn = document.querySelector('.testimonials-prev');
             this.nextBtn = document.querySelector('.testimonials-next');
 
-            // Configuration
-            this.config = {
-                autoRotateInterval: options.autoRotateInterval || 5000, // 5 seconds
-                transitionDuration: options.transitionDuration || 600, // 600ms
-                cardsPerView: options.cardsPerView || 2, // Cards to show at once
-                ...options
-            };
-
             this.currentIndex = 0;
-            this.isTransitioning = false;
-            this.isPaused = false;
-            this.autoRotateTimer = null;
-            this.cardsPerView = 2; // Default to 2 cards
-            this.isMobile = false;
 
             // Store bound handlers for cleanup
             this.boundHandlers = {
                 prevHandler: null,
                 nextHandler: null,
-                mouseEnterHandler: null,
-                mouseLeaveHandler: null,
-                dotHandlers: new Map(),
-                cardMouseEnterHandlers: new Map(),
-                cardMouseLeaveHandlers: new Map()
+                scrollHandler: null,
+                dotHandlers: new Map()
             };
 
             if (!this.container) {
@@ -72,27 +56,10 @@ export class TestimonialsCarousel {
                 return;
             }
 
-            // Detect mobile/desktop and adjust cards per view
-            this.checkViewport();
-            window.addEventListener('resize', () => this.checkViewport());
-
             this.createDots();
             this.addEventListeners();
-            this.updateCarousel();
-            this.startAutoRotate();
         } catch (error) {
             console.error('TestimonialsCarousel init error:', error);
-        }
-    }
-
-    checkViewport() {
-        const previousIsMobile = this.isMobile;
-        this.isMobile = window.innerWidth <= 1024; // Match CSS tablet breakpoint (max-width: 1024px)
-        this.cardsPerView = this.isMobile ? 1 : 2;
-
-        // If viewport changed, update carousel
-        if (previousIsMobile !== this.isMobile && this.cards.length > 0) {
-            this.updateCarousel();
         }
     }
 
@@ -105,29 +72,25 @@ export class TestimonialsCarousel {
                 return;
             }
 
-            // Calculate number of slides (groups of cards)
-            // For 4 cards with 2 per view = 2 slides
-            const numSlides = Math.ceil(this.cards.length / this.cardsPerView);
-
-            for (let slideIndex = 0; slideIndex < numSlides; slideIndex++) {
+            // Create one dot per card for individual navigation
+            this.cards.forEach((_, index) => {
                 const dot = document.createElement('div');
                 dot.classList.add('testimonial-dot');
                 dot.setAttribute('role', 'tab');
-                const cardIndices = slideIndex * this.cardsPerView;
-                dot.setAttribute('aria-label', `Go to slide ${slideIndex + 1}`);
-                dot.setAttribute('tabindex', slideIndex === 0 ? '0' : '-1');
-                if (slideIndex === 0) {
+                dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
+                dot.setAttribute('tabindex', index === 0 ? '0' : '-1');
+                if (index === 0) {
                     dot.classList.add('active');
                     dot.setAttribute('aria-selected', 'true');
                 } else {
                     dot.setAttribute('aria-selected', 'false');
                 }
 
-                const handler = () => this.goToSlide(cardIndices);
+                const handler = () => this.goToSlide(index);
                 dot.addEventListener('click', handler);
                 this.boundHandlers.dotHandlers.set(dot, handler);
                 this.dotsContainer.appendChild(dot);
-            }
+            });
 
             this.dots = document.querySelectorAll('.testimonial-dot');
         } catch (error) {
@@ -144,111 +107,75 @@ export class TestimonialsCarousel {
             this.prevBtn?.addEventListener('click', this.boundHandlers.prevHandler);
             this.nextBtn?.addEventListener('click', this.boundHandlers.nextHandler);
 
-            // Pause on hover for the entire carousel
-            this.boundHandlers.mouseEnterHandler = () => this.pauseAutoRotate();
-            this.boundHandlers.mouseLeaveHandler = () => this.resumeAutoRotate();
+            // Scroll tracking with throttling for better performance
+            this.boundHandlers.scrollHandler = throttle(() => {
+                const scrollLeft = this.track.scrollLeft;
+                // Calculate gap dynamically from computed style
+                const computedStyle = window.getComputedStyle(this.track);
+                const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
+                const cardWidth = this.cards[0].offsetWidth + gap;
+                const newIndex = Math.round(scrollLeft / cardWidth);
+                if (newIndex !== this.currentIndex && newIndex < this.cards.length) {
+                    this.currentIndex = newIndex;
+                    this.updateDots();
+                }
+            }, 16); // 60fps
 
-            this.container.addEventListener('mouseenter', this.boundHandlers.mouseEnterHandler);
-            this.container.addEventListener('mouseleave', this.boundHandlers.mouseLeaveHandler);
-
-            // Also pause on individual card hover for extra assurance
-            this.cards.forEach((card) => {
-                const enterHandler = () => this.pauseAutoRotate();
-                const leaveHandler = () => this.resumeAutoRotate();
-
-                card.addEventListener('mouseenter', enterHandler);
-                card.addEventListener('mouseleave', leaveHandler);
-
-                this.boundHandlers.cardMouseEnterHandlers.set(card, enterHandler);
-                this.boundHandlers.cardMouseLeaveHandlers.set(card, leaveHandler);
-            });
+            this.track.addEventListener('scroll', this.boundHandlers.scrollHandler, { passive: true });
         } catch (error) {
             console.error('TestimonialsCarousel addEventListeners error:', error);
         }
     }
 
     goToSlide(index) {
-        if (this.isTransitioning || index === this.currentIndex) return;
-
         this.currentIndex = index;
         this.updateCarousel();
     }
 
     prev() {
-        if (this.isTransitioning) return;
-
-        // Go back by cardsPerView
-        this.currentIndex = (this.currentIndex - this.cardsPerView + this.cards.length) % this.cards.length;
+        this.currentIndex = Math.max(0, this.currentIndex - 1);
         this.updateCarousel();
     }
 
     next() {
-        if (this.isTransitioning) return;
-
-        // Advance by cardsPerView
-        this.currentIndex = (this.currentIndex + this.cardsPerView) % this.cards.length;
+        this.currentIndex = Math.min(this.cards.length - 1, this.currentIndex + 1);
         this.updateCarousel();
     }
 
     updateCarousel() {
         try {
-            if (this.cards.length === 0) {
+            if (!this.cards[0]) {
                 if (window.location.hostname === 'localhost') {
                     console.warn('TestimonialsCarousel: No cards available to update');
                 }
                 return;
             }
 
-            this.isTransitioning = true;
-
-            // Calculate which cards should be visible
-            const visibleIndices = [];
-            for (let i = 0; i < this.cardsPerView; i++) {
-                const index = (this.currentIndex + i) % this.cards.length;
-                visibleIndices.push(index);
-            }
-
-            // Hide all cards first (remove active class immediately)
-            this.cards.forEach((card) => {
-                card.classList.remove('active');
-                card.setAttribute('aria-hidden', 'true');
+            // Calculate gap dynamically from computed style
+            const computedStyle = window.getComputedStyle(this.track);
+            const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
+            const cardWidth = this.cards[0].offsetWidth + gap;
+            this.track.scrollTo({
+                left: this.currentIndex * cardWidth,
+                behavior: 'smooth'
             });
-
-            // Force reflow to ensure removeClass takes effect
-            void this.track.offsetHeight;
-
-            // Show visible cards using RAF for smooth animation
-            requestAnimationFrame(() => {
-                visibleIndices.forEach((index) => {
-                    const card = this.cards[index];
-                    card.classList.add('active');
-                    card.setAttribute('aria-hidden', 'false');
-                });
-            });
-
             this.updateDots();
-
-            // Reset transition flag after animation completes
-            setTimeout(() => {
-                this.isTransitioning = false;
-            }, this.config.transitionDuration);
         } catch (error) {
             console.error('TestimonialsCarousel updateCarousel error:', error);
-            this.isTransitioning = false;
         }
     }
 
     updateDots() {
         try {
             if (!this.dots || this.dots.length === 0) {
+                if (window.location.hostname === 'localhost') {
+                    console.warn('TestimonialsCarousel: No dots available to update');
+                }
                 return;
             }
 
-            // Calculate which dot should be active based on current index
-            const activeSlideIndex = Math.floor(this.currentIndex / this.cardsPerView);
-
             this.dots.forEach((dot, index) => {
-                if (index === activeSlideIndex) {
+                if (index === this.currentIndex) {
                     dot.classList.add('active');
                     dot.setAttribute('aria-selected', 'true');
                     dot.setAttribute('tabindex', '0');
@@ -263,40 +190,11 @@ export class TestimonialsCarousel {
         }
     }
 
-    startAutoRotate() {
-        if (this.cards.length <= 1) return;
-
-        this.stopAutoRotate();
-        this.autoRotateTimer = setInterval(() => {
-            if (!this.isPaused) {
-                this.next();
-            }
-        }, this.config.autoRotateInterval);
-    }
-
-    stopAutoRotate() {
-        if (this.autoRotateTimer) {
-            clearInterval(this.autoRotateTimer);
-            this.autoRotateTimer = null;
-        }
-    }
-
-    pauseAutoRotate() {
-        this.isPaused = true;
-    }
-
-    resumeAutoRotate() {
-        this.isPaused = false;
-    }
-
     /**
      * Cleanup method to remove all event listeners and prevent memory leaks
      * Call this method when the carousel is no longer needed
      */
     destroy() {
-        // Stop auto-rotation
-        this.stopAutoRotate();
-
         // Remove button listeners
         if (this.prevBtn && this.boundHandlers.prevHandler) {
             this.prevBtn.removeEventListener('click', this.boundHandlers.prevHandler);
@@ -305,26 +203,10 @@ export class TestimonialsCarousel {
             this.nextBtn.removeEventListener('click', this.boundHandlers.nextHandler);
         }
 
-        // Remove container listeners
-        if (this.container) {
-            if (this.boundHandlers.mouseEnterHandler) {
-                this.container.removeEventListener('mouseenter', this.boundHandlers.mouseEnterHandler);
-            }
-            if (this.boundHandlers.mouseLeaveHandler) {
-                this.container.removeEventListener('mouseleave', this.boundHandlers.mouseLeaveHandler);
-            }
+        // Remove scroll listener
+        if (this.track && this.boundHandlers.scrollHandler) {
+            this.track.removeEventListener('scroll', this.boundHandlers.scrollHandler);
         }
-
-        // Remove card hover listeners
-        this.boundHandlers.cardMouseEnterHandlers.forEach((handler, card) => {
-            card.removeEventListener('mouseenter', handler);
-        });
-        this.boundHandlers.cardMouseEnterHandlers.clear();
-
-        this.boundHandlers.cardMouseLeaveHandlers.forEach((handler, card) => {
-            card.removeEventListener('mouseleave', handler);
-        });
-        this.boundHandlers.cardMouseLeaveHandlers.clear();
 
         // Remove dot click listeners
         this.boundHandlers.dotHandlers.forEach((handler, dot) => {
