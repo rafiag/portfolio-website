@@ -1,9 +1,19 @@
 /**
  * Portfolio Filter Module
  * Handles portfolio filtering functionality
+ *
+ * Features:
+ * - Dynamic filtering of portfolio cards by category
+ * - Smooth fade-in/fade-out animations
+ * - Active filter button state management
+ * - Memory-safe timer cleanup
  */
 
 export class PortfolioFilter {
+    /**
+     * Creates a new PortfolioFilter instance
+     * Automatically initializes if filter buttons and cards are found
+     */
     constructor() {
         try {
             this.filterBtns = document.querySelectorAll('.filter-btn');
@@ -33,6 +43,10 @@ export class PortfolioFilter {
         }
     }
 
+    /**
+     * Initialize the filter by attaching click listeners to filter buttons
+     * @returns {void}
+     */
     init() {
         try {
             this.filterBtns.forEach(btn => {
@@ -45,6 +59,12 @@ export class PortfolioFilter {
         }
     }
 
+    /**
+     * Filter portfolio cards based on the clicked filter button
+     * Shows/hides cards with smooth fade animations
+     * @param {HTMLElement} btn - The filter button that was clicked
+     * @returns {void}
+     */
     filter(btn) {
         try {
             const filter = btn.dataset.filter;
@@ -94,6 +114,7 @@ export class PortfolioFilter {
     /**
      * Cleanup method to remove all event listeners and clear timers
      * Call this method when the filter is no longer needed
+     * @returns {void}
      */
     destroy() {
         // Clear all active timers

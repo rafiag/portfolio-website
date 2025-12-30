@@ -1,11 +1,22 @@
 /**
  * Portfolio Modal Module
  * Handles portfolio project modal display and interactions
+ *
+ * Features:
+ * - Opens modal with portfolio project details
+ * - Focus trap implementation for accessibility
+ * - Keyboard navigation (Escape to close, Tab to cycle)
+ * - Focus restoration when modal closes
+ * - Click outside to close functionality
  */
 
 import { portfolioData } from '../data/portfolio-data.js';
 
 export class PortfolioModal {
+    /**
+     * Creates a new PortfolioModal instance
+     * @param {string} itemSelector - CSS selector for portfolio items that trigger the modal
+     */
     constructor(itemSelector = '.portfolio-item[data-portfolio-id], .portfolio-card[data-portfolio-id]') {
         try {
             this.modal = document.getElementById('portfolioModal');
@@ -53,6 +64,10 @@ export class PortfolioModal {
         }
     }
 
+    /**
+     * Initialize the modal by attaching event listeners
+     * @returns {void}
+     */
     init() {
         try {
             // Add click listeners to all portfolio items
@@ -96,6 +111,7 @@ export class PortfolioModal {
 
     /**
      * Get all focusable elements within the modal
+     * @returns {HTMLElement[]} Array of focusable elements
      */
     getFocusableElements() {
         const focusableSelectors = [
@@ -116,6 +132,9 @@ export class PortfolioModal {
 
     /**
      * Handle focus trap - keeps focus within modal
+     * Implements keyboard navigation with Tab and Shift+Tab
+     * @param {KeyboardEvent} e - The keyboard event
+     * @returns {void}
      */
     handleFocusTrap(e) {
         // Only trap Tab key
@@ -151,6 +170,18 @@ export class PortfolioModal {
         }
     }
 
+    /**
+     * Open the modal and populate it with portfolio project data
+     * @param {Object} data - Portfolio item data object
+     * @param {string} data.title - Project title
+     * @param {string} data.description - Project description
+     * @param {string} data.image - Image URL path
+     * @param {string[]} [data.details] - Array of project detail points
+     * @param {string[]} [data.tags] - Array of technology/skill tags
+     * @param {string} [data.link] - External project URL
+     * @returns {void}
+     * @throws {Error} If required modal elements are not found in DOM
+     */
     openModal(data) {
         try {
             // Show loading state
@@ -233,6 +264,11 @@ export class PortfolioModal {
         }
     }
 
+    /**
+     * Close the modal and restore focus to the trigger element
+     * Removes active state, re-enables body scroll, and cleans up focus trap
+     * @returns {void}
+     */
     closeModal() {
         try {
             this.modal.classList.remove('active');
@@ -254,6 +290,7 @@ export class PortfolioModal {
     /**
      * Cleanup method to remove all event listeners and prevent memory leaks
      * Call this method when the modal is no longer needed
+     * @returns {void}
      */
     destroy() {
         try {

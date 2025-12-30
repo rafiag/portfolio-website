@@ -3,13 +3,15 @@
  * Helpers for optimizing animations and event handlers
  */
 
+import { ANIMATION, PERFORMANCE } from '../constants.js';
+
 /**
  * Throttle function - limits how often a function can execute
  * @param {Function} func - Function to throttle
  * @param {number} wait - Minimum time between executions in ms
  * @returns {Function} Throttled function
  */
-export function throttle(func, wait = 16) { // 16ms ≈ 60fps
+export function throttle(func, wait = ANIMATION.FRAME_DURATION) { // 16ms ≈ 60fps
     let timeout = null;
     let previous = 0;
 
@@ -40,7 +42,7 @@ export function throttle(func, wait = 16) { // 16ms ≈ 60fps
  * @param {number} wait - Time to wait in ms
  * @returns {Function} Debounced function
  */
-export function debounce(func, wait = 250) {
+export function debounce(func, wait = PERFORMANCE.DEBOUNCE_DEFAULT) {
     let timeout;
 
     return function executedFunction(...args) {
@@ -62,7 +64,7 @@ export function debounce(func, wait = 250) {
 export function raf(callback) {
     return window.requestAnimationFrame
         ? window.requestAnimationFrame(callback)
-        : setTimeout(callback, 16);
+        : setTimeout(callback, ANIMATION.FRAME_DURATION);
 }
 
 /**

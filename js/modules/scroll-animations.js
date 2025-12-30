@@ -4,16 +4,18 @@
  * OPTIMIZED: Uses class toggles and unobserves after animation
  */
 
+import { INTERSECTION_OBSERVER, BROWSER_SUPPORT, IS_DEV } from '../constants.js';
+
 export function initScrollAnimations(selector, options = {}) {
     const defaultOptions = {
-        threshold: 0.1,
+        threshold: INTERSECTION_OBSERVER.THRESHOLD,
         rootMargin: '0px 0px -50px 0px'
     };
 
     const observerOptions = { ...defaultOptions, ...options };
 
     try {
-        if ('IntersectionObserver' in window) {
+        if (BROWSER_SUPPORT.INTERSECTION_OBSERVER) {
             const observer = new IntersectionObserver((entries) => {
                 // Batch DOM operations
                 entries.forEach(entry => {
@@ -36,7 +38,7 @@ export function initScrollAnimations(selector, options = {}) {
             });
         } else {
             // Fallback for browsers without IntersectionObserver support
-            if (window.location.hostname === 'localhost') {
+            if (IS_DEV) {
                 console.warn('IntersectionObserver not supported, showing all elements immediately');
             }
             document.querySelectorAll(selector).forEach(el => {

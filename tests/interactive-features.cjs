@@ -67,27 +67,7 @@ const TARGET_URL = 'http://localhost:8000';
       failed++;
     }
 
-    // Test 2: Portfolio Carousel - Dots Navigation
-    console.log('\n🔘 Testing carousel dots navigation...');
-    try {
-      const dots = await page.locator('.carousel-dot').count();
-      if (dots > 0) {
-        console.log(`  Found ${dots} carousel dots`);
-
-        // Click second dot
-        await page.locator('.carousel-dot').nth(1).click();
-        await page.waitForTimeout(500);
-        console.log('  ✅ Carousel dot navigation works');
-        passed++;
-      } else {
-        console.log('  ⚠️  No carousel dots found');
-      }
-    } catch (error) {
-      console.log('  ❌ Carousel dots error:', error.message);
-      failed++;
-    }
-
-    // Test 3: Work Experience Cards
+    // Test 2: Work Experience Cards
     console.log('\n💼 Testing work experience company selection...');
     try {
       const companyCards = await page.locator('.experience-company-card').count();
@@ -255,13 +235,12 @@ const TARGET_URL = 'http://localhost:8000';
       if (carouselExists) {
         // Test 5b-1: Check structure
         const cards = await page.locator('.testimonial-card').count();
-        const dots = await page.locator('.testimonial-dot').count();
 
-        if (dots === cards && cards === 5) {
-          console.log(`  ✅ Carousel structure correct (${cards} cards, ${dots} dots - 1 dot per card)`);
+        if (cards === 5) {
+          console.log(`  ✅ Carousel structure correct (${cards} cards)`);
           passed++;
         } else {
-          console.log(`  ❌ Card/dot mismatch (${cards} cards, ${dots} dots, expected 5 of each)`);
+          console.log(`  ❌ Expected 5 cards, found ${cards}`);
           failed++;
         }
 
@@ -296,45 +275,11 @@ const TARGET_URL = 'http://localhost:8000';
           failed++;
         }
 
-        // Test 5b-4: Check manual navigation via dots
-        await page.locator('.testimonial-dot').nth(0).click();
-        await page.waitForTimeout(700);
-
-        const scrollBackToStart = await page.evaluate(() => {
-          const track = document.querySelector('.testimonials-track');
-          return track.scrollLeft < 50; // Allow small margin
-        });
-
-        if (scrollBackToStart) {
-          console.log('  ✅ Manual navigation via dots works (scrolled back to start)');
-          passed++;
-        } else {
-          console.log('  ❌ Manual navigation failed');
-          failed++;
-        }
-
-        // Test 5b-5: Check dot highlighting follows scroll
-        await page.locator('.testimonial-dot').nth(2).click();
-        await page.waitForTimeout(700);
-
-        const thirdDotActive = await page.locator('.testimonial-dot').nth(2).evaluate(el =>
-          el.classList.contains('active')
-        );
-
-        if (thirdDotActive) {
-          console.log('  ✅ Active dot updates when clicking dots');
-          passed++;
-        } else {
-          console.log('  ❌ Active dot did not update');
-          failed++;
-        }
-
-        // Test 5b-6: Check accessibility attributes
+        // Test 5b-4: Check accessibility attributes
         const carouselRole = await carousel.getAttribute('role');
         const carouselLabel = await carousel.getAttribute('aria-label');
-        const dotsRole = await page.locator('.testimonials-dots').getAttribute('role');
 
-        if (carouselRole === 'region' && carouselLabel && dotsRole === 'tablist') {
+        if (carouselRole === 'region' && carouselLabel) {
           console.log('  ✅ Carousel has proper ARIA attributes');
           passed++;
         } else {

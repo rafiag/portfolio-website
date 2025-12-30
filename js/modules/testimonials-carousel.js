@@ -5,6 +5,7 @@
  */
 
 import { throttle } from './performance-utils.js';
+import { LAYOUT, ANIMATION, IS_DEV } from '../constants.js';
 
 export class TestimonialsCarousel {
     constructor() {
@@ -12,29 +13,30 @@ export class TestimonialsCarousel {
             this.container = document.querySelector('.testimonials-carousel');
             this.track = document.querySelector('.testimonials-track');
             this.cards = document.querySelectorAll('.testimonial-card');
-            this.dotsContainer = document.querySelector('.testimonials-dots');
             this.prevBtn = document.querySelector('.testimonials-prev');
             this.nextBtn = document.querySelector('.testimonials-next');
 
             this.currentIndex = 0;
+            this.cachedGap = null;
+            this.cachedCardWidth = null;
 
             // Store bound handlers for cleanup
             this.boundHandlers = {
                 prevHandler: null,
                 nextHandler: null,
                 scrollHandler: null,
-                dotHandlers: new Map()
+                resizeHandler: null
             };
 
             if (!this.container) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: testimonials-carousel element not found');
                 }
                 return;
             }
 
             if (this.cards.length === 0) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: no testimonial cards found');
                 }
                 return;
@@ -50,51 +52,37 @@ export class TestimonialsCarousel {
         try {
             // Only initialize if there are multiple testimonials
             if (this.cards.length <= 1) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.log('TestimonialsCarousel: Only one testimonial, skipping carousel initialization');
                 }
                 return;
             }
 
-            this.createDots();
+            this.cacheStyles();
             this.addEventListeners();
         } catch (error) {
             console.error('TestimonialsCarousel init error:', error);
         }
     }
 
-    createDots() {
+    /**
+     * Cache computed styles for better performance
+     * Reduces DOM reads during scroll events
+     */
+    cacheStyles() {
         try {
-            if (!this.dotsContainer) {
-                if (window.location.hostname === 'localhost') {
-                    console.warn('TestimonialsCarousel: dots container not found, skipping dots creation');
-                }
+            if (!this.track || !this.cards[0]) {
                 return;
             }
 
-            // Create one dot per card for individual navigation
-            this.cards.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('testimonial-dot');
-                dot.setAttribute('role', 'tab');
-                dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
-                dot.setAttribute('tabindex', index === 0 ? '0' : '-1');
-                if (index === 0) {
-                    dot.classList.add('active');
-                    dot.setAttribute('aria-selected', 'true');
-                } else {
-                    dot.setAttribute('aria-selected', 'false');
-                }
-
-                const handler = () => this.goToSlide(index);
-                dot.addEventListener('click', handler);
-                this.boundHandlers.dotHandlers.set(dot, handler);
-                this.dotsContainer.appendChild(dot);
-            });
-
-            this.dots = document.querySelectorAll('.testimonial-dot');
+            const computedStyle = window.getComputedStyle(this.track);
+            this.cachedGap = parseFloat(computedStyle.gap) || LAYOUT.CAROUSEL_GAP;
+            this.cachedCardWidth = this.cards[0].offsetWidth + this.cachedGap;
         } catch (error) {
-            console.error('TestimonialsCarousel createDots error:', error);
+            console.error('TestimonialsCarousel cacheStyles error:', error);
+            // Fallback to default values
+            this.cachedGap = LAYOUT.CAROUSEL_GAP;
+            this.cachedCardWidth = this.cards[0]?.offsetWidth + LAYOUT.CAROUSEL_GAP || 400;
         }
     }
 
@@ -110,18 +98,21 @@ export class TestimonialsCarousel {
             // Scroll tracking with throttling for better performance
             this.boundHandlers.scrollHandler = throttle(() => {
                 const scrollLeft = this.track.scrollLeft;
-                // Calculate gap dynamically from computed style
-                const computedStyle = window.getComputedStyle(this.track);
-                const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
-                const cardWidth = this.cards[0].offsetWidth + gap;
-                const newIndex = Math.round(scrollLeft / cardWidth);
+                // Use cached card width for better performance
+                const newIndex = Math.round(scrollLeft / this.cachedCardWidth);
                 if (newIndex !== this.currentIndex && newIndex < this.cards.length) {
                     this.currentIndex = newIndex;
-                    this.updateDots();
                 }
             }, 16); // 60fps
 
             this.track.addEventListener('scroll', this.boundHandlers.scrollHandler, { passive: true });
+
+            // Update cached values on window resize
+            this.boundHandlers.resizeHandler = throttle(() => {
+                this.cacheStyles();
+            }, ANIMATION.RESIZE_THROTTLE);
+
+            window.addEventListener('resize', this.boundHandlers.resizeHandler, { passive: true });
         } catch (error) {
             console.error('TestimonialsCarousel addEventListeners error:', error);
         }
@@ -145,48 +136,19 @@ export class TestimonialsCarousel {
     updateCarousel() {
         try {
             if (!this.cards[0]) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: No cards available to update');
                 }
                 return;
             }
 
-            // Calculate gap dynamically from computed style
-            const computedStyle = window.getComputedStyle(this.track);
-            const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
-            const cardWidth = this.cards[0].offsetWidth + gap;
+            // Use cached card width for better performance
             this.track.scrollTo({
-                left: this.currentIndex * cardWidth,
+                left: this.currentIndex * this.cachedCardWidth,
                 behavior: 'smooth'
             });
-            this.updateDots();
         } catch (error) {
             console.error('TestimonialsCarousel updateCarousel error:', error);
-        }
-    }
-
-    updateDots() {
-        try {
-            if (!this.dots || this.dots.length === 0) {
-                if (window.location.hostname === 'localhost') {
-                    console.warn('TestimonialsCarousel: No dots available to update');
-                }
-                return;
-            }
-
-            this.dots.forEach((dot, index) => {
-                if (index === this.currentIndex) {
-                    dot.classList.add('active');
-                    dot.setAttribute('aria-selected', 'true');
-                    dot.setAttribute('tabindex', '0');
-                } else {
-                    dot.classList.remove('active');
-                    dot.setAttribute('aria-selected', 'false');
-                    dot.setAttribute('tabindex', '-1');
-                }
-            });
-        } catch (error) {
-            console.error('TestimonialsCarousel updateDots error:', error);
         }
     }
 
@@ -208,18 +170,17 @@ export class TestimonialsCarousel {
             this.track.removeEventListener('scroll', this.boundHandlers.scrollHandler);
         }
 
-        // Remove dot click listeners
-        this.boundHandlers.dotHandlers.forEach((handler, dot) => {
-            dot.removeEventListener('click', handler);
-        });
-        this.boundHandlers.dotHandlers.clear();
+        // Remove resize listener
+        if (this.boundHandlers.resizeHandler) {
+            window.removeEventListener('resize', this.boundHandlers.resizeHandler);
+        }
 
         // Clear references
         this.container = null;
         this.track = null;
         this.cards = null;
-        this.dotsContainer = null;
-        this.dots = null;
+        this.cachedGap = null;
+        this.cachedCardWidth = null;
         this.boundHandlers = null;
     }
 }
