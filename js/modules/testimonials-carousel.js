@@ -5,6 +5,7 @@
  */
 
 import { throttle } from './performance-utils.js';
+import { LAYOUT, ANIMATION, IS_DEV } from '../constants.js';
 
 export class TestimonialsCarousel {
     constructor() {
@@ -17,24 +18,27 @@ export class TestimonialsCarousel {
             this.nextBtn = document.querySelector('.testimonials-next');
 
             this.currentIndex = 0;
+            this.cachedGap = null;
+            this.cachedCardWidth = null;
 
             // Store bound handlers for cleanup
             this.boundHandlers = {
                 prevHandler: null,
                 nextHandler: null,
                 scrollHandler: null,
+                resizeHandler: null,
                 dotHandlers: new Map()
             };
 
             if (!this.container) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: testimonials-carousel element not found');
                 }
                 return;
             }
 
             if (this.cards.length === 0) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: no testimonial cards found');
                 }
                 return;
@@ -50,12 +54,13 @@ export class TestimonialsCarousel {
         try {
             // Only initialize if there are multiple testimonials
             if (this.cards.length <= 1) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.log('TestimonialsCarousel: Only one testimonial, skipping carousel initialization');
                 }
                 return;
             }
 
+            this.cacheStyles();
             this.createDots();
             this.addEventListeners();
         } catch (error) {
@@ -63,10 +68,31 @@ export class TestimonialsCarousel {
         }
     }
 
+    /**
+     * Cache computed styles for better performance
+     * Reduces DOM reads during scroll events
+     */
+    cacheStyles() {
+        try {
+            if (!this.track || !this.cards[0]) {
+                return;
+            }
+
+            const computedStyle = window.getComputedStyle(this.track);
+            this.cachedGap = parseFloat(computedStyle.gap) || LAYOUT.CAROUSEL_GAP;
+            this.cachedCardWidth = this.cards[0].offsetWidth + this.cachedGap;
+        } catch (error) {
+            console.error('TestimonialsCarousel cacheStyles error:', error);
+            // Fallback to default values
+            this.cachedGap = LAYOUT.CAROUSEL_GAP;
+            this.cachedCardWidth = this.cards[0]?.offsetWidth + LAYOUT.CAROUSEL_GAP || 400;
+        }
+    }
+
     createDots() {
         try {
             if (!this.dotsContainer) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: dots container not found, skipping dots creation');
                 }
                 return;
@@ -110,11 +136,8 @@ export class TestimonialsCarousel {
             // Scroll tracking with throttling for better performance
             this.boundHandlers.scrollHandler = throttle(() => {
                 const scrollLeft = this.track.scrollLeft;
-                // Calculate gap dynamically from computed style
-                const computedStyle = window.getComputedStyle(this.track);
-                const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
-                const cardWidth = this.cards[0].offsetWidth + gap;
-                const newIndex = Math.round(scrollLeft / cardWidth);
+                // Use cached card width for better performance
+                const newIndex = Math.round(scrollLeft / this.cachedCardWidth);
                 if (newIndex !== this.currentIndex && newIndex < this.cards.length) {
                     this.currentIndex = newIndex;
                     this.updateDots();
@@ -122,6 +145,13 @@ export class TestimonialsCarousel {
             }, 16); // 60fps
 
             this.track.addEventListener('scroll', this.boundHandlers.scrollHandler, { passive: true });
+
+            // Update cached values on window resize
+            this.boundHandlers.resizeHandler = throttle(() => {
+                this.cacheStyles();
+            }, ANIMATION.RESIZE_THROTTLE);
+
+            window.addEventListener('resize', this.boundHandlers.resizeHandler, { passive: true });
         } catch (error) {
             console.error('TestimonialsCarousel addEventListeners error:', error);
         }
@@ -145,18 +175,15 @@ export class TestimonialsCarousel {
     updateCarousel() {
         try {
             if (!this.cards[0]) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: No cards available to update');
                 }
                 return;
             }
 
-            // Calculate gap dynamically from computed style
-            const computedStyle = window.getComputedStyle(this.track);
-            const gap = parseFloat(computedStyle.gap) || 32; // fallback to 2rem = 32px
-            const cardWidth = this.cards[0].offsetWidth + gap;
+            // Use cached card width for better performance
             this.track.scrollTo({
-                left: this.currentIndex * cardWidth,
+                left: this.currentIndex * this.cachedCardWidth,
                 behavior: 'smooth'
             });
             this.updateDots();
@@ -168,7 +195,7 @@ export class TestimonialsCarousel {
     updateDots() {
         try {
             if (!this.dots || this.dots.length === 0) {
-                if (window.location.hostname === 'localhost') {
+                if (IS_DEV) {
                     console.warn('TestimonialsCarousel: No dots available to update');
                 }
                 return;
@@ -208,6 +235,11 @@ export class TestimonialsCarousel {
             this.track.removeEventListener('scroll', this.boundHandlers.scrollHandler);
         }
 
+        // Remove resize listener
+        if (this.boundHandlers.resizeHandler) {
+            window.removeEventListener('resize', this.boundHandlers.resizeHandler);
+        }
+
         // Remove dot click listeners
         this.boundHandlers.dotHandlers.forEach((handler, dot) => {
             dot.removeEventListener('click', handler);
@@ -220,6 +252,8 @@ export class TestimonialsCarousel {
         this.cards = null;
         this.dotsContainer = null;
         this.dots = null;
+        this.cachedGap = null;
+        this.cachedCardWidth = null;
         this.boundHandlers = null;
     }
 }

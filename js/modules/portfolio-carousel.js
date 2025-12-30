@@ -1,12 +1,24 @@
 /**
  * Portfolio Carousel Module
  * Handles portfolio carousel navigation and interactions
+ *
+ * Features:
+ * - Click-based navigation with prev/next buttons
+ * - Touch/swipe support for mobile devices
+ * - Dot indicators for direct slide navigation
+ * - Throttled scroll tracking for performance
+ * - Automatic carousel state updates
+ *
  * OPTIMIZED: Uses throttling for scroll events
  */
 
 import { throttle } from './performance-utils.js';
 
 export class PortfolioCarousel {
+    /**
+     * Creates a new PortfolioCarousel instance
+     * Automatically initializes if carousel track and items are found
+     */
     constructor() {
         try {
             this.track = document.querySelector('.carousel-track');
@@ -54,6 +66,10 @@ export class PortfolioCarousel {
         }
     }
 
+    /**
+     * Initialize the carousel by creating dots and attaching event listeners
+     * @returns {void}
+     */
     init() {
         try {
             this.createDots();
@@ -64,6 +80,10 @@ export class PortfolioCarousel {
         }
     }
 
+    /**
+     * Create navigation dot indicators for each carousel item
+     * @returns {void}
+     */
     createDots() {
         try {
             this.items.forEach((_, index) => {
@@ -81,6 +101,11 @@ export class PortfolioCarousel {
         }
     }
 
+    /**
+     * Attach all event listeners for carousel interactions
+     * Includes button clicks, touch/swipe events, and scroll tracking
+     * @returns {void}
+     */
     addEventListeners() {
         // Button handlers
         this.boundHandlers.prevHandler = () => this.prev();
@@ -130,21 +155,39 @@ export class PortfolioCarousel {
         this.track.addEventListener('scroll', this.boundHandlers.scrollHandler, { passive: true });
     }
 
+    /**
+     * Navigate to a specific carousel slide
+     * @param {number} index - The zero-based index of the slide to navigate to
+     * @returns {void}
+     */
     goToSlide(index) {
         this.currentIndex = index;
         this.updateCarousel();
     }
 
+    /**
+     * Navigate to the previous carousel slide
+     * @returns {void}
+     */
     prev() {
         this.currentIndex = Math.max(0, this.currentIndex - 1);
         this.updateCarousel();
     }
 
+    /**
+     * Navigate to the next carousel slide
+     * @returns {void}
+     */
     next() {
         this.currentIndex = Math.min(this.items.length - 1, this.currentIndex + 1);
         this.updateCarousel();
     }
 
+    /**
+     * Update carousel position to show the current slide
+     * Smoothly scrolls the track and updates dot indicators
+     * @returns {void}
+     */
     updateCarousel() {
         try {
             if (!this.items[0]) {
@@ -164,6 +207,10 @@ export class PortfolioCarousel {
         }
     }
 
+    /**
+     * Update the active state of navigation dot indicators
+     * @returns {void}
+     */
     updateDots() {
         try {
             if (!this.dots || this.dots.length === 0) {
@@ -183,6 +230,7 @@ export class PortfolioCarousel {
     /**
      * Cleanup method to remove all event listeners and prevent memory leaks
      * Call this method when the carousel is no longer needed
+     * @returns {void}
      */
     destroy() {
         // Remove button listeners

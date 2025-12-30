@@ -3,6 +3,8 @@
  * Handles smooth scrolling for anchor links
  */
 
+import { BROWSER_SUPPORT } from '../constants.js';
+
 // Store handlers for cleanup
 const anchorHandlers = new Map();
 
@@ -17,10 +19,16 @@ export function initSmoothScroll() {
             }
             const target = document.querySelector(href);
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                if (BROWSER_SUPPORT.SMOOTH_SCROLL) {
+                    // Modern browsers with smooth scroll support
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                } else {
+                    // Fallback for older browsers (Safari <15.4)
+                    target.scrollIntoView(true);
+                }
             }
         };
         anchor.addEventListener('click', handler);

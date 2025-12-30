@@ -4,6 +4,8 @@
  * Triggers on scroll into view using Intersection Observer
  */
 
+import { INTERSECTION_OBSERVER } from '../constants.js';
+
 export class StatisticsCounter {
     constructor() {
         this.counters = [];
@@ -58,8 +60,8 @@ export class StatisticsCounter {
      */
     setupObserver() {
         const options = {
-            threshold: 0.1, // Trigger when 10% of element is visible
-            rootMargin: '50px' // Trigger 50px before entering viewport
+            threshold: INTERSECTION_OBSERVER.STATS_THRESHOLD,
+            rootMargin: INTERSECTION_OBSERVER.STATS_ROOT_MARGIN
         };
 
         this.observer = new IntersectionObserver((entries) => {
@@ -86,7 +88,7 @@ export class StatisticsCounter {
      * Optimized for minimal DOM operations and 60fps performance
      */
     animateCounters() {
-        const duration = 500; // 0.5 seconds animation
+        const duration = 2000; // 2 seconds animation for better visibility
         const startTime = performance.now();
         const countersLength = this.counters.length;
 
@@ -94,13 +96,13 @@ export class StatisticsCounter {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
 
-            // Easing function for smooth animation (easeOutExpo)
-            const easeOutExpo = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+            // Easing function for smooth animation (easeOutQuart)
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
 
             // Use for loop instead of forEach for better performance
             for (let i = 0; i < countersLength; i++) {
                 const counter = this.counters[i];
-                const value = Math.floor(easeOutExpo * counter.target);
+                const value = Math.floor(easeOutQuart * counter.target);
 
                 // Only update DOM if value changed
                 if (value !== counter.current) {

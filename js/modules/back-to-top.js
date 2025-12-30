@@ -10,10 +10,12 @@
  * - GPU-accelerated animations
  */
 
+import { SCROLL_THRESHOLDS, BROWSER_SUPPORT } from '../constants.js';
+
 class BackToTop {
     constructor(options = {}) {
         this.options = {
-            scrollThreshold: options.scrollThreshold || 300,
+            scrollThreshold: options.scrollThreshold || SCROLL_THRESHOLDS.BACK_TO_TOP,
             scrollDuration: options.scrollDuration || 600,
             buttonSelector: options.buttonSelector || '.back-to-top',
             ...options
@@ -119,7 +121,7 @@ class BackToTop {
      */
     scrollToTop() {
         // Use native smooth scroll if supported
-        if ('scrollBehavior' in document.documentElement.style) {
+        if (BROWSER_SUPPORT.SMOOTH_SCROLL) {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
