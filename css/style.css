@@ -941,6 +941,10 @@ body {
     transition: border-color 0.3s ease;
     /* GPU acceleration */
     backface-visibility: hidden;
+    /* Flexbox for consistent author positioning */
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
 }
 
 .testimonial-card:hover {
@@ -965,16 +969,16 @@ body {
     line-height: 1.65;
     /* Reduced from 1.8 for tighter spacing */
     color: var(--color-text-muted);
-    margin-bottom: 1.5rem;
-    /* Reduced from 2rem */
+    margin-bottom: 0;
+    /* Removed - flexbox handles spacing */
     position: relative;
     z-index: 1;
     overflow: hidden;
     display: -webkit-box;
-    line-clamp: 7;
-    /* Limit to 7 lines */
-    -webkit-line-clamp: 7;
-    /* Limit to 7 lines */
+    line-clamp: 9;
+    /* Increased from 7 to 9 lines */
+    -webkit-line-clamp: 9;
+    /* Increased from 7 to 9 lines */
     -webkit-box-orient: vertical;
     white-space: normal;
     /* Ensure text wraps properly */
@@ -989,6 +993,11 @@ body {
     border-radius: 3px;
     font-weight: 500;
     transition: background 0.3s ease;
+}
+
+.testimonial-author {
+    margin-top: auto;
+    padding-top: 1.5rem;
 }
 
 .author-name {

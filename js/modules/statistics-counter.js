@@ -88,7 +88,7 @@ export class StatisticsCounter {
      * Optimized for minimal DOM operations and 60fps performance
      */
     animateCounters() {
-        const duration = 2000; // 2 seconds animation for better visibility
+        const duration = 500; // .5 seconds animation for better visibility
         const startTime = performance.now();
         const countersLength = this.counters.length;
 
