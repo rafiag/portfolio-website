@@ -13,7 +13,6 @@ export class TestimonialsCarousel {
             this.container = document.querySelector('.testimonials-carousel');
             this.track = document.querySelector('.testimonials-track');
             this.cards = document.querySelectorAll('.testimonial-card');
-            this.dotsContainer = document.querySelector('.testimonials-dots');
             this.prevBtn = document.querySelector('.testimonials-prev');
             this.nextBtn = document.querySelector('.testimonials-next');
 
@@ -26,8 +25,7 @@ export class TestimonialsCarousel {
                 prevHandler: null,
                 nextHandler: null,
                 scrollHandler: null,
-                resizeHandler: null,
-                dotHandlers: new Map()
+                resizeHandler: null
             };
 
             if (!this.container) {
@@ -61,7 +59,6 @@ export class TestimonialsCarousel {
             }
 
             this.cacheStyles();
-            this.createDots();
             this.addEventListeners();
         } catch (error) {
             console.error('TestimonialsCarousel init error:', error);
@@ -89,41 +86,6 @@ export class TestimonialsCarousel {
         }
     }
 
-    createDots() {
-        try {
-            if (!this.dotsContainer) {
-                if (IS_DEV) {
-                    console.warn('TestimonialsCarousel: dots container not found, skipping dots creation');
-                }
-                return;
-            }
-
-            // Create one dot per card for individual navigation
-            this.cards.forEach((_, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('testimonial-dot');
-                dot.setAttribute('role', 'tab');
-                dot.setAttribute('aria-label', `Go to testimonial ${index + 1}`);
-                dot.setAttribute('tabindex', index === 0 ? '0' : '-1');
-                if (index === 0) {
-                    dot.classList.add('active');
-                    dot.setAttribute('aria-selected', 'true');
-                } else {
-                    dot.setAttribute('aria-selected', 'false');
-                }
-
-                const handler = () => this.goToSlide(index);
-                dot.addEventListener('click', handler);
-                this.boundHandlers.dotHandlers.set(dot, handler);
-                this.dotsContainer.appendChild(dot);
-            });
-
-            this.dots = document.querySelectorAll('.testimonial-dot');
-        } catch (error) {
-            console.error('TestimonialsCarousel createDots error:', error);
-        }
-    }
-
     addEventListeners() {
         try {
             // Button handlers
@@ -140,7 +102,6 @@ export class TestimonialsCarousel {
                 const newIndex = Math.round(scrollLeft / this.cachedCardWidth);
                 if (newIndex !== this.currentIndex && newIndex < this.cards.length) {
                     this.currentIndex = newIndex;
-                    this.updateDots();
                 }
             }, 16); // 60fps
 
@@ -186,34 +147,8 @@ export class TestimonialsCarousel {
                 left: this.currentIndex * this.cachedCardWidth,
                 behavior: 'smooth'
             });
-            this.updateDots();
         } catch (error) {
             console.error('TestimonialsCarousel updateCarousel error:', error);
-        }
-    }
-
-    updateDots() {
-        try {
-            if (!this.dots || this.dots.length === 0) {
-                if (IS_DEV) {
-                    console.warn('TestimonialsCarousel: No dots available to update');
-                }
-                return;
-            }
-
-            this.dots.forEach((dot, index) => {
-                if (index === this.currentIndex) {
-                    dot.classList.add('active');
-                    dot.setAttribute('aria-selected', 'true');
-                    dot.setAttribute('tabindex', '0');
-                } else {
-                    dot.classList.remove('active');
-                    dot.setAttribute('aria-selected', 'false');
-                    dot.setAttribute('tabindex', '-1');
-                }
-            });
-        } catch (error) {
-            console.error('TestimonialsCarousel updateDots error:', error);
         }
     }
 
@@ -240,18 +175,10 @@ export class TestimonialsCarousel {
             window.removeEventListener('resize', this.boundHandlers.resizeHandler);
         }
 
-        // Remove dot click listeners
-        this.boundHandlers.dotHandlers.forEach((handler, dot) => {
-            dot.removeEventListener('click', handler);
-        });
-        this.boundHandlers.dotHandlers.clear();
-
         // Clear references
         this.container = null;
         this.track = null;
         this.cards = null;
-        this.dotsContainer = null;
-        this.dots = null;
         this.cachedGap = null;
         this.cachedCardWidth = null;
         this.boundHandlers = null;

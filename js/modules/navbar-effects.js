@@ -5,6 +5,7 @@
  */
 
 import { throttle, cacheElementMeasurements, optimizedScrollHandler } from './performance-utils.js';
+import { SCROLL_THRESHOLDS, ANIMATION, IS_DEV } from '../constants.js';
 
 // Store cleanup handlers for the module
 const cleanupHandlers = {
@@ -24,7 +25,7 @@ export function initNavbarScrollEffect() {
                     const currentScroll = window.pageYOffset;
 
                     // Use class toggle instead of direct style manipulation
-                    if (currentScroll > 100) {
+                    if (currentScroll > SCROLL_THRESHOLDS.NAVBAR_STICKY) {
                         nav.classList.add('scrolled');
                     } else {
                         nav.classList.remove('scrolled');
@@ -38,7 +39,7 @@ export function initNavbarScrollEffect() {
             // Store handler for cleanup
             cleanupHandlers.navbarScrollHandler = handleScroll;
         } else {
-            if (window.location.hostname === 'localhost') {
+            if (IS_DEV) {
                 console.warn('Navigation element not found');
             }
         }
@@ -85,7 +86,7 @@ export function initActiveNavLinks() {
                 }
             });
         }
-    }, 16); // 60fps
+    }, ANIMATION.SCROLL_THROTTLE); // 60fps
 
     // Use passive listener for better scroll performance
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
@@ -99,7 +100,7 @@ export function initActiveNavLinks() {
             const newMeasurements = cacheElementMeasurements(section);
             Object.assign(cached, newMeasurements);
         });
-    }, 250);
+    }, ANIMATION.RESIZE_THROTTLE);
 
     window.addEventListener('resize', resizeHandler, { passive: true });
     // Store handler for cleanup

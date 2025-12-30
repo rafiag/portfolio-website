@@ -1007,7 +1007,7 @@ body {
 /* Testimonials Navigation Dots */
 .testimonials-dots {
     display: none;
-    /* Hidden at user request */
+    /* Hidden - dots navigation removed from UI */
     justify-content: center;
     gap: 0.8rem;
     margin-top: 2rem;
