@@ -7,9 +7,21 @@ import { validatePortfolioData, formatValidationErrors } from '../modules/portfo
 
 export const portfolioData = {
     1: {
+        title: "Wordle Decoded",
+        description: "Deep dive into what actually makes the puzzle 'hard'—moving beyond guesswork and into linguistic and performance-based data analysis.",
+        image: "assets/images/portfolio/1.webp",
+        tags: ["Python", "SQL", "NLP"],
+        details: [
+            "ETL & Data Engineering: Designed a pipeline to Extract data from multiple sources, Transform it using a multi-component difficulty algorithm, and Load it into a relational database with pre-computed aggregations for optimized dashboard performance.",
+            "NLP & Sentiment Analysis: Custom NLTK VADER lexicon tuned for Wordle-specific slang and emoji patterns, processing 1M+ tweets to correlate community sentiment with puzzle difficulty.",
+            "Modern Visualization: I used this project to learn Recharts, building 8+ interactive visualization dashboards including scatter plots, time series, sentiment analysis, and distribution charts."
+        ],
+        link: "https://rafiag.github.io/wordle-decoded/"
+    },
+    2: {
         title: "The Year of Judge (2022)",
         description: "This project provides an interactive narrative of Aaron Judge’s historic 2022 season using pitch-level analytics gathered via the pybaseball API. It combines granular Statcast metrics with historical comparisons to analyze his record-breaking performance. The final dashboard transforms raw strike-zone and exit-velocity data into a compelling visual story of an MVP season.",
-        image: "assets/images/portfolio/1.webp",
+        image: "assets/images/portfolio/2.webp",
         tags: ["Python", "Tableau"],
         details: [
             "Automated Data Pipeline: Utilized the pybaseball Python library to programmatically scrape and aggregate pitch-by-pitch Statcast data for the entire 2022 MLB season. This ensured a high-fidelity dataset including exit velocities, launch angles, and precise coordinates for every plate appearance.",
@@ -18,10 +30,10 @@ export const portfolioData = {
         ],
         link: "https://public.tableau.com/app/profile/rafiatha/viz/TheYearofJudge2022/Judge"
     },
-    2: {
+    3: {
         title: "Mapping Bali's Tourism Hotspots",
         description: "This award-winning project analyzes a decade of tourism patterns in Bali by extracting geospatial metadata from user-uploaded photos. Using Python-based spatial clustering, it identifies high-density 'hotspots' to visualize the evolution of tourist movements between 2010 and 2019. The findings were presented and recognized at an international conference hosted by the University of Ryukyu in Japan.",
-        image: "assets/images/portfolio/2.webp",
+        image: "assets/images/portfolio/3.webp",
         tags: ["Python", "Scikit-learn", "Tableau"],
         details: [
             "Geospatial Data Mining: Programmatically extracted nearly ten years of user-generated metadata via the Flickr API to track tourist footprints. This provided a massive, real-world dataset for analyzing long-term spatial behavior and regional popularity trends",
@@ -30,10 +42,10 @@ export const portfolioData = {
         ],
         link: "https://public.tableau.com/app/profile/rafiatha/viz/BaliTourismHotspot/Dashboard"
     },
-    3: {
+    4: {
         title: "E-Commerce Performance Dashboard",
         description: "This project delivers a three-tier analysis of e-commerce health, focusing on sales performance, customer retention, and behavioral clustering. It utilizes a Python-driven backend to segment customers, providing actionable insights into revenue growth and user loyalty. The resulting Tableau dashboard allows stakeholders to interact with complex transactional data through a streamlined, multi-tab interface.",
-        image: "assets/images/portfolio/3.webp",
+        image: "assets/images/portfolio/4.webp",
         tags: ["Python", "Scikit-learn", "Tableau"],
         details: [
             "Multi-Dimensional Reporting: Developed a comprehensive dashboard featuring three distinct views: Sales Performance, Customer Retention, and RFM Segmentation. Each tab offers a specialized lens through which to evaluate business health and revenue drivers",
