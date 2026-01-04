@@ -16,6 +16,7 @@ import BackToTop from './modules/back-to-top.js';
 
 // Import page-specific modules
 import { PortfolioFilter } from './modules/portfolio-filter.js';
+import { initCopyrightYear } from './modules/index-page.js';
 
 // Import structured data
 import { initStructuredData } from './modules/structured-data.js';
@@ -50,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll animations for portfolio cards
     initScrollAnimations('.portfolio-card');
+
+    // Update copyright year
+    initCopyrightYear();
 
     // Inject structured data for SEO
     initStructuredData('portfolio');

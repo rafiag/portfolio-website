@@ -93,6 +93,14 @@ export function initPageLoadAnimation() {
     cleanupHandlers.loadHandler = handler;
 }
 
+// Update copyright year dynamically
+export function initCopyrightYear() {
+    const yearElement = document.getElementById('current-year');
+    if (yearElement) {
+        yearElement.textContent = new Date().getFullYear();
+    }
+}
+
 /**
  * Cleanup function to remove all event listeners and observers
  * Call this function when the page is unloaded or navigated away from

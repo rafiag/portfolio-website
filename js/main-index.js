@@ -23,6 +23,7 @@ import {
     initExperienceCards,
     initSkillBarsAnimation,
     initPageLoadAnimation,
+    initCopyrightYear,
     cleanupIndexPage
 } from './modules/index-page.js';
 
@@ -107,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initExperienceCards();
     initSkillBarsAnimation();
     initPageLoadAnimation();
+    initCopyrightYear();
 
     // Inject structured data for SEO
     initStructuredData('index');
